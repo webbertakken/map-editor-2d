@@ -1,6 +1,7 @@
 import { Stage, Layer, Star, Text } from 'react-konva'
 import React, { createRef, useEffect, useState } from 'react'
 import Konva from 'konva'
+import { useWindowSize } from '../../hooks/useWindowSize'
 
 function generateShapes() {
   return [...Array(10)].map((_, i) => ({
@@ -16,16 +17,20 @@ const INITIAL_STATE = generateShapes()
 
 export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
-  const [width, setWidth] = useState<number>(640)
-  const [height, setHeight] = useState<number>(480)
+  const windowSize = useWindowSize()
+  const [width, setWidth] = useState<number | undefined>(windowSize.width)
+  const [height, setHeight] = useState<number | undefined>(windowSize.height)
   const [stars, setStars] = React.useState(INITIAL_STATE)
 
   useEffect(() => {
     if (ref.current) {
-      setHeight(ref.current.offsetHeight)
-      setWidth(ref.current.offsetWidth)
+      // Todo - fix layout, remove -1
+      // setWidth(ref.current.offsetWidth - 1)
+      // setHeight(ref.current.offsetHeight - 1)
+      setWidth(window.innerWidth - 400 /* both sidebars */)
+      setHeight(window.innerHeight - 42 /* menu */)
     }
-  }, [ref])
+  }, [ref, windowSize.width, windowSize.height])
 
   const handleDragStart = (e: Konva.KonvaEventObject<DragEvent>) => {
     const id = e.target.id()
