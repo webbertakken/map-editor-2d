@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Paragraph } from 'dracula-ui'
 import Modal from '../../modal/Modal'
+import ExternalLink from '../../atoms/ExternalLink'
 
 class Props {}
 
@@ -19,10 +20,17 @@ const NewScene = ({}: Props): JSX.Element => {
       title={title}
     >
       <Paragraph>Load a scene file.</Paragraph>
+      <Paragraph>All changes are saved automatically.</Paragraph>
       <Paragraph>
-        Note: all changes are automatically saved. Recommend keeping backups or using version
-        control for your scene files.
+        please{' '}
+        <ExternalLink
+          title="use version control"
+          href="https://en.wikipedia.org/wiki/Version_control"
+        />{' '}
+        or make backups.
       </Paragraph>
+
+      <Button>Load Scene File</Button>
     </Modal>
   )
 }

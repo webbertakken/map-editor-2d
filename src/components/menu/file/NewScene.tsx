@@ -57,7 +57,7 @@ const NewScene = ({}: Props): JSX.Element => {
         <strong>Note:</strong> all changes are saved automatically.
       </Paragraph>
 
-      <Button onClick={openCreateFileDialog}>Select file location</Button>
+      <Button onClick={openCreateFileDialog}>Select File Location</Button>
     </Modal>
   )
 }

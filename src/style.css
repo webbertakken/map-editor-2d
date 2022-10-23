@@ -15,6 +15,21 @@ body, h1, h2, h3, h4, h5, h6, p {
   cursor: default;
 }
 
+a {
+  font-weight: bold;
+  text-decoration: inherit;
+}
+
+a, a:visited, a:active, a:hover {
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+
 :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
@@ -31,10 +46,20 @@ body, h1, h2, h3, h4, h5, h6, p {
   -webkit-text-size-adjust: 100%;
 }
 
-@media (prefers-color-scheme: dark) {
+/**
+ * For now, just always show dark theme.
+ *
+ * TODO - create better styles for light theme.
+ */
+
+/*@media (prefers-color-scheme: dark) {*/
   :root {
     color: #f6f6f6;
     background-color: rgba(42, 42, 42, 1);
+  }
+
+  a {
+    color: #f6f6f6;
   }
 
   .ReactModal__Overlay {
@@ -45,4 +70,4 @@ body, h1, h2, h3, h4, h5, h6, p {
     background-color: rgba(42, 42, 42, 1) !important;
     border-color: rgb(35, 35, 35) !important;
   }
-}
+/*}*/
