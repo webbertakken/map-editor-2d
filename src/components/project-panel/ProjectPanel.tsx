@@ -7,7 +7,9 @@ interface Props {}
 const ProjectPanel = ({}: Props): JSX.Element => {
   return (
     <>
-      <Section title="Scene">No scene selected</Section>
+      <Section title="Scene" color="pink">
+        No scene selected
+      </Section>
     </>
   )
 }

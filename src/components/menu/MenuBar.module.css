@@ -1,0 +1,5 @@
+.menuBar {
+  display: flex;
+  flex-direction: row;
+  border-bottom-width: 1px;
+}
