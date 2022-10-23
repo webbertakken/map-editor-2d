@@ -1,14 +1,17 @@
 import React from 'react'
-import { Box, Heading } from 'dracula-ui'
 import Section from '../layout/Section'
+import { useRecoilValue } from 'recoil'
+import { sceneNameState } from '../../model/scene/scene'
 
 interface Props {}
 
 const ProjectPanel = ({}: Props): JSX.Element => {
+  const sceneName = useRecoilValue(sceneNameState)
+
   return (
     <>
       <Section title="Scene" color="pink">
-        No scene selected
+        {sceneName}
       </Section>
     </>
   )

@@ -4,48 +4,66 @@ import Modal from '../../modal/Modal'
 import { save } from '@tauri-apps/api/dialog'
 import { writeTextFile } from '@tauri-apps/api/fs'
 import { SCENE_FILE_TYPE_EXTENSION, SCENE_FILE_TYPE_NAME } from '../../../constants'
+import { Scene, sceneState } from '../../../model/scene/scene'
+import { useRecoilState } from 'recoil'
+import { useNotification } from '../../../hooks/useNotification'
 
 class Props {}
 
-const newFile = {
-  name: 'Untitled',
-  version: 0.1,
-  description:
-    "Generated using Webber's Map Editor 2D. See https://github.com/webbertakken/map-editor-2d for more details.",
-}
-
 const NewScene = ({}: Props): JSX.Element => {
+  const [_, setScene] = useRecoilState(sceneState)
+  const [isOpen, setIsOpen] = React.useState(false)
+  const notify = useNotification()
+
   const title = 'New Scene'
   const color = 'orange'
 
   const openCreateFileDialog = async () => {
-    // Select directory to save file in
-    const filePath = await save({
-      title: 'Create a new scene',
-      filters: [
-        {
-          name: SCENE_FILE_TYPE_NAME,
-          extensions: [SCENE_FILE_TYPE_EXTENSION],
-        },
-      ],
-    })
+    try {
+      // Select directory to save file in
+      const filePath = await save({
+        title: 'Create a new scene',
+        filters: [
+          {
+            name: SCENE_FILE_TYPE_NAME,
+            extensions: [SCENE_FILE_TYPE_EXTENSION],
+          },
+        ],
+      })
 
-    // No path chosen
-    if (filePath === null) return
+      // No path chosen
+      if (filePath === null) return
 
-    // Write file
-    await writeTextFile(filePath, JSON.stringify(newFile, null, 2))
+      // Create new scene
+      const newScene = Scene.new()
+
+      // Write to file
+      await writeTextFile(filePath, Scene.toFile(newScene))
+
+      // Load in editor
+      setScene(newScene)
+
+      // Close modal
+      setIsOpen(false)
+
+      // Notify user
+      notify.success('Scene created successfully')
+    } catch (error: any) {
+      notify.error(error.message)
+    }
   }
 
   return (
     <Modal
-      color={color}
+      title={title}
       button={(props) => (
         <Button size="xs" {...props}>
           {title}
         </Button>
       )}
-      title={title}
+      color={color}
+      isOpen={isOpen}
+      setIsOpen={setIsOpen}
     >
       <Paragraph>Create a scene file.</Paragraph>
 
