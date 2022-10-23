@@ -1,8 +1,8 @@
 import React from 'react'
-import NewScene from './buttons/NewScene'
+import NewScene from './file/NewScene'
 import Category from './Category'
 import MenuBar from './MenuBar'
-import LoadScene from './buttons/LoadScene'
+import LoadScene from './file/LoadScene'
 
 interface Props {}
 
