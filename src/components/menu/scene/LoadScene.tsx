@@ -5,18 +5,20 @@ import ExternalLink from '../../atoms/ExternalLink'
 import { open } from '@tauri-apps/api/dialog'
 import { SCENE_FILE_TYPE_EXTENSION, SCENE_FILE_TYPE_NAME } from '../../../constants'
 import { readTextFile } from '@tauri-apps/api/fs'
-import { Scene, sceneState } from '../../../model/scene/scene'
+import { SceneFile, sceneState } from '../../../model/SceneFile'
 import { useRecoilState } from 'recoil'
 import { useNotification } from '../../../hooks/useNotification'
+import { SceneMeta, sceneMetaState } from '../../../model/SceneMeta'
 
 class Props {}
 
 const NewScene = ({}: Props): JSX.Element => {
-  const [_, setScene] = useRecoilState(sceneState)
+  const [_1, setScene] = useRecoilState(sceneState)
+  const [_2, setSceneMeta] = useRecoilState(sceneMetaState)
   const notify = useNotification()
   const [isOpen, setIsOpen] = React.useState(false)
 
-  const title = 'Load Scene'
+  const title = 'Load'
   const color = 'orange'
 
   const openLoadFileDialog = async () => {
@@ -41,10 +43,11 @@ const NewScene = ({}: Props): JSX.Element => {
       const fileContents = await readTextFile(filePath)
 
       // Parse file
-      const scene = await Scene.fromFile(fileContents)
+      const scene = await SceneFile.fromFile(fileContents)
 
       // Load in editor
       setScene(scene)
+      setSceneMeta(SceneMeta.create(filePath))
 
       // Close modal
       setIsOpen(false)

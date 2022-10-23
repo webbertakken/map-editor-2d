@@ -1,18 +1,21 @@
 import React from 'react'
 import { Button } from 'dracula-ui'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { isSceneOpenState, Scene, sceneState } from '../../../model/scene/scene'
+import { isSceneOpenState, SceneFile, sceneState } from '../../../model/SceneFile'
 import { useNotification } from '../../../hooks/useNotification'
+import { SceneMeta, sceneMetaState } from '../../../model/SceneMeta'
 
 interface Props {}
 
 const CloseScene = ({}: Props): JSX.Element => {
-  const [_, setScene] = useRecoilState(sceneState)
+  const [_1, setScene] = useRecoilState(sceneState)
+  const [_2, setSceneMeta] = useRecoilState(sceneMetaState)
   const notify = useNotification()
   const isSceneOpen = useRecoilValue(isSceneOpenState)
 
   const closeScene = () => {
-    setScene(Scene.default())
+    setScene(SceneFile.default())
+    setSceneMeta(SceneMeta.default())
 
     notify.success('Scene closed')
   }
