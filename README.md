@@ -1,15 +1,30 @@
-# Tauri + React + Typescript
+# Webber's Map Editor 2D
 
-This template should help get you started developing with Tauri, React and Typescript in Vite.
+⚠️ Pre-alpha, works but doesn't do much yet. ⚠️
 
-## Recommended IDE Setup
+## How it works
 
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+- Load or create a new map
+- Select your sprites' folder (recursively). 
+- Drag your sprites to the canvas to create instances.
+- On the canvas, adjust instances:
+  - 📛 Name 
+  - 🪧 Position (x, y)
+  - 🔝 Z-Index
+  - 🛞 Rotation
+  - 🔛 Scale
+- Save map as a JSON file (includes relative paths to the files).
+
+[//]: # ( Possible future features )
+[//]: # (    - Flip)
+[//]: # (    - Color)
+[//]: # (    - Opacity)
+[//]: # (    - Blend mode)
 
 ## Contribute
 
-- [Development](DEVELOPMENT.md)
+Please read the [Development](DEVELOPMENT.md) doc.
 
 ## License
 
-- [MIT](LICENSE)
+[MIT](LICENSE) licensed.
