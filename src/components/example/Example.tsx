@@ -1,11 +1,11 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import reactLogo from "../../assets/react.svg";
 import { invoke } from "@tauri-apps/api/tauri";
-import "./App.css";
+import "./Example.css";
 
-function App() {
-  const [greetMsg, setGreetMsg] = useState("nuh");
-  const [name, setName] = useState();
+function Example() {
+  const [greetMsg, setGreetMsg] = useState("");
+  const [name, setName] = useState("");
 
   async function greet() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
@@ -37,15 +37,14 @@ function App() {
             onChange={(e) => setName(e.currentTarget.value)}
             placeholder="Enter a name..."
           />
-          <button type="button" onClick={() => setGreetMsg(name)}>
+          <button type="button" onClick={() => greet()}>
             Greet
           </button>
-          <p>test {greetMsg}</p>
         </div>
       </div>
-
+      <p>{greetMsg}</p>
     </div>
   );
 }
 
-export default App;
+export default Example;
