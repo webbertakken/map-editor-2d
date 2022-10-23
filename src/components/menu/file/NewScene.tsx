@@ -3,6 +3,7 @@ import { Button, Paragraph } from 'dracula-ui'
 import Modal from '../../modal/Modal'
 import { save } from '@tauri-apps/api/dialog'
 import { writeTextFile } from '@tauri-apps/api/fs'
+import { SCENE_FILE_TYPE_EXTENSION, SCENE_FILE_TYPE_NAME } from '../../../constants'
 
 class Props {}
 
@@ -23,8 +24,8 @@ const NewScene = ({}: Props): JSX.Element => {
       title: 'Create a new scene',
       filters: [
         {
-          name: '2D Map Editor Scene',
-          extensions: ['2dtf'],
+          name: SCENE_FILE_TYPE_NAME,
+          extensions: [SCENE_FILE_TYPE_EXTENSION],
         },
       ],
     })
