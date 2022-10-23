@@ -1,0 +1,23 @@
+.spriteList {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1em;
+}
+
+.sprite {
+  width: 50px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  text-align: center;
+  font-size: 80%;
+}
+
+.sprite img {
+  width: auto;
+  height: auto;
+  max-width: 50px;
+  max-height: 50px;
+}

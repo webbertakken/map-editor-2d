@@ -4,18 +4,20 @@ import Modal from '../../modal/Modal'
 import { save } from '@tauri-apps/api/dialog'
 import { writeTextFile } from '@tauri-apps/api/fs'
 import { SCENE_FILE_TYPE_EXTENSION, SCENE_FILE_TYPE_NAME } from '../../../constants'
-import { Scene, sceneState } from '../../../model/scene/scene'
+import { SceneFile, sceneState } from '../../../model/SceneFile'
 import { useRecoilState } from 'recoil'
 import { useNotification } from '../../../hooks/useNotification'
+import { SceneMeta, sceneMetaState } from '../../../model/SceneMeta'
 
 class Props {}
 
 const NewScene = ({}: Props): JSX.Element => {
-  const [_, setScene] = useRecoilState(sceneState)
+  const [_1, setScene] = useRecoilState(sceneState)
+  const [_2, setSceneMeta] = useRecoilState(sceneMetaState)
   const [isOpen, setIsOpen] = React.useState(false)
   const notify = useNotification()
 
-  const title = 'New Scene'
+  const title = 'New'
   const color = 'orange'
 
   const openCreateFileDialog = async () => {
@@ -35,13 +37,14 @@ const NewScene = ({}: Props): JSX.Element => {
       if (filePath === null) return
 
       // Create new scene
-      const newScene = Scene.new()
+      const newScene = SceneFile.new()
 
       // Write to file
-      await writeTextFile(filePath, Scene.toFile(newScene))
+      await writeTextFile(filePath, SceneFile.toFile(newScene))
 
       // Load in editor
       setScene(newScene)
+      setSceneMeta(SceneMeta.create(filePath))
 
       // Close modal
       setIsOpen(false)

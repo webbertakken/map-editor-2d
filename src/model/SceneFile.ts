@@ -1,8 +1,8 @@
 import { atom, selector } from 'recoil'
-import { SCENE_FILE_CURRENT_VERSION } from '../../constants'
+import { SCENE_FILE_CURRENT_VERSION } from '../constants'
 import { gt as semverGt, lt as semverLt, valid as semverValid } from 'semver'
 
-export class Scene {
+export class SceneFile {
   public name: string = ''
   public version: string = ''
   public description: string = ''
@@ -17,22 +17,22 @@ export class Scene {
 
   static new() {
     return {
-      ...Scene.default(),
+      ...SceneFile.default(),
       name: 'Untitled',
       description:
         "Generated using Webber's Map Editor 2D. See https://github.com/webbertakken/map-editor-2d for more details.",
     }
   }
 
-  static toFile(scene: Scene): string {
+  static toFile(scene: SceneFile): string {
     return JSON.stringify(scene, null, 2)
   }
 
   static fromFile(sceneFileContents: string) {
-    return Scene.fromJson(JSON.parse(sceneFileContents))
+    return SceneFile.fromJson(JSON.parse(sceneFileContents))
   }
 
-  public static async fromJson(json: any): Promise<Scene> {
+  public static async fromJson(json: any): Promise<SceneFile> {
     if (!json.version) {
       throw new Error('Scene has no version.')
     }
@@ -77,17 +77,17 @@ export class Scene {
   }
 }
 
-export const sceneState = atom<Scene>({
+export const sceneState = atom<SceneFile>({
   key: 'scene',
-  default: Scene.default(),
+  default: SceneFile.default(),
 })
 
-export const sceneNameState = selector({
+export const sceneNameSelector = selector({
   key: 'sceneName',
   get: ({ get }) => get(sceneState).name,
 })
 
 export const isSceneOpenState = selector({
   key: 'isSceneOpen',
-  get: ({ get }) => get(sceneState).name !== Scene.default().name,
+  get: ({ get }) => get(sceneState).name !== SceneFile.default().name,
 })
