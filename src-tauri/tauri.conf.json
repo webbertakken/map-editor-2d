@@ -55,10 +55,10 @@
     "windows": [
       {
         "fullscreen": false,
-        "height": 600,
+        "width": 1400,
+        "height": 900,
         "resizable": true,
-        "title": "map-editor-2d",
-        "width": 800
+        "title": "Webber's Map Editor 2D"
       }
     ]
   }
