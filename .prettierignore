@@ -1,0 +1,10 @@
+idea/
+node_modules/
+src-tauri/
+public/
+coverage/
+
+# Use stylelint instead
+*.less
+*.css
+*.scss

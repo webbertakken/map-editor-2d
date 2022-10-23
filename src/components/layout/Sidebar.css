@@ -1,0 +1,15 @@
+.sidebar {
+  min-width: 200px;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: column;
+  font-size: 75%;
+}
+
+.sidebar.left {
+  border-right-width: 1px;
+}
+
+.sidebar.right {
+  border-left-width: 1px;
+}

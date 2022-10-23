@@ -18,5 +18,7 @@ yarn tauri dev
 ## Build
 
 ```powershell
-yarn tauri build
+yarn tauri build --debug
 ```
+
+_Note: `--debug` is currently just to allow the inspector to work._

@@ -1,0 +1,39 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  height: 100vh;
+}
+
+/* Panels, Sidebars, Sidebar sections */
+.layout > div, .sidebar, .section {
+  border-color: #e5e5e5;
+  border-style: solid;
+  border-width: 0;
+}
+@media (prefers-color-scheme: dark) {
+  .layout > div, .sidebar, .section {
+    border-color: #505759;
+    border-style: solid;
+    border-width: 0;
+  }
+}
+
+.layout .menu {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 0;
+  border-bottom-width: 1px;
+}
+
+.layout .content {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+.layout .content .main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
