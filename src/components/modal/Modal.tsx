@@ -22,11 +22,19 @@ interface Props {
   title: string
   children: React.ReactNode
   color?: keyof typeof dividerColors
+  isOpen: boolean
+  setIsOpen: (isOpen: boolean) => void
 }
 
-const Modal = ({ button: Button, title, children, color = 'purple' }: Props): JSX.Element => {
+const Modal = ({
+  button: Button,
+  title,
+  isOpen,
+  setIsOpen,
+  children,
+  color = 'purple',
+}: Props): JSX.Element => {
   let subtitle: HTMLHeadingElement | null
-  const [modalIsOpen, setIsOpen] = React.useState(false)
 
   function openModal() {
     setIsOpen(true)
@@ -45,7 +53,7 @@ const Modal = ({ button: Button, title, children, color = 'purple' }: Props): JS
     <div>
       <Button onClick={openModal} />
       <ReactModal
-        isOpen={modalIsOpen}
+        isOpen={isOpen}
         onAfterOpen={afterOpenModal}
         onRequestClose={closeModal}
         style={customStyles}
