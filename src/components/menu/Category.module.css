@@ -1,0 +1,9 @@
+.category {
+  display: flex;
+  flex-grow: 0;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.2em;
+  padding: 0 0.5em;
+  border-right-width: 1px;
+}

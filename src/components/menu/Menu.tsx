@@ -1,20 +1,21 @@
 import React from 'react'
-import { Button, Heading } from 'dracula-ui'
-import { useNotification } from '../../hooks/useNotification'
+import NewScene from './buttons/NewScene'
+import Category from './Category'
+import MenuBar from './MenuBar'
+import LoadScene from './buttons/LoadScene'
 
 interface Props {}
 
 const Menu = ({}: Props): JSX.Element => {
-  const notify = useNotification()
-
-  const click = () => {
-    notify.success('Hello')
-  }
-
   return (
-    <div>
-      <Button onClick={click} />
-    </div>
+    <>
+      <MenuBar>
+        <Category title="File">
+          <NewScene />
+          <LoadScene />
+        </Category>
+      </MenuBar>
+    </>
   )
 }
 

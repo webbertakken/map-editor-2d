@@ -10,6 +10,10 @@ import 'dracula-ui/styles/dracula-ui.css'
 import Sidebar from './components/layout/Sidebar'
 import Main from './components/layout/Main'
 import { Toaster } from 'react-hot-toast'
+import ReactModal from 'react-modal'
+
+// Needed for accessibility: https://reactcommunity.org/react-modal/accessibility/
+ReactModal.setAppElement('#root')
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
