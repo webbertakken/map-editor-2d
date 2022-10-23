@@ -1,13 +1,16 @@
 import React from 'react'
 import { Button, Paragraph } from 'dracula-ui'
 import Modal from '../../modal/Modal'
-import { save, message } from '@tauri-apps/api/dialog'
+import { save } from '@tauri-apps/api/dialog'
 import { writeTextFile } from '@tauri-apps/api/fs'
 
 class Props {}
 
-const tempFile = {
+const newFile = {
   name: 'Untitled',
+  version: 0.1,
+  description:
+    "Generated using Webber's Map Editor 2D. See https://github.com/webbertakken/map-editor-2d for more details.",
 }
 
 const NewScene = ({}: Props): JSX.Element => {
@@ -15,9 +18,9 @@ const NewScene = ({}: Props): JSX.Element => {
   const color = 'orange'
 
   const openCreateFileDialog = async () => {
+    // Select directory to save file in
     const filePath = await save({
       title: 'Create a new scene',
-      // defaultPath:
       filters: [
         {
           name: '2D Map Editor Scene',
@@ -30,12 +33,7 @@ const NewScene = ({}: Props): JSX.Element => {
     if (filePath === null) return
 
     // Write file
-    await writeTextFile(filePath, JSON.stringify(tempFile, null, 2))
-
-    // Auto-save notice
-    await message('Note: all changes to your scene will automatically be saved', 'Tauri')
-
-    // Todo - tell global state that a file is opened
+    await writeTextFile(filePath, JSON.stringify(newFile, null, 2))
   }
 
   return (
@@ -49,9 +47,14 @@ const NewScene = ({}: Props): JSX.Element => {
       title={title}
     >
       <Paragraph>Create a scene file.</Paragraph>
+
       <Paragraph>
-        It is recommended to create the scene in the same directory as your sprites, or the parent
-        directory.
+        It is recommended to create the scene in the same directory as your sprites, or in the
+        parent directory.
+      </Paragraph>
+
+      <Paragraph>
+        <strong>Note:</strong> all changes are saved automatically.
       </Paragraph>
 
       <Button onClick={openCreateFileDialog}>Select file location</Button>
