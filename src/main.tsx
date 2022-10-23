@@ -6,9 +6,25 @@ import Menu from './components/menu/Menu'
 import ProjectPanel from './components/project-panel/ProjectPanel'
 import { Canvas } from './components/canvas/Canvas'
 import DetailsPanel from './components/details-panel/DetailsPanel'
+import 'dracula-ui/styles/dracula-ui.css'
+import Sidebar from './components/layout/Sidebar'
+import Main from './components/layout/Main'
+import { Toaster } from 'react-hot-toast'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <Layout menu={<Menu />} left={<ProjectPanel />} main={<Canvas />} right={<DetailsPanel />} />
+    <Toaster />
+
+    <Layout menu={<Menu />}>
+      <Sidebar left>
+        <ProjectPanel />
+      </Sidebar>
+      <Main>
+        <Canvas />
+      </Main>
+      <Sidebar right>
+        <DetailsPanel />
+      </Sidebar>
+    </Layout>
   </React.StrictMode>,
 )

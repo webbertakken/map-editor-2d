@@ -1,13 +1,20 @@
 import React from 'react'
-import { Heading } from 'dracula-ui'
+import { Button, Heading } from 'dracula-ui'
+import { useNotification } from '../../hooks/useNotification'
 
 interface Props {}
 
 const Menu = ({}: Props): JSX.Element => {
+  const notify = useNotification()
+
+  const click = () => {
+    notify.success('Hello')
+  }
+
   return (
-    <>
-      <Heading size="xl">Webber's Map Editor 2d</Heading>
-    </>
+    <div>
+      <Button onClick={click} />
+    </div>
   )
 }
 
