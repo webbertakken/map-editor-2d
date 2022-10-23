@@ -7,6 +7,7 @@ import { dividerColors } from 'dracula-ui/components/Divider/Divider'
 const customStyles = {
   content: {
     minWidth: '300px',
+    maxWidth: '600px',
     top: '25%',
     left: '50%',
     right: 'auto',
