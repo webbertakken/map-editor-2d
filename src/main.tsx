@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Example from "./components/example/Example";
 import "./style.css";
+import { Canvas } from "./components/canvas/Canvas";
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <Example />
+    <Canvas />
   </React.StrictMode>
 );
