@@ -71,3 +71,22 @@ a:hover {
     border-color: rgb(35, 35, 35) !important;
   }
 /*}*/
+
+/**
+ * Scrollbars!
+ */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #3f4346;
+}
+::-webkit-scrollbar-thumb {
+  background: #2f2f33;
+  border-left: 1px solid #505759;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a2a2d;
+}

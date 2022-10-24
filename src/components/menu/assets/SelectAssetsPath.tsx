@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'dracula-ui'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { areSpritesLoadedSelector, Assets, assetsState } from '../../../model/Assets'
+import { areSpritesAssetsLoadedSelector, Assets, assetsState } from '../../../model/Assets'
 import { open } from '@tauri-apps/api/dialog'
 import { useNotification } from '../../../hooks/useNotification'
 import { AssetsPath } from '../../../model/AssetsPath'
@@ -12,7 +12,7 @@ interface Props {}
 const SelectAssetsPath = ({}: Props): JSX.Element => {
   const [_1, setAssets] = useRecoilState(assetsState)
   const scenePath = useRecoilValue(scenePathSelector)
-  const areSelected = useRecoilValue(areSpritesLoadedSelector)
+  const areSelected = useRecoilValue(areSpritesAssetsLoadedSelector)
   const notify = useNotification()
 
   const selectAssetsPath = async () => {

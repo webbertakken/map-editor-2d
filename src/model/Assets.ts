@@ -1,11 +1,12 @@
 import { atom, selector } from 'recoil'
-import { Sprite } from './Sprite'
+import { SpriteAsset } from './SpriteAsset'
 import { readDir, FileEntry, readBinaryFile } from '@tauri-apps/api/fs'
+import { Buffer } from 'buffer'
 
 export class Assets {
   public spritesPath: string = ''
   public areSpritesLoaded: boolean = false
-  public sprites: Sprite[] = []
+  public sprites: SpriteAsset[] = []
 
   public static default(): Assets {
     return {
@@ -15,7 +16,7 @@ export class Assets {
     }
   }
 
-  public static create(spritesPath: string, sprites: Sprite[]): Assets {
+  public static create(spritesPath: string, sprites: SpriteAsset[]): Assets {
     return {
       ...Assets.default(),
       areSpritesLoaded: true,
@@ -24,17 +25,8 @@ export class Assets {
     }
   }
 
-  public static async loadSprites(spritesAbsolutePath: string): Promise<Sprite[]> {
-    const sprites: Sprite[] = []
-
-    function blobToDataUrl(blob: Blob): Promise<string> {
-      return new Promise((resolve, _) => {
-        const reader = new FileReader()
-        // @ts-ignore
-        reader.onloadend = () => resolve(reader.result)
-        reader.readAsDataURL(blob)
-      })
-    }
+  public static async loadSprites(spritesAbsolutePath: string): Promise<SpriteAsset[]> {
+    const sprites: SpriteAsset[] = []
 
     const processEntries = async (entries: FileEntry[]) => {
       for (const entry of entries) {
@@ -46,9 +38,13 @@ export class Assets {
 
         if (path.endsWith('.png') || path.endsWith('.jpg')) {
           const data = await readBinaryFile(path)
-          const dataUrl = await blobToDataUrl(new Blob([data]))
+          const buffer = Buffer.from(data)
 
-          sprites.push(Sprite.create(entry.path, dataUrl))
+          // noinspection TypeScriptValidateJSTypes (incorrect assertion, base64 is indeed required)
+          const base64 = buffer.toString('base64')
+          const dataUrl = `data:image/png;base64,${base64}`
+
+          sprites.push(SpriteAsset.create(entry.path, dataUrl))
           continue
         }
 
@@ -69,11 +65,11 @@ export const assetsState = atom<Assets>({
 })
 
 export const spritesSelector = selector({
-  key: 'sprites',
+  key: 'spritesAssets',
   get: ({ get }) => get(assetsState).sprites,
 })
 
-export const areSpritesLoadedSelector = selector({
-  key: 'areSpritesLoaded',
+export const areSpritesAssetsLoadedSelector = selector({
+  key: 'areSpriteAssetsLoaded',
   get: ({ get }) => get(assetsState).areSpritesLoaded,
 })

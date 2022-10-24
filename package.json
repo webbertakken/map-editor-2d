@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@tauri-apps/api": "^1.1.0",
+    "buffer": "^6.0.3",
     "dracula-ui": "^1.0.3",
     "konva": "^8.3.13",
     "react": "^18.2.0",
@@ -19,7 +20,9 @@
     "react-konva": "^18.2.3",
     "react-modal": "^3.16.1",
     "recoil": "^0.7.6",
-    "semver": "^7.3.8"
+    "semver": "^7.3.8",
+    "use-image": "^1.1.0",
+    "uuid": "^9.0.0"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.1.0",
@@ -28,6 +31,7 @@
     "@types/react-dom": "^18.0.6",
     "@types/react-modal": "^3.13.1",
     "@types/semver": "^7.3.12",
+    "@types/uuid": "^8.3.4",
     "@vitejs/plugin-react": "^2.0.0",
     "typescript": "^4.6.4",
     "vite": "^3.0.2"

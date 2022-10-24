@@ -1,7 +1,5 @@
 import React from 'react'
-import './Layout.css'
-import './Sidebar.css'
-import './Section.css'
+import styles from './Layout.module.css'
 
 interface Props {
   menu: JSX.Element
@@ -10,9 +8,9 @@ interface Props {
 
 const Layout = ({ menu, children }: Props): JSX.Element => {
   return (
-    <div className="layout">
-      <div className="menu">{menu}</div>
-      <div className="content">{children}</div>
+    <div className={styles.layout}>
+      <div className={styles.menu}>{menu}</div>
+      <div className={styles.content}>{children}</div>
     </div>
   )
 }
