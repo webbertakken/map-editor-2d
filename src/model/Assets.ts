@@ -1,11 +1,11 @@
 import { atom, selector } from 'recoil'
-import { Sprite } from './Sprite'
+import { SpriteAsset } from './SpriteAsset'
 import { readDir, FileEntry, readBinaryFile } from '@tauri-apps/api/fs'
 
 export class Assets {
   public spritesPath: string = ''
   public areSpritesLoaded: boolean = false
-  public sprites: Sprite[] = []
+  public sprites: SpriteAsset[] = []
 
   public static default(): Assets {
     return {
@@ -15,7 +15,7 @@ export class Assets {
     }
   }
 
-  public static create(spritesPath: string, sprites: Sprite[]): Assets {
+  public static create(spritesPath: string, sprites: SpriteAsset[]): Assets {
     return {
       ...Assets.default(),
       areSpritesLoaded: true,
@@ -24,8 +24,8 @@ export class Assets {
     }
   }
 
-  public static async loadSprites(spritesAbsolutePath: string): Promise<Sprite[]> {
-    const sprites: Sprite[] = []
+  public static async loadSprites(spritesAbsolutePath: string): Promise<SpriteAsset[]> {
+    const sprites: SpriteAsset[] = []
 
     function blobToDataUrl(blob: Blob): Promise<string> {
       return new Promise((resolve, _) => {
@@ -48,7 +48,7 @@ export class Assets {
           const data = await readBinaryFile(path)
           const dataUrl = await blobToDataUrl(new Blob([data]))
 
-          sprites.push(Sprite.create(entry.path, dataUrl))
+          sprites.push(SpriteAsset.create(entry.path, dataUrl))
           continue
         }
 

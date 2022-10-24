@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { initialiseApplication } from './init'
 import Layout from './components/layout/Layout'
 import Menu from './components/menu/Menu'
 import ProjectPanel from './components/project-panel/ProjectPanel'
@@ -13,6 +14,8 @@ import { RecoilRoot } from 'recoil'
 
 import './style.css'
 import 'dracula-ui/styles/dracula-ui.css'
+
+await initialiseApplication()
 
 // Needed for accessibility: https://reactcommunity.org/react-modal/accessibility/
 ReactModal.setAppElement('#root')
