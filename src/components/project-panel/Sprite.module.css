@@ -24,14 +24,15 @@
   user-select: none;
 }
 
-/*.sprite:active {*/
-/*  cursor: grabbing;*/
-/*}*/
+.sprite:active {
+  cursor: grabbing;
+}
 
 .sprite .image {
   width: 54px;
   height: 54px;
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   background-position: center center;
 }
 

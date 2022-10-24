@@ -19,3 +19,9 @@ type Rotation = IntRange<0, 360>
 
 // Scale of the entity.
 interface Scale extends Vector3 {}
+
+// Props on top of the asset instance, used to control behaviour on the canvas.
+interface CanvasItemProps {
+  isDragging: boolean
+  src: any
+}

@@ -1,21 +1,19 @@
-import { Layer, Sprite as KonvaSprite, Stage, Text } from 'react-konva'
-import React, { createRef, useEffect, useState } from 'react'
+import { Layer, Stage, Text } from 'react-konva'
+import React, { createRef, useContext, useEffect, useState } from 'react'
 import Konva from 'konva'
 import { useWindowSize } from '../../hooks/useWindowSize'
-import { SpriteInstance } from '../../model/SpriteInstance'
-
-interface CanvasItem<T> {
-  data: T
-  id: string
-  isDragging: boolean
-}
+import { DragAndDropContext } from '../../context/DragAndDropContext'
+import { CanvasSpriteData } from '../../model/CanvasItem'
+import { CanvasSprite } from './CanvasSprite'
 
 export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
+  const stageRef = React.useRef()
   const windowSize = useWindowSize()
   const [width, setWidth] = useState<number | undefined>(windowSize.width)
   const [height, setHeight] = useState<number | undefined>(windowSize.height)
-  const [sprites, setSprites] = React.useState<CanvasItem<SpriteInstance>[]>([])
+  const [sprites, setSprites] = React.useState<CanvasSpriteData[]>([])
+  const { dragAndDropRef } = useContext(DragAndDropContext)
 
   useEffect(() => {
     if (ref.current) {
@@ -35,6 +33,7 @@ export const Canvas = () => {
       }),
     )
   }
+
   const handleDragEnd = (e: Konva.KonvaEventObject<DragEvent>) => {
     setSprites(
       sprites.map((star) => {
@@ -46,42 +45,40 @@ export const Canvas = () => {
     )
   }
 
+  const onDragOver = (e) => {
+    e.preventDefault()
+  }
+
+  const onDrop = (e) => {
+    e.preventDefault()
+
+    // Register event position
+    stageRef.current.setPointersPositions(e)
+    const { x, y } = stageRef.current.getPointerPosition()
+
+    // Add sprite to canvas state
+    const sprite = CanvasSpriteData.fromDragAndDrop(dragAndDropRef.current, x, y)
+    setSprites((sprites) => [...sprites, sprite])
+
+    // Don't store the last dragged image
+    dragAndDropRef.current = undefined
+  }
+
   return (
-    <div ref={ref} style={{ flexGrow: 1 }}>
-      <Stage width={width} height={height}>
+    <div ref={ref} style={{ flexGrow: 1 }} onDragOver={onDragOver} onDrop={onDrop}>
+      <Stage width={width} height={height} ref={stageRef}>
         <Layer>
           <Text text="Try to drag a star" />
-          {sprites.map((spriteInstance) => (
-            <KonvaSprite
-              key={spriteInstance.id}
-              id={spriteInstance.id}
-              draggable
-              x={spriteInstance.data.position.x}
-              y={spriteInstance.data.position.y}
-              rotation={spriteInstance.data.rotation}
-              scaleX={
-                spriteInstance.isDragging
-                  ? spriteInstance.data.scale.x * 1.2
-                  : spriteInstance.data.scale.x
-              }
-              scaleY={
-                spriteInstance.isDragging
-                  ? spriteInstance.data.scale.y * 1.2
-                  : spriteInstance.data.scale.y
-              }
-              opacity={0.8}
-              shadowColor="black"
-              shadowBlur={10}
-              shadowOpacity={0.6}
-              shadowOffsetX={spriteInstance.isDragging ? 10 : 5}
-              shadowOffsetY={spriteInstance.isDragging ? 10 : 5}
-              onDragStart={handleDragStart}
-              onDragEnd={handleDragEnd}
-              animations={null}
-              animation="none"
-              image={new HTMLImageElement()}
-            />
-          ))}
+          {sprites.map((data) => {
+            return (
+              <CanvasSprite
+                key={data.id}
+                data={data}
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+              />
+            )
+          })}
         </Layer>
       </Stage>
     </div>

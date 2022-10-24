@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { createRef } from 'react'
 import ReactDOM from 'react-dom/client'
 import { initialiseApplication } from './init'
 import Layout from './components/layout/Layout'
@@ -14,28 +14,37 @@ import { RecoilRoot } from 'recoil'
 
 import './style.css'
 import 'dracula-ui/styles/dracula-ui.css'
+import { DragAndDropContext } from './context/DragAndDropContext'
 
+// Global stuff
 await initialiseApplication()
 
 // Needed for accessibility: https://reactcommunity.org/react-modal/accessibility/
 ReactModal.setAppElement('#root')
 
+// Mount application
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
-      <Toaster />
+      <DragAndDropContext.Provider
+        value={{
+          dragAndDropRef: createRef<HTMLDivElement>(),
+        }}
+      >
+        <Toaster />
 
-      <Layout menu={<Menu />}>
-        <Sidebar left>
-          <ProjectPanel />
-        </Sidebar>
-        <Main>
-          <Canvas />
-        </Main>
-        <Sidebar right>
-          <DetailsPanel />
-        </Sidebar>
-      </Layout>
+        <Layout menu={<Menu />}>
+          <Sidebar left>
+            <ProjectPanel />
+          </Sidebar>
+          <Main>
+            <Canvas />
+          </Main>
+          <Sidebar right>
+            <DetailsPanel />
+          </Sidebar>
+        </Layout>
+      </DragAndDropContext.Provider>
     </RecoilRoot>
   </React.StrictMode>,
 )

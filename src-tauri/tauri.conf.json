@@ -69,7 +69,8 @@
         "width": 1400,
         "height": 900,
         "resizable": true,
-        "title": "Webber's Map Editor 2D"
+        "title": "Webber's Map Editor 2D",
+        "fileDropEnabled": false
       }
     ]
   }
