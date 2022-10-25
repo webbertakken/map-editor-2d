@@ -1,10 +1,10 @@
 import { atom, selector } from 'recoil'
-import { SceneFile } from '../model/SceneFile'
+import { Scene } from '../model/Scene'
 import { spriteInstancesSelector } from './CanvasState'
 
-export const sceneState = atom<SceneFile>({
+export const sceneState = atom<Scene>({
   key: 'scene',
-  default: SceneFile.default(),
+  default: Scene.default(),
 })
 
 export const sceneNameSelector = selector({
@@ -14,10 +14,10 @@ export const sceneNameSelector = selector({
 
 export const isSceneOpenState = selector({
   key: 'isSceneOpen',
-  get: ({ get }) => get(sceneState).name !== SceneFile.default().name,
+  get: ({ get }) => get(sceneState).name !== Scene.default().name,
 })
 
-export const sceneFileDataSelector = selector<SceneFile>({
+export const sceneFileDataSelector = selector<Scene>({
   key: 'sceneFileData',
   get: ({ get }) => ({
     ...get(sceneState),

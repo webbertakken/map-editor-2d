@@ -3,7 +3,7 @@ import { sceneFileDataSelector } from '../../../state/SceneState'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Box, Button, Checkbox } from 'dracula-ui'
 import { appState, isAutoSaveEnabledSelector } from '../../../state/AppState'
-import { SceneFile } from '../../../model/SceneFile'
+import { Scene } from '../../../model/Scene'
 
 interface Props {}
 
@@ -13,7 +13,7 @@ const SaveScene = ({}: Props): JSX.Element => {
   const isAutoSaveEnabled = useRecoilValue(isAutoSaveEnabledSelector)
 
   const save = async () => {
-    console.log(SceneFile.toFile(sceneFileData))
+    console.log(Scene.toFile(sceneFileData))
   }
 
   useEffect(() => {

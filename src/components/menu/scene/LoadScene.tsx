@@ -5,22 +5,25 @@ import ExternalLink from '../../atoms/ExternalLink'
 import { open } from '@tauri-apps/api/dialog'
 import { SCENE_FILE_TYPE_EXTENSION, SCENE_FILE_TYPE_NAME } from '../../../constants'
 import { readTextFile } from '@tauri-apps/api/fs'
-import { SceneFile } from '../../../model/SceneFile'
+import { Scene } from '../../../model/Scene'
 import { useRecoilState } from 'recoil'
 import { useNotification } from '../../../hooks/useNotification'
 import { SceneMeta, sceneMetaState } from '../../../model/SceneMeta'
 import { sceneState } from '../../../state/SceneState'
 import { AssetsLoader } from '../../../service/AssetsLoader'
 import { assetsState } from '../../../state/AssetsState'
+import { AssetPath } from '../../../model/AssetPath'
+import { Path } from '../../../model/Path'
+import { Assets } from '../../../model/Assets'
 
 class Props {}
 
 const NewScene = ({}: Props): JSX.Element => {
   const [_1, setScene] = useRecoilState(sceneState)
   const [_2, setSceneMeta] = useRecoilState(sceneMetaState)
+  const [_3, setAssets] = useRecoilState(assetsState)
   const notify = useNotification()
   const [isOpen, setIsOpen] = React.useState(false)
-  const [assets, setAssets] = useRecoilState(assetsState)
 
   const title = 'Load'
   const color = 'orange'
@@ -28,7 +31,7 @@ const NewScene = ({}: Props): JSX.Element => {
   const openLoadFileDialog = async () => {
     try {
       // Open a selection dialog for image files
-      const filePath = await open({
+      let rawFilePath = await open({
         title: 'Create a new scene',
         multiple: false,
         directory: false,
@@ -41,35 +44,48 @@ const NewScene = ({}: Props): JSX.Element => {
       })
 
       // No file chosen
-      if (filePath === null || Array.isArray(filePath)) return
+      if (rawFilePath === null || Array.isArray(rawFilePath)) return
 
-      // Load file
-      const fileContents = await readTextFile(filePath)
+      // Normalise path
+      const filePath = Path.normalise(rawFilePath)
 
-      // Parse file
-      const scene = await SceneFile.fromFile(fileContents)
+      // Load scene and its assets while informing the user
+      await notify.promise(
+        (async () => {
+          // Reset previous scene
+          setScene(Scene.default())
+          setAssets(Assets.default())
 
-      // Load in editor
-      setScene(scene)
-      setSceneMeta(SceneMeta.create(filePath))
+          // Load file
+          const fileContents = await readTextFile(filePath)
 
-      if (scene.assetsRelativePath !== null) {
-        const assets = await notify.promise(
-          AssetsLoader.loadAssets(filePath, scene.assetsRelativePath),
-          {
-            loading: 'Loading your sprites...',
-            success: 'Sprites loaded successfully',
-            error: 'Error while loading your sprites',
-          },
-        )
-      }
-      setAssets(assets)
+          // Parse file
+          const scene = await Scene.fromFile(fileContents)
 
-      // Close modal
-      setIsOpen(false)
+          // Load scene
+          const sceneMeta = SceneMeta.create(filePath)
+          setScene(scene)
+          setSceneMeta(sceneMeta)
 
-      // Notify user
-      notify.success('Scene loaded successfully')
+          // Load assets
+          if (scene.assetsRelativePath) {
+            console.log('Scene has assets path, loading assets...')
+            const absPath = AssetPath.toAbsolute(sceneMeta.absolutePath, scene.assetsRelativePath)
+            const assets = await AssetsLoader.loadAssets(filePath, absPath)
+            setAssets(assets)
+          } else {
+            console.log('Scene has no assets path, skipping...')
+          }
+
+          // Close modal
+          setIsOpen(false)
+        })(),
+        {
+          loading: 'Loading your scene...',
+          success: 'Scene loaded successfully',
+          error: 'Error while loading your scene',
+        },
+      )
     } catch (error: any) {
       notify.error(error.message)
     }

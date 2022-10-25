@@ -2,6 +2,7 @@ import { SpriteAsset } from './SpriteAsset'
 import { FileEntry, readBinaryFile, readDir } from '@tauri-apps/api/fs'
 import { Buffer } from 'buffer'
 import { AssetPath } from './AssetPath'
+import { Path } from './Path'
 
 export class Assets {
   public spritesPath: string = ''
@@ -31,11 +32,13 @@ export class Assets {
   ): Promise<SpriteAsset[]> {
     const sprites: SpriteAsset[] = []
 
-    const processEntries = async (entries: FileEntry[]) => {
+    const readFilesRecursively = async (entries: FileEntry[]) => {
       for (const entry of entries) {
-        const { children, path } = entry
+        const { children, path: rawPath } = entry
+        const path = Path.normalise(rawPath)
+
         if (children !== undefined) {
-          await processEntries(children)
+          await readFilesRecursively(children)
           continue
         }
 
@@ -64,7 +67,7 @@ export class Assets {
     }
 
     const entries = await readDir(spritesAbsolutePath, { recursive: true })
-    await processEntries(entries)
+    await readFilesRecursively(entries)
 
     return sprites
   }

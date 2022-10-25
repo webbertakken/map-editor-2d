@@ -6,7 +6,10 @@ interface CanvasInstance {
   sprites: SpriteInstance[]
 }
 
-export class SceneFile {
+/**
+ * Scene data that is part of the scene file.
+ */
+export class Scene {
   public name: string = ''
   public version: string = ''
   public description: string = ''
@@ -27,22 +30,22 @@ export class SceneFile {
 
   static new() {
     return {
-      ...SceneFile.default(),
+      ...Scene.default(),
       name: 'Untitled',
       description:
         "Generated using Webber's Map Editor 2D. See https://github.com/webbertakken/map-editor-2d for more details.",
     }
   }
 
-  static toFile(scene: SceneFile): string {
+  static toFile(scene: Scene): string {
     return JSON.stringify(scene, null, 2)
   }
 
   static fromFile(sceneFileContents: string) {
-    return SceneFile.fromJson(JSON.parse(sceneFileContents))
+    return Scene.fromJson(JSON.parse(sceneFileContents))
   }
 
-  public static async fromJson(json: any): Promise<SceneFile> {
+  public static async fromJson(json: any): Promise<Scene> {
     if (!json.version) {
       throw new Error('Scene has no version.')
     }
@@ -79,13 +82,25 @@ export class SceneFile {
       throw new Error('Scene has no description.')
     }
 
+    // Make sure it falls back to defaults if they're not defined.
+    // That is to not end up with a corrupt file when updating the version
+    const safeProps = {}
+    if (canvas) Object.assign(safeProps, canvas)
+    if (assetsRelativePath) Object.assign(safeProps, assetsRelativePath)
+
     return {
-      ...SceneFile.default(),
+      ...Scene.default(),
       name,
       version,
       description,
+      ...safeProps,
+    }
+  }
+
+  static addAssetsRelativePath(scene: Scene, assetsRelativePath: string) {
+    return {
+      ...scene,
       assetsRelativePath,
-      canvas,
     }
   }
 }

@@ -1,17 +1,23 @@
-import { REGEX_FILE_EXTENSION } from '../constants'
+import { REGEX_LEADING_SLASHES } from '../constants'
 
 export class AssetPath {
-  public static isInsideScenePath(scenePath: string, assetsPath: string): boolean {
+  public static isInsideScenePath(sceneAbsolutePath: string, assetsAbsolutePath: string): boolean {
     // remove everything after & including the last backslash
-    const pathToScene = scenePath.substring(0, scenePath.lastIndexOf('\\'))
+    const pathToScene = sceneAbsolutePath.substring(0, sceneAbsolutePath.lastIndexOf('/'))
 
-    return assetsPath.includes(pathToScene)
+    return assetsAbsolutePath.includes(pathToScene)
   }
 
-  public static toRelative(scenePath: string, assetsPath: string): string {
+  public static toRelative(sceneAbsolutePath: string, assetsAbsolutePath: string): string {
+    // assets are directly inside the scene's directory
+    if (sceneAbsolutePath === assetsAbsolutePath) return ''
     // remove everything after & including the last backslash
-    const pathToScene = scenePath.substring(0, scenePath.lastIndexOf('\\'))
+    const pathToScene = sceneAbsolutePath.substring(0, sceneAbsolutePath.lastIndexOf('/'))
+    // Remove absolute path to scene
+    return assetsAbsolutePath.replace(pathToScene, '').replace(REGEX_LEADING_SLASHES, '')
+  }
 
-    return assetsPath.replace(pathToScene, '').replace(REGEX_FILE_EXTENSION, '')
+  static toAbsolute(sceneAbsolutePath: string, assetsRelativePath: string) {
+    return `${sceneAbsolutePath}/${assetsRelativePath}`
   }
 }

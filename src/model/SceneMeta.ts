@@ -1,18 +1,23 @@
 import { atom, selector } from 'recoil'
 
 export class SceneMeta {
-  public path: string = ''
+  public absolutePath: string = ''
 
   static default() {
     return {
-      path: '',
+      absolutePath: '',
+      sceneFileName: '',
     }
   }
 
-  static create(filePath: string) {
+  static create(fullPathAndFileName: string) {
+    const sceneFileName = fullPathAndFileName.replace(/^.*([\\/:])/, '')
+    const absolutePath = fullPathAndFileName.replace(sceneFileName, '').replace(/[\\/]+$/, '')
+
     return {
       ...SceneMeta.default(),
-      path: filePath,
+      absolutePath,
+      sceneFileName,
     }
   }
 }
@@ -22,7 +27,7 @@ export const sceneMetaState = atom<SceneMeta>({
   default: SceneMeta.default(),
 })
 
-export const scenePathSelector = selector({
-  key: 'scenePath',
-  get: ({ get }) => get(sceneMetaState).path,
+export const sceneAbsolutePathSelector = selector({
+  key: 'sceneAbsolutePath',
+  get: ({ get }) => get(sceneMetaState).absolutePath,
 })
