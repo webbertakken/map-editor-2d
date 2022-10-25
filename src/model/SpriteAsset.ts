@@ -1,13 +1,15 @@
 export class SpriteAsset {
+  public id: string = ''
   public name: string = ''
-  public path: string = ''
-  public dataUrl: string = ''
+  public relativePath: string = ''
+  public src: string = ''
 
-  static create(path: string, dataUrl: string): SpriteAsset {
+  static create(relativePath: string, src: string): SpriteAsset {
     return {
-      name: path.substring(path.lastIndexOf('\\') + 1),
-      path,
-      dataUrl,
+      id: relativePath, // Easy-mode identifier that doesn't require persistence between sessions
+      name: relativePath.substring(relativePath.lastIndexOf('\\') + 1).replace(/\.[^/\\.]+$/, ''),
+      relativePath,
+      src,
     }
   }
 }

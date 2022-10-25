@@ -60,7 +60,7 @@ export const Canvas = () => {
     if (!dragAndDropRef.current) return console.warn('No drag and drop ref')
 
     // Add sprite to canvas state
-    const sprite = CanvasSpriteData.fromDragAndDrop(dragAndDropRef.current, x, y)
+    const sprite = CanvasSpriteData.createFromSpriteAsset(dragAndDropRef.current, x, y)
     setSprites((sprites) => [...sprites, sprite])
 
     // Don't store the last dragged image
@@ -71,7 +71,6 @@ export const Canvas = () => {
     <div ref={ref} style={{ flexGrow: 1 }} onDragOver={onDragOver} onDrop={onDrop}>
       <Stage width={width} height={height} ref={stageRef}>
         <Layer>
-          <Text text="Try to drag a star" />
           {sprites.map((data) => {
             return (
               <CanvasSprite

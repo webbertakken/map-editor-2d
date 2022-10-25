@@ -1,4 +1,9 @@
 /**
+ * Regex
+ */
+export const REGEX_FILE_EXTENSION = /\.[^/\\.]+$/
+
+/**
  * Scene
  */
 

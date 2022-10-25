@@ -1,4 +1,6 @@
-export class AssetsPath {
+import { REGEX_FILE_EXTENSION } from '../constants'
+
+export class AssetPath {
   public static isInsideScenePath(scenePath: string, assetsPath: string): boolean {
     // remove everything after & including the last backslash
     const pathToScene = scenePath.substring(0, scenePath.lastIndexOf('\\'))
@@ -10,6 +12,6 @@ export class AssetsPath {
     // remove everything after & including the last backslash
     const pathToScene = scenePath.substring(0, scenePath.lastIndexOf('\\'))
 
-    return assetsPath.replace(pathToScene, '').replace(/^[./\\]+/g, '')
+    return assetsPath.replace(pathToScene, '').replace(REGEX_FILE_EXTENSION, '')
   }
 }

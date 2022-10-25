@@ -4,7 +4,7 @@ import { useRecoilState, useRecoilValue } from 'recoil'
 import { areSpritesAssetsLoadedSelector, Assets, assetsState } from '../../../model/Assets'
 import { open } from '@tauri-apps/api/dialog'
 import { useNotification } from '../../../hooks/useNotification'
-import { AssetsPath } from '../../../model/AssetsPath'
+import { AssetPath } from '../../../model/AssetPath'
 import { scenePathSelector } from '../../../model/SceneMeta'
 
 interface Props {}
@@ -17,7 +17,7 @@ const SelectAssetsPath = ({}: Props): JSX.Element => {
 
   const selectAssetsPath = async () => {
     try {
-      const spritesAbsolutePath = await open({
+      const assetsAbsolutePath = await open({
         title: 'Where are you sprites located?',
         multiple: false,
         directory: true,
@@ -25,11 +25,10 @@ const SelectAssetsPath = ({}: Props): JSX.Element => {
       })
 
       // Nothing selected
-      if (spritesAbsolutePath === null || Array.isArray(spritesAbsolutePath)) return
+      if (assetsAbsolutePath === null || Array.isArray(assetsAbsolutePath)) return
 
       // Make sure it's a subdirectory of the scene
-      console.log(scenePath, spritesAbsolutePath)
-      if (!AssetsPath.isInsideScenePath(scenePath, spritesAbsolutePath)) {
+      if (!AssetPath.isInsideScenePath(scenePath, assetsAbsolutePath)) {
         throw new Error('The selected directory is not inside the scene directory')
       }
 
@@ -37,12 +36,11 @@ const SelectAssetsPath = ({}: Props): JSX.Element => {
       await notify.promise(
         (async () => {
           // Load the actual files
-          const sprites = await Assets.loadSprites(spritesAbsolutePath)
-          console.log(sprites)
+          const sprites = await Assets.loadSprites(scenePath, assetsAbsolutePath)
 
           // Load in editor
-          const spritesPath = AssetsPath.toRelative(scenePath, spritesAbsolutePath)
-          setAssets(Assets.create(spritesPath, sprites))
+          const assetsRelativePath = AssetPath.toRelative(scenePath, assetsAbsolutePath)
+          setAssets(Assets.create(assetsRelativePath, sprites))
         })(),
         {
           loading: 'Loading your sprites...',
