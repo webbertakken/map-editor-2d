@@ -9,7 +9,7 @@ export class CanvasSpriteData extends SpriteInstance implements CanvasItemProps 
   // The in-memory representation of the sprite
   public src: any = null
 
-  static fromDragAndDrop(current: HTMLDivElement | null, x: any, y: any): CanvasSpriteData {
+  static fromDragAndDrop(current: string | null, x: any, y: any): CanvasSpriteData {
     const spriteInstance = SpriteInstance.createFromDragAndDrop(x, y)
 
     let src = current

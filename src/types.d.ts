@@ -1,3 +1,7 @@
+// Writable: Source: https://stackoverflow.com/a/43001581/3593896
+type Writeable<T> = { -readonly [P in keyof T]: T[P] }
+type DeepWriteable<T> = { -readonly [P in keyof T]: DeepWriteable<T[P]> }
+
 // IntRange: Source: https://stackoverflow.com/a/39495173/3593896
 type Enumerate<N extends number, Acc extends number[] = []> = Acc['length'] extends N
   ? Acc[number]

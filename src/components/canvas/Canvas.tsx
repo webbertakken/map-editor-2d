@@ -1,19 +1,19 @@
 import { Layer, Stage, Text } from 'react-konva'
-import React, { createRef, useContext, useEffect, useState } from 'react'
+import React, { createRef, DragEventHandler, useContext, useEffect, useState } from 'react'
 import Konva from 'konva'
 import { useWindowSize } from '../../hooks/useWindowSize'
-import { DragAndDropContext } from '../../context/DragAndDropContext'
+import { DragAndDropContext, DragAndDropContextProps } from '../../context/DragAndDropContext'
 import { CanvasSpriteData } from '../../model/CanvasItem'
 import { CanvasSprite } from './CanvasSprite'
 
 export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
-  const stageRef = React.useRef()
+  const stageRef = React.useRef<Konva.Stage>(null)
   const windowSize = useWindowSize()
   const [width, setWidth] = useState<number | undefined>(windowSize.width)
   const [height, setHeight] = useState<number | undefined>(windowSize.height)
   const [sprites, setSprites] = React.useState<CanvasSpriteData[]>([])
-  const { dragAndDropRef } = useContext(DragAndDropContext)
+  const { dragAndDropRef } = useContext<DragAndDropContextProps>(DragAndDropContext)
 
   useEffect(() => {
     if (ref.current) {
@@ -45,23 +45,26 @@ export const Canvas = () => {
     )
   }
 
-  const onDragOver = (e) => {
+  const onDragOver: DragEventHandler = (e) => {
     e.preventDefault()
   }
 
-  const onDrop = (e) => {
+  const onDrop: DragEventHandler = (e) => {
     e.preventDefault()
+    if (!stageRef.current) return console.warn('No stage ref')
 
     // Register event position
     stageRef.current.setPointersPositions(e)
-    const { x, y } = stageRef.current.getPointerPosition()
+    const { x, y } = stageRef.current.getPointerPosition() || { x: 0, y: 0 }
+
+    if (!dragAndDropRef.current) return console.warn('No drag and drop ref')
 
     // Add sprite to canvas state
     const sprite = CanvasSpriteData.fromDragAndDrop(dragAndDropRef.current, x, y)
     setSprites((sprites) => [...sprites, sprite])
 
     // Don't store the last dragged image
-    dragAndDropRef.current = undefined
+    dragAndDropRef.current = null
   }
 
   return (

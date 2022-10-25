@@ -1,5 +1,5 @@
 import { useRecoilValue } from 'recoil'
-import { areSpritesAssetsLoadedSelector, spritesSelector } from '../../../model/Assets'
+import { areSpritesAssetsLoadedSelector, spriteAssetsSelector } from '../../../model/Assets'
 import Section from '../../layout/Section'
 import styles from '../Sprite.module.css'
 import React from 'react'
@@ -9,7 +9,7 @@ interface Props {}
 
 export const SpritesSection = ({}: Props): JSX.Element | null => {
   const areSpritesLoaded = useRecoilValue(areSpritesAssetsLoadedSelector)
-  const spriteAssets = useRecoilValue(spritesSelector)
+  const spriteAssets = useRecoilValue(spriteAssetsSelector)
 
   if (!areSpritesLoaded) return null
 
