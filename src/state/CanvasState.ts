@@ -1,18 +1,7 @@
-import { atom, selector } from 'recoil'
-import { SpriteInstance } from '../model/SpriteInstance'
+import { atom } from 'recoil'
+import { CanvasSpriteData } from '../model/CanvasSpriteData'
 
-interface CanvasState {
-  spriteInstances: SpriteInstance[]
-}
-
-export const canvasState = atom<CanvasState>({
-  key: 'canvas',
-  default: {
-    spriteInstances: [],
-  },
-})
-
-export const spriteInstancesSelector = selector({
-  key: 'spriteInstances',
-  get: ({ get }) => get(canvasState).spriteInstances,
+export const canvasSpritesState = atom<CanvasSpriteData[]>({
+  key: 'canvasSpritesState',
+  default: [],
 })

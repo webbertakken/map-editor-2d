@@ -1,7 +1,6 @@
-import { atom, selector } from 'recoil'
-
 export class SceneMeta {
   public absolutePath: string = ''
+  public sceneFileName: string = ''
 
   static default() {
     return {
@@ -21,13 +20,3 @@ export class SceneMeta {
     }
   }
 }
-
-export const sceneMetaState = atom<SceneMeta>({
-  key: 'sceneMeta',
-  default: SceneMeta.default(),
-})
-
-export const sceneAbsolutePathSelector = selector({
-  key: 'sceneAbsolutePath',
-  get: ({ get }) => get(sceneMetaState).absolutePath,
-})

@@ -10,7 +10,6 @@ export class AssetsLoader {
 
     // Load the actual files
     const sprites = await Assets.loadSprites(scenePath, assetsAbsolutePath)
-
     // Return to method that can modify state
     const assetsRelativePath = AssetPath.toRelative(scenePath, assetsAbsolutePath)
     return Assets.create(assetsRelativePath, sprites)

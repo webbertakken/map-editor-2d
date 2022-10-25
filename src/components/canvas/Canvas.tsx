@@ -1,10 +1,12 @@
-import { Layer, Stage, Text } from 'react-konva'
+import { Layer, Stage } from 'react-konva'
 import React, { createRef, DragEventHandler, useContext, useEffect, useState } from 'react'
 import Konva from 'konva'
 import { useWindowSize } from '../../hooks/useWindowSize'
 import { DragAndDropContext, DragAndDropContextProps } from '../../context/DragAndDropContext'
 import { CanvasSpriteData } from '../../model/CanvasSpriteData'
 import { CanvasSprite } from './CanvasSprite'
+import { canvasSpritesState } from '../../state/CanvasState'
+import { useRecoilState } from 'recoil'
 
 export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
@@ -12,7 +14,7 @@ export const Canvas = () => {
   const windowSize = useWindowSize()
   const [width, setWidth] = useState<number | undefined>(windowSize.width)
   const [height, setHeight] = useState<number | undefined>(windowSize.height)
-  const [sprites, setSprites] = React.useState<CanvasSpriteData[]>([])
+  const [sprites, setSprites] = useRecoilState(canvasSpritesState)
   const { dragAndDropRef } = useContext<DragAndDropContextProps>(DragAndDropContext)
 
   useEffect(() => {

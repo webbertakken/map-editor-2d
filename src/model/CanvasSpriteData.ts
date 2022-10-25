@@ -27,4 +27,9 @@ export class CanvasSpriteData extends SpriteInstance implements CanvasItemProps 
       ...spriteInstance,
     }
   }
+
+  static withoutRuntimeInformation(sprite: CanvasSpriteData): SpriteInstance {
+    const { isDragging, src, assetId, name, ...spriteInstance } = sprite
+    return spriteInstance
+  }
 }

@@ -8,8 +8,8 @@ import { readTextFile } from '@tauri-apps/api/fs'
 import { Scene } from '../../../model/Scene'
 import { useRecoilState } from 'recoil'
 import { useNotification } from '../../../hooks/useNotification'
-import { SceneMeta, sceneMetaState } from '../../../model/SceneMeta'
-import { sceneState } from '../../../state/SceneState'
+import { SceneMeta } from '../../../model/SceneMeta'
+import { sceneMetaState, sceneState } from '../../../state/SceneState'
 import { AssetsLoader } from '../../../service/AssetsLoader'
 import { assetsState } from '../../../state/AssetsState'
 import { AssetPath } from '../../../model/AssetPath'
@@ -71,7 +71,7 @@ const NewScene = ({}: Props): JSX.Element => {
           if (scene.assetsRelativePath) {
             console.log('Scene has assets path, loading assets...')
             const absPath = AssetPath.toAbsolute(sceneMeta.absolutePath, scene.assetsRelativePath)
-            const assets = await AssetsLoader.loadAssets(filePath, absPath)
+            const assets = await AssetsLoader.loadAssets(sceneMeta.absolutePath, absPath)
             setAssets(assets)
           } else {
             console.log('Scene has no assets path, skipping...')
