@@ -85,8 +85,8 @@ export class Scene {
     // Make sure it falls back to defaults if they're not defined.
     // That is to not end up with a corrupt file when updating the version
     const safeProps = {}
-    if (canvas) Object.assign(safeProps, canvas)
-    if (assetsRelativePath) Object.assign(safeProps, assetsRelativePath)
+    if (typeof canvas !== 'undefined') Object.assign(safeProps, { canvas })
+    if (typeof assetsRelativePath !== 'undefined') Object.assign(safeProps, { assetsRelativePath })
 
     return {
       ...Scene.default(),

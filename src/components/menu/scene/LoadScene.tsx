@@ -15,6 +15,7 @@ import { assetsState } from '../../../state/AssetsState'
 import { AssetPath } from '../../../model/AssetPath'
 import { Path } from '../../../model/Path'
 import { Assets } from '../../../model/Assets'
+import { canvasSpritesState } from '../../../state/CanvasState'
 
 class Props {}
 
@@ -22,6 +23,7 @@ const NewScene = ({}: Props): JSX.Element => {
   const [_1, setScene] = useRecoilState(sceneState)
   const [_2, setSceneMeta] = useRecoilState(sceneMetaState)
   const [_3, setAssets] = useRecoilState(assetsState)
+  const [_4, setSprites] = useRecoilState(canvasSpritesState)
   const notify = useNotification()
   const [isOpen, setIsOpen] = React.useState(false)
 
@@ -55,6 +57,7 @@ const NewScene = ({}: Props): JSX.Element => {
           // Reset previous scene
           setScene(Scene.default())
           setAssets(Assets.default())
+          setSprites([])
 
           // Load file
           const fileContents = await readTextFile(filePath)
@@ -68,7 +71,7 @@ const NewScene = ({}: Props): JSX.Element => {
           setSceneMeta(sceneMeta)
 
           // Load assets
-          if (scene.assetsRelativePath) {
+          if (scene.assetsRelativePath !== null) {
             console.log('Scene has assets path, loading assets...')
             const absPath = AssetPath.toAbsolute(sceneMeta.absolutePath, scene.assetsRelativePath)
             const assets = await AssetsLoader.loadAssets(sceneMeta.absolutePath, absPath)

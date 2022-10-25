@@ -12,6 +12,7 @@ import { sceneMetaState, sceneState } from '../../../state/SceneState'
 import { Path } from '../../../model/Path'
 import { Assets } from '../../../model/Assets'
 import { assetsState } from '../../../state/AssetsState'
+import { canvasSpritesState } from '../../../state/CanvasState'
 
 class Props {}
 
@@ -19,6 +20,7 @@ const NewScene = ({}: Props): JSX.Element => {
   const [_1, setScene] = useRecoilState(sceneState)
   const [_2, setSceneMeta] = useRecoilState(sceneMetaState)
   const [_3, setAssets] = useRecoilState(assetsState)
+  const [_4, setSprites] = useRecoilState(canvasSpritesState)
   const [isOpen, setIsOpen] = React.useState(false)
   const notify = useNotification()
 
@@ -45,6 +47,7 @@ const NewScene = ({}: Props): JSX.Element => {
       // Reset previous scene
       setScene(Scene.default())
       setAssets(Assets.default())
+      setSprites([])
 
       // Create new scene
       const newScene = Scene.new()
