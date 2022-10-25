@@ -16,6 +16,7 @@ import { AssetPath } from '../../../model/AssetPath'
 import { Path } from '../../../model/Path'
 import { Assets } from '../../../model/Assets'
 import { canvasSpritesState } from '../../../state/CanvasState'
+import { CanvasLoader } from '../../../service/CanvasLoader'
 
 class Props {}
 
@@ -56,6 +57,7 @@ const NewScene = ({}: Props): JSX.Element => {
         (async () => {
           // Reset previous scene
           setScene(Scene.default())
+          setSceneMeta(SceneMeta.default())
           setAssets(Assets.default())
           setSprites([])
 
@@ -76,6 +78,8 @@ const NewScene = ({}: Props): JSX.Element => {
             const absPath = AssetPath.toAbsolute(sceneMeta.absolutePath, scene.assetsRelativePath)
             const assets = await AssetsLoader.loadAssets(sceneMeta.absolutePath, absPath)
             setAssets(assets)
+            const sprites = await CanvasLoader.loadSprites(scene, assets)
+            setSprites(sprites)
           } else {
             console.log('Scene has no assets path, skipping...')
           }

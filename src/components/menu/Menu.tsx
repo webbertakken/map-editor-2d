@@ -23,9 +23,11 @@ const Menu = ({}: Props): JSX.Element => {
           <CloseScene />
         </Category>
 
-        <Category title="">
-          <SaveScene />
-        </Category>
+        {isSceneOpen && (
+          <Category title="">
+            <SaveScene />
+          </Category>
+        )}
 
         {isSceneOpen && (
           <Category title="Assets">
