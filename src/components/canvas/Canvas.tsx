@@ -3,7 +3,7 @@ import React, { createRef, DragEventHandler, useContext, useEffect, useState } f
 import Konva from 'konva'
 import { useWindowSize } from '../../hooks/useWindowSize'
 import { DragAndDropContext, DragAndDropContextProps } from '../../context/DragAndDropContext'
-import { CanvasSpriteData } from '../../model/CanvasItem'
+import { CanvasSpriteData } from '../../model/CanvasSpriteData'
 import { CanvasSprite } from './CanvasSprite'
 
 export const Canvas = () => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import Section from '../../layout/Section'
 import { useRecoilValue } from 'recoil'
-import { sceneNameSelector } from '../../../model/SceneFile'
+import { sceneNameSelector } from '../../../state/SceneState'
 
 interface Props {}
 

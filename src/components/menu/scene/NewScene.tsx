@@ -4,10 +4,11 @@ import Modal from '../../modal/Modal'
 import { save } from '@tauri-apps/api/dialog'
 import { writeTextFile } from '@tauri-apps/api/fs'
 import { SCENE_FILE_TYPE_EXTENSION, SCENE_FILE_TYPE_NAME } from '../../../constants'
-import { SceneFile, sceneState } from '../../../model/SceneFile'
+import { SceneFile } from '../../../model/SceneFile'
 import { useRecoilState } from 'recoil'
 import { useNotification } from '../../../hooks/useNotification'
 import { SceneMeta, sceneMetaState } from '../../../model/SceneMeta'
+import { sceneState } from '../../../state/SceneState'
 
 class Props {}
 

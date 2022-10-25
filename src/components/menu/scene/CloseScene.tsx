@@ -1,9 +1,10 @@
 import React from 'react'
 import { Button } from 'dracula-ui'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { isSceneOpenState, SceneFile, sceneState } from '../../../model/SceneFile'
+import { SceneFile } from '../../../model/SceneFile'
 import { useNotification } from '../../../hooks/useNotification'
 import { SceneMeta, sceneMetaState } from '../../../model/SceneMeta'
+import { isSceneOpenState, sceneState } from '../../../state/SceneState'
 
 interface Props {}
 

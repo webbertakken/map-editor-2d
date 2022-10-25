@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button } from 'dracula-ui'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { areSpritesAssetsLoadedSelector, Assets, assetsState } from '../../../model/Assets'
 import { open } from '@tauri-apps/api/dialog'
 import { useNotification } from '../../../hooks/useNotification'
-import { AssetPath } from '../../../model/AssetPath'
 import { scenePathSelector } from '../../../model/SceneMeta'
+import { areSpritesAssetsLoadedSelector, assetsState } from '../../../state/AssetsState'
+import { AssetsLoader } from '../../../service/AssetsLoader'
 
 interface Props {}
 
@@ -27,27 +27,14 @@ const SelectAssetsPath = ({}: Props): JSX.Element => {
       // Nothing selected
       if (assetsAbsolutePath === null || Array.isArray(assetsAbsolutePath)) return
 
-      // Make sure it's a subdirectory of the scene
-      if (!AssetPath.isInsideScenePath(scenePath, assetsAbsolutePath)) {
-        throw new Error('The selected directory is not inside the scene directory')
-      }
-
       // Notify user while loading the files into the editor
-      await notify.promise(
-        (async () => {
-          // Load the actual files
-          const sprites = await Assets.loadSprites(scenePath, assetsAbsolutePath)
+      const assets = await notify.promise(AssetsLoader.loadAssets(scenePath, assetsAbsolutePath), {
+        loading: 'Loading your sprites...',
+        success: 'Sprites loaded successfully',
+        error: 'Error while loading your sprites',
+      })
 
-          // Load in editor
-          const assetsRelativePath = AssetPath.toRelative(scenePath, assetsAbsolutePath)
-          setAssets(Assets.create(assetsRelativePath, sprites))
-        })(),
-        {
-          loading: 'Loading your sprites...',
-          success: 'Sprites loaded successfully',
-          error: 'Error while loading your sprites',
-        },
-      )
+      setAssets(assets)
     } catch (error: any) {
       notify.error(error.message)
     }

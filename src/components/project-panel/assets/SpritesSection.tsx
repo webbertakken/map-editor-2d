@@ -1,9 +1,9 @@
 import { useRecoilValue } from 'recoil'
-import { areSpritesAssetsLoadedSelector, spriteAssetsSelector } from '../../../model/Assets'
 import Section from '../../layout/Section'
 import styles from '../Sprite.module.css'
 import React from 'react'
 import SpriteAssetCard from './SpriteAssetCard'
+import { areSpritesAssetsLoadedSelector, spriteAssetsSelector } from '../../../state/AssetsState'
 
 interface Props {}
 

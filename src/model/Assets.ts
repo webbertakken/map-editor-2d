@@ -1,9 +1,7 @@
-import { atom, selector } from 'recoil'
 import { SpriteAsset } from './SpriteAsset'
-import { readDir, FileEntry, readBinaryFile } from '@tauri-apps/api/fs'
+import { FileEntry, readBinaryFile, readDir } from '@tauri-apps/api/fs'
 import { Buffer } from 'buffer'
 import { AssetPath } from './AssetPath'
-import { REGEX_FILE_EXTENSION } from '../constants'
 
 export class Assets {
   public spritesPath: string = ''
@@ -45,7 +43,6 @@ export class Assets {
         switch (extension) {
           case '.png':
           case '.jpg':
-          case '.jpeg':
             const data = await readBinaryFile(path)
             const buffer = Buffer.from(data)
 
@@ -72,18 +69,3 @@ export class Assets {
     return sprites
   }
 }
-
-export const assetsState = atom<Assets>({
-  key: 'assets',
-  default: Assets.default(),
-})
-
-export const spriteAssetsSelector = selector({
-  key: 'spritesAssets',
-  get: ({ get }) => get(assetsState).sprites,
-})
-
-export const areSpritesAssetsLoadedSelector = selector({
-  key: 'areSpriteAssetsLoaded',
-  get: ({ get }) => get(assetsState).areSpritesLoaded,
-})

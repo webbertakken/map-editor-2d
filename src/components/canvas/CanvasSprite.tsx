@@ -1,7 +1,7 @@
 import useImage from 'use-image'
 import { Image as KonvaImage } from 'react-konva'
 import React from 'react'
-import { CanvasSpriteData } from '../../model/CanvasItem'
+import { CanvasSpriteData } from '../../model/CanvasSpriteData'
 import { CANVAS_LIFT_UP_SCALING_FACTOR } from '../../constants'
 import { KonvaNodeEvents } from 'react-konva/ReactKonvaCore'
 import { ImageConfig } from 'konva/lib/shapes/Image'

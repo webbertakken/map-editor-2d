@@ -1,17 +1,27 @@
-import { atom, selector } from 'recoil'
 import { SCENE_FILE_CURRENT_VERSION } from '../constants'
 import { gt as semverGt, lt as semverLt, valid as semverValid } from 'semver'
+import { SpriteInstance } from './SpriteInstance'
+
+interface CanvasInstance {
+  sprites: SpriteInstance[]
+}
 
 export class SceneFile {
   public name: string = ''
   public version: string = ''
   public description: string = ''
+  public assetsRelativePath: string | null = null
+  public canvas: CanvasInstance = {} as CanvasInstance
 
   public static default() {
     return {
       name: 'No scene selected.',
       version: SCENE_FILE_CURRENT_VERSION,
       description: 'Please select a scene file to edit',
+      assetsRelativePath: null,
+      canvas: {
+        sprites: [],
+      },
     }
   }
 
@@ -56,7 +66,7 @@ export class SceneFile {
     }
 
     // Parse file
-    const { name, description, ...rest } = json
+    const { name, description, assetsRelativePath, canvas, ...rest } = json
     if (rest.length > 0 && !allowUnknownFields) {
       throw new Error('Unknown fields in scene file.')
     }
@@ -70,24 +80,12 @@ export class SceneFile {
     }
 
     return {
+      ...SceneFile.default(),
       name,
       version,
       description,
+      assetsRelativePath,
+      canvas,
     }
   }
 }
-
-export const sceneState = atom<SceneFile>({
-  key: 'scene',
-  default: SceneFile.default(),
-})
-
-export const sceneNameSelector = selector({
-  key: 'sceneName',
-  get: ({ get }) => get(sceneState).name,
-})
-
-export const isSceneOpenState = selector({
-  key: 'isSceneOpen',
-  get: ({ get }) => get(sceneState).name !== SceneFile.default().name,
-})
