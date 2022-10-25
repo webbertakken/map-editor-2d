@@ -1,5 +1,7 @@
 import React, { createRef } from 'react'
 import ReactDOM from 'react-dom/client'
+import './style.css'
+import 'dracula-ui/styles/dracula-ui.css'
 import { initialiseApplication } from './init'
 import Layout from './components/layout/Layout'
 import Menu from './components/menu/Menu'
@@ -11,13 +13,10 @@ import Main from './components/layout/Main'
 import { Toaster } from 'react-hot-toast'
 import ReactModal from 'react-modal'
 import { RecoilRoot } from 'recoil'
-
-import './style.css'
-import 'dracula-ui/styles/dracula-ui.css'
 import { DragAndDropContext } from './context/DragAndDropContext'
 
 // Global stuff
-await initialiseApplication()
+initialiseApplication().then(() => console.info('Application initialised'))
 
 // Needed for accessibility: https://reactcommunity.org/react-modal/accessibility/
 ReactModal.setAppElement('#root')
@@ -28,7 +27,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <RecoilRoot>
       <DragAndDropContext.Provider
         value={{
-          dragAndDropRef: createRef<HTMLDivElement>(),
+          dragAndDropRef: createRef<string>(),
         }}
       >
         <Toaster />

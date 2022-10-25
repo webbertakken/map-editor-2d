@@ -2,12 +2,12 @@ import React, { DragEventHandler, useContext } from 'react'
 import styles from '../Sprite.module.css'
 import { DragAndDropContext } from '../../../context/DragAndDropContext'
 
-interface Props {
+interface SpriteAsset {
   name: string
   dataUrl: string
 }
 
-const SpriteAsset = ({ name, dataUrl }: Props): JSX.Element => {
+const SpriteAsset = ({ name, dataUrl }: SpriteAsset): JSX.Element => {
   const { dragAndDropRef } = useContext(DragAndDropContext)
 
   const onDragStart: DragEventHandler<HTMLDivElement> = (event) => {

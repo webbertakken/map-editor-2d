@@ -64,7 +64,7 @@ export const assetsState = atom<Assets>({
   default: Assets.default(),
 })
 
-export const spritesSelector = selector({
+export const spriteAssetsSelector = selector({
   key: 'spritesAssets',
   get: ({ get }) => get(assetsState).sprites,
 })
