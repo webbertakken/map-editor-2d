@@ -5,8 +5,9 @@ import MenuBar from './MenuBar'
 import LoadScene from './scene/LoadScene'
 import CloseScene from './scene/CloseScene'
 import { useRecoilValue } from 'recoil'
-import { isSceneOpenState } from '../../model/SceneFile'
 import SelectAssetsPath from './assets/SelectAssetsPath'
+import { isSceneOpenState } from '../../state/SceneState'
+import SaveScene from './scene/SaveScene'
 
 interface Props {}
 
@@ -21,6 +22,12 @@ const Menu = ({}: Props): JSX.Element => {
           <LoadScene />
           <CloseScene />
         </Category>
+
+        {isSceneOpen && (
+          <Category title="">
+            <SaveScene />
+          </Category>
+        )}
 
         {isSceneOpen && (
           <Category title="Assets">

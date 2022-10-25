@@ -14,14 +14,17 @@ export class SpriteInstance {
   public scale: Scale = { x: 1, y: 1, z: 1 }
   // Opacity
   public opacity: number = 1
+  // Relative path to the asset
+  public relativePath: string = ''
 
-  static createFromDragAndDrop(x: any, y: any): SpriteInstance {
+  static createFromDragAndDrop(x: number, y: number, relativePath: string): SpriteInstance {
     return {
       id: uuidv4(),
       position: { x, y, z: 1 },
       rotation: 0,
       scale: { x: 1, y: 1, z: 1 },
       opacity: 1,
+      relativePath,
     }
   }
 }

@@ -1,4 +1,11 @@
 /**
+ * Regex
+ */
+export const REGEX_FILE_EXTENSION = /\.[^/\\.]+$/
+export const REGEX_LEADING_SLASHES = /^[\\/]+/
+export const REGEX_TRAILING_SLASHES = /[\\/]+$/
+
+/**
  * Scene
  */
 

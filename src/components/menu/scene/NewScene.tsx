@@ -4,16 +4,23 @@ import Modal from '../../modal/Modal'
 import { save } from '@tauri-apps/api/dialog'
 import { writeTextFile } from '@tauri-apps/api/fs'
 import { SCENE_FILE_TYPE_EXTENSION, SCENE_FILE_TYPE_NAME } from '../../../constants'
-import { SceneFile, sceneState } from '../../../model/SceneFile'
+import { Scene } from '../../../model/Scene'
 import { useRecoilState } from 'recoil'
 import { useNotification } from '../../../hooks/useNotification'
-import { SceneMeta, sceneMetaState } from '../../../model/SceneMeta'
+import { SceneMeta } from '../../../model/SceneMeta'
+import { sceneMetaState, sceneState } from '../../../state/SceneState'
+import { Path } from '../../../model/Path'
+import { Assets } from '../../../model/Assets'
+import { assetsState } from '../../../state/AssetsState'
+import { canvasSpritesState } from '../../../state/CanvasState'
 
 class Props {}
 
 const NewScene = ({}: Props): JSX.Element => {
   const [_1, setScene] = useRecoilState(sceneState)
   const [_2, setSceneMeta] = useRecoilState(sceneMetaState)
+  const [_3, setAssets] = useRecoilState(assetsState)
+  const [_4, setSprites] = useRecoilState(canvasSpritesState)
   const [isOpen, setIsOpen] = React.useState(false)
   const notify = useNotification()
 
@@ -23,7 +30,7 @@ const NewScene = ({}: Props): JSX.Element => {
   const openCreateFileDialog = async () => {
     try {
       // Select directory to save file in
-      const filePath = await save({
+      const rawFilePath = await save({
         title: 'Create a new scene',
         filters: [
           {
@@ -34,13 +41,19 @@ const NewScene = ({}: Props): JSX.Element => {
       })
 
       // No path chosen
-      if (filePath === null) return
+      if (rawFilePath === null) return
+      const filePath = Path.normalise(rawFilePath)
+
+      // Reset previous scene
+      setScene(Scene.default())
+      setAssets(Assets.default())
+      setSprites([])
 
       // Create new scene
-      const newScene = SceneFile.new()
+      const newScene = Scene.new()
 
       // Write to file
-      await writeTextFile(filePath, SceneFile.toFile(newScene))
+      await writeTextFile(filePath, Scene.toFile(newScene))
 
       // Load in editor
       setScene(newScene)

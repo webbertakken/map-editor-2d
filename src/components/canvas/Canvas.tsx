@@ -1,10 +1,12 @@
-import { Layer, Stage, Text } from 'react-konva'
+import { Layer, Stage } from 'react-konva'
 import React, { createRef, DragEventHandler, useContext, useEffect, useState } from 'react'
 import Konva from 'konva'
 import { useWindowSize } from '../../hooks/useWindowSize'
 import { DragAndDropContext, DragAndDropContextProps } from '../../context/DragAndDropContext'
-import { CanvasSpriteData } from '../../model/CanvasItem'
+import { CanvasSpriteData } from '../../model/CanvasSpriteData'
 import { CanvasSprite } from './CanvasSprite'
+import { canvasSpritesState } from '../../state/CanvasState'
+import { useRecoilState } from 'recoil'
 
 export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
@@ -12,7 +14,7 @@ export const Canvas = () => {
   const windowSize = useWindowSize()
   const [width, setWidth] = useState<number | undefined>(windowSize.width)
   const [height, setHeight] = useState<number | undefined>(windowSize.height)
-  const [sprites, setSprites] = React.useState<CanvasSpriteData[]>([])
+  const [sprites, setSprites] = useRecoilState(canvasSpritesState)
   const { dragAndDropRef } = useContext<DragAndDropContextProps>(DragAndDropContext)
 
   useEffect(() => {
@@ -60,7 +62,7 @@ export const Canvas = () => {
     if (!dragAndDropRef.current) return console.warn('No drag and drop ref')
 
     // Add sprite to canvas state
-    const sprite = CanvasSpriteData.fromDragAndDrop(dragAndDropRef.current, x, y)
+    const sprite = CanvasSpriteData.createFromSpriteAsset(dragAndDropRef.current, x, y)
     setSprites((sprites) => [...sprites, sprite])
 
     // Don't store the last dragged image
@@ -71,7 +73,6 @@ export const Canvas = () => {
     <div ref={ref} style={{ flexGrow: 1 }} onDragOver={onDragOver} onDrop={onDrop}>
       <Stage width={width} height={height} ref={stageRef}>
         <Layer>
-          <Text text="Try to drag a star" />
           {sprites.map((data) => {
             return (
               <CanvasSprite

@@ -10,7 +10,7 @@ interface Props {
 const Category = ({ title, children }: Props): JSX.Element => {
   return (
     <div className={styles.category}>
-      <Paragraph size="xs">{title}:</Paragraph>
+      {title && <Paragraph size="xs">{title}:</Paragraph>}
       {children}
     </div>
   )
