@@ -1,8 +1,7 @@
 import { atom, selector } from 'recoil'
 import { Scene } from '../model/Scene'
-import { canvasSpritesState } from './CanvasState'
-import { CanvasSpriteData } from '../model/CanvasSpriteData'
 import { SceneMeta } from '../model/SceneMeta'
+import { allSpritesState } from './SpritesState'
 
 /**
  * Meta information about the scene
@@ -55,7 +54,7 @@ export const sceneFileDataSelector = selector<Scene>({
   get: ({ get }) => ({
     ...get(sceneState),
     canvas: {
-      sprites: get(canvasSpritesState).map(CanvasSpriteData.withoutRuntimeInformation),
+      sprites: get(allSpritesState).datas,
     },
   }),
 })

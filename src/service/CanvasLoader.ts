@@ -1,17 +1,23 @@
 import { Scene } from '../model/Scene'
 import { Assets } from '../model/Assets'
-import { CanvasSpriteData } from '../model/CanvasSpriteData'
+import { SpriteMeta } from '../model/SpriteMeta'
 
 export class CanvasLoader {
-  static async loadSprites(scene: Scene, assets: Assets): Promise<CanvasSpriteData[]> {
-    return scene.canvas.sprites.map((sprite) => {
+  static async loadSprites(scene: Scene, assets: Assets): Promise<Sprite> {
+    const metas: SpriteMeta[] = []
+    const datas: SpriteData[] = []
+
+    scene.canvas.sprites.map((sprite) => {
       const asset = assets.sprites.find((asset) => asset.id === sprite.relativePath)
 
       if (!asset) {
         throw new Error(`Could not find asset for sprite ${sprite.relativePath}`)
       }
 
-      return CanvasSpriteData.fromSpriteAndAsset(sprite, asset)
+      metas.push(SpriteMeta.fromSpriteAndAsset(sprite, asset))
+      datas.push(sprite)
     })
+
+    return { datas, metas }
   }
 }

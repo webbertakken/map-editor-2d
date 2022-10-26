@@ -29,8 +29,41 @@ type Rotation = IntRange<0, 360>
 // Scale of the entity.
 interface Scale extends Vector3 {}
 
-// Props on top of the asset instance, used to control behaviour on the canvas.
-interface CanvasItemProps {
-  isDragging: boolean
+/**
+ * Information about the canvas item.
+ * Only required on runtime.
+ * This data is non-persistent.
+ */
+interface CanvasItemMeta {
+  // The id of the persisted item to link to
+  id: string
+  // The id of the asset
+  assetId: string
+  // Name of the asset
+  name: string
+  // The in-memory representation of the sprite
   src: any
+  // Needed to keep track of whether the item is being dragged
+  isDragging: boolean
+}
+
+interface SpriteMeta extends CanvasItemMeta {}
+interface SpriteData {
+  // Unique id
+  id: string
+  // Position in 2D space
+  position: Translation
+  // Rotation in 2D space (Z-axis)
+  rotation: Rotation
+  // Scale in 2D space
+  scale: Scale
+  // Opacity
+  opacity: number
+  // Relative path to the asset
+  relativePath: string
+}
+
+interface Sprite {
+  datas: SpriteData[]
+  metas: SpriteMeta[]
 }
