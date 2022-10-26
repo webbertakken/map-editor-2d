@@ -36,7 +36,6 @@ export class Assets {
       for (const entry of entries) {
         const { children, path: rawPath } = entry
         const path = Path.normalise(rawPath)
-
         if (children !== undefined) {
           await readFilesRecursively(children)
           continue

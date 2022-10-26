@@ -11,8 +11,10 @@
   },
   "tauri": {
     "allowlist": {
+      "all": true,
       "fs": {
-        "all": true
+        "all": true,
+        "scope": ["$HOME/*"]
       },
       "dialog": {
         "all": true

@@ -90,7 +90,7 @@ const NewScene = ({}: Props): JSX.Element => {
         {
           loading: 'Loading your scene...',
           success: 'Scene loaded successfully',
-          error: 'Error while loading your scene',
+          error: (error) => `Error while loading your scene: ${error}`,
         },
       )
     } catch (error: any) {

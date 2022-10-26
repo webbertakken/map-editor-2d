@@ -2,7 +2,7 @@ import { AssetPath } from '../model/AssetPath'
 import { Assets } from '../model/Assets'
 
 export class AssetsLoader {
-  static async loadAssets(scenePath: string, assetsAbsolutePath: string) {
+  static async loadAssets(scenePath: string, assetsAbsolutePath: string): Promise<Assets> {
     // Make sure it's a subdirectory of the scene
     if (!AssetPath.isInsideScenePath(scenePath, assetsAbsolutePath)) {
       throw new Error('The selected directory is not inside the scene directory')

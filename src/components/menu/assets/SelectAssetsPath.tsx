@@ -38,7 +38,7 @@ const SelectAssetsPath = ({}: Props): JSX.Element => {
       const assets = await notify.promise(AssetsLoader.loadAssets(scenePath, assetsAbsolutePath), {
         loading: 'Loading your sprites...',
         success: 'Sprites loaded successfully',
-        error: 'Error while loading your sprites',
+        error: (error) => `Error while loading your sprites: ${error}`,
       })
 
       setAssets(assets)
