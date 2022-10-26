@@ -1,9 +1,9 @@
 import { SCENE_FILE_CURRENT_VERSION } from '../constants'
 import { gt as semverGt, lt as semverLt, valid as semverValid } from 'semver'
-import { SpriteInstance } from './SpriteInstance'
+import { SpriteData } from './SpriteData'
 
 interface CanvasInstance {
-  sprites: SpriteInstance[]
+  sprites: SpriteData[]
 }
 
 /**

@@ -3,10 +3,11 @@ import React, { createRef, DragEventHandler, useContext, useEffect, useState } f
 import Konva from 'konva'
 import { useWindowSize } from '../../hooks/useWindowSize'
 import { DragAndDropContext, DragAndDropContextProps } from '../../context/DragAndDropContext'
-import { CanvasSpriteData } from '../../model/CanvasSpriteData'
+import { SpriteMeta } from '../../model/SpriteMeta'
 import { CanvasSprite } from './CanvasSprite'
-import { canvasSpritesState } from '../../state/CanvasState'
-import { useRecoilState } from 'recoil'
+import { useRecoilCallback, useRecoilValue } from 'recoil'
+import { SpriteData } from '../../model/SpriteData'
+import { addSpriteCallback, spriteIdsState } from '../../state/SpritesState'
 
 export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
@@ -14,7 +15,8 @@ export const Canvas = () => {
   const windowSize = useWindowSize()
   const [width, setWidth] = useState<number | undefined>(windowSize.width)
   const [height, setHeight] = useState<number | undefined>(windowSize.height)
-  const [sprites, setSprites] = useRecoilState(canvasSpritesState)
+  const addSprite = useRecoilCallback(addSpriteCallback, [])
+  const spriteIds = useRecoilValue(spriteIdsState)
   const { dragAndDropRef } = useContext<DragAndDropContextProps>(DragAndDropContext)
 
   useEffect(() => {
@@ -24,29 +26,6 @@ export const Canvas = () => {
     }
   }, [ref, windowSize])
 
-  const handleDragStart = (e: Konva.KonvaEventObject<DragEvent>) => {
-    const id = e.target.id()
-    setSprites(
-      sprites.map((sprite) => {
-        return {
-          ...sprite,
-          isDragging: sprite.id === id,
-        }
-      }),
-    )
-  }
-
-  const handleDragEnd = (e: Konva.KonvaEventObject<DragEvent>) => {
-    setSprites(
-      sprites.map((star) => {
-        return {
-          ...star,
-          isDragging: false,
-        }
-      }),
-    )
-  }
-
   const onDragOver: DragEventHandler = (e) => {
     e.preventDefault()
   }
@@ -54,16 +33,16 @@ export const Canvas = () => {
   const onDrop: DragEventHandler = (e) => {
     e.preventDefault()
     if (!stageRef.current) return console.warn('No stage ref')
+    if (!dragAndDropRef.current) return console.warn('No drag and drop ref')
 
     // Register event position
     stageRef.current.setPointersPositions(e)
     const { x, y } = stageRef.current.getPointerPosition() || { x: 0, y: 0 }
 
-    if (!dragAndDropRef.current) return console.warn('No drag and drop ref')
-
-    // Add sprite to canvas state
-    const sprite = CanvasSpriteData.createFromSpriteAsset(dragAndDropRef.current, x, y)
-    setSprites((sprites) => [...sprites, sprite])
+    // Add sprite to canvas at that position
+    const spriteData = SpriteData.createFromDragAndDrop(x, y, dragAndDropRef.current.relativePath)
+    const spriteMeta = SpriteMeta.createFromSpriteAsset(spriteData.id, dragAndDropRef.current)
+    addSprite(spriteData.id, spriteData, spriteMeta)
 
     // Don't store the last dragged image
     dragAndDropRef.current = null
@@ -73,16 +52,9 @@ export const Canvas = () => {
     <div ref={ref} style={{ flexGrow: 1 }} onDragOver={onDragOver} onDrop={onDrop}>
       <Stage width={width} height={height} ref={stageRef}>
         <Layer>
-          {sprites.map((data) => {
-            return (
-              <CanvasSprite
-                key={data.id}
-                data={data}
-                onDragStart={handleDragStart}
-                onDragEnd={handleDragEnd}
-              />
-            )
-          })}
+          {spriteIds.map((id) => (
+            <CanvasSprite key={id} id={id} />
+          ))}
         </Layer>
       </Stage>
     </div>
