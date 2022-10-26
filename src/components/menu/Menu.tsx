@@ -23,11 +23,12 @@ const Menu = ({}: Props): JSX.Element => {
           <CloseScene />
         </Category>
 
-        {isSceneOpen && (
-          <Category title="">
-            <SaveScene />
-          </Category>
-        )}
+        {/* Todo - Only start saving once scene is initialised */}
+        {/*{isSceneOpen && (*/}
+        {/*  <Category title="">*/}
+        {/*    <SaveScene />*/}
+        {/*  </Category>*/}
+        {/*)}*/}
 
         {isSceneOpen && (
           <Category title="Assets">

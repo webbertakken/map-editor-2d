@@ -21,6 +21,12 @@
 [//]: # (    - Opacity)
 [//]: # (    - Blend mode)
 
+## Limitations
+
+- Currently only works with files in your home directory, for your own security. 
+
+_Limitations will be lifted in [v2](https://github.com/webbertakken/map-editor-2d/issues/10)._
+
 ## Contribute
 
 Please read the [Development](DEVELOPMENT.md) doc.
