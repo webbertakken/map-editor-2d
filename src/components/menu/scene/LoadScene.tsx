@@ -9,7 +9,7 @@ import { Scene } from '../../../model/Scene'
 import { useRecoilState } from 'recoil'
 import { useNotification } from '../../../hooks/useNotification'
 import { SceneMeta } from '../../../model/SceneMeta'
-import { sceneMetaState, sceneState } from '../../../state/SceneState'
+import { isSceneLoadedState, sceneMetaState, sceneState } from '../../../state/SceneState'
 import { AssetsLoader } from '../../../service/AssetsLoader'
 import { assetsState } from '../../../state/AssetsState'
 import { AssetPath } from '../../../model/AssetPath'
@@ -17,7 +17,7 @@ import { Path } from '../../../model/Path'
 import { Assets } from '../../../model/Assets'
 import { CanvasLoader } from '../../../service/CanvasLoader'
 import { allSpritesState } from '../../../state/SpritesState'
-import { Sprite } from '../../../model/Sprite'
+import { Sprites } from '../../../model/Sprites'
 
 class Props {}
 
@@ -26,6 +26,7 @@ const NewScene = ({}: Props): JSX.Element => {
   const [_2, setSceneMeta] = useRecoilState(sceneMetaState)
   const [_3, setAssets] = useRecoilState(assetsState)
   const [_4, setAllSprites] = useRecoilState(allSpritesState)
+  const [_5, setHasLoadedScene] = useRecoilState(isSceneLoadedState)
   const notify = useNotification()
   const [isOpen, setIsOpen] = React.useState(false)
 
@@ -57,10 +58,11 @@ const NewScene = ({}: Props): JSX.Element => {
       await notify.promise(
         (async () => {
           // Reset previous scene
+          setHasLoadedScene(false)
           setScene(Scene.default())
           setSceneMeta(SceneMeta.default())
           setAssets(Assets.default())
-          setAllSprites(Sprite.default())
+          setAllSprites(Sprites.default())
 
           // Load file
           const fileContents = await readTextFile(filePath)
@@ -72,6 +74,9 @@ const NewScene = ({}: Props): JSX.Element => {
           const sceneMeta = SceneMeta.create(filePath)
           setScene(scene)
           setSceneMeta(sceneMeta)
+
+          // Close modal
+          setIsOpen(false)
 
           // Load assets
           if (scene.assetsRelativePath !== null) {
@@ -85,8 +90,8 @@ const NewScene = ({}: Props): JSX.Element => {
             console.log('Scene has no assets path, skipping...')
           }
 
-          // Close modal
-          setIsOpen(false)
+          // Mark scene as loaded
+          setHasLoadedScene(true)
         })(),
         {
           loading: 'Loading your scene...',

@@ -1,4 +1,4 @@
-export class Sprite {
+export class Sprites {
   static default() {
     return {
       datas: [],

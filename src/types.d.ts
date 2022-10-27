@@ -63,7 +63,7 @@ interface SpriteData {
   relativePath: string
 }
 
-interface Sprite {
+interface Sprites {
   datas: SpriteData[]
   metas: SpriteMeta[]
 }

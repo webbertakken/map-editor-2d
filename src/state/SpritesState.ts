@@ -57,7 +57,7 @@ export const spriteMetasWithId = selectorFamily<SpriteMeta, string>({
  * Combined
  */
 
-export const allSpritesState = selector<Sprite>({
+export const allSpritesState = selector<Sprites>({
   key: 'spriteDatasCollection',
   get: ({ get }) => {
     const ids = get(spriteIdsState)
@@ -65,9 +65,9 @@ export const allSpritesState = selector<Sprite>({
     const metas = ids.map((id) => get(spriteMetasWithId(id)))
     return { datas, metas }
   },
-  set: ({ set, reset, get }, datasAndMetas) => {
-    if (datasAndMetas instanceof DefaultValue) {
-      // DefaultValue means reset context
+  set: ({ set, reset, get }, sprites) => {
+    // Reset on DefaultValue means reset context
+    if (sprites instanceof DefaultValue) {
       get(spriteIdsState).forEach((id) => {
         reset(spriteDatasWithId(id))
         reset(spriteMetasWithId(id))
@@ -76,16 +76,11 @@ export const allSpritesState = selector<Sprite>({
       return
     }
 
-    const { datas, metas } = datasAndMetas
-    const ids = datas.map((data: any) => data.id)
-
+    const { datas, metas } = sprites
+    const ids = datas.map((data) => data.id)
+    for (const data of datas) set(spriteDatasWithId(data.id), data)
+    for (const meta of metas) set(spriteMetasWithId(meta.id), meta)
     set(spriteIdsState, ids)
-    for (const data of datas) {
-      set(spriteDatasWithId(data.id), data)
-    }
-    for (const meta of metas) {
-      set(spriteMetasWithId(meta.id), meta)
-    }
   },
 })
 

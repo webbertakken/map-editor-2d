@@ -8,12 +8,12 @@ import { Scene } from '../../../model/Scene'
 import { useRecoilState } from 'recoil'
 import { useNotification } from '../../../hooks/useNotification'
 import { SceneMeta } from '../../../model/SceneMeta'
-import { sceneMetaState, sceneState } from '../../../state/SceneState'
+import { isSceneLoadedState, sceneMetaState, sceneState } from '../../../state/SceneState'
 import { Path } from '../../../model/Path'
 import { Assets } from '../../../model/Assets'
 import { assetsState } from '../../../state/AssetsState'
 import { allSpritesState } from '../../../state/SpritesState'
-import { Sprite } from '../../../model/Sprite'
+import { Sprites } from '../../../model/Sprites'
 
 class Props {}
 
@@ -22,6 +22,7 @@ const NewScene = ({}: Props): JSX.Element => {
   const [_2, setSceneMeta] = useRecoilState(sceneMetaState)
   const [_3, setAssets] = useRecoilState(assetsState)
   const [_4, setSprites] = useRecoilState(allSpritesState)
+  const [_5, setHasLoadedScene] = useRecoilState(isSceneLoadedState)
   const [isOpen, setIsOpen] = React.useState(false)
   const notify = useNotification()
 
@@ -46,9 +47,10 @@ const NewScene = ({}: Props): JSX.Element => {
       const filePath = Path.normalise(rawFilePath)
 
       // Reset previous scene
+      setHasLoadedScene(false)
       setScene(Scene.default())
       setAssets(Assets.default())
-      setSprites(Sprite.default())
+      setSprites(Sprites.default())
 
       // Create new scene
       const newScene = Scene.new()
@@ -56,12 +58,13 @@ const NewScene = ({}: Props): JSX.Element => {
       // Write to file
       await writeTextFile(filePath, Scene.toFile(newScene))
 
+      // Close modal
+      setIsOpen(false)
+
       // Load in editor
       setScene(newScene)
       setSceneMeta(SceneMeta.create(filePath))
-
-      // Close modal
-      setIsOpen(false)
+      setHasLoadedScene(true)
 
       // Notify user
       notify.success('Scene created successfully')
