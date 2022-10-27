@@ -6,13 +6,18 @@ import { KonvaNodeEvents } from 'react-konva/ReactKonvaCore'
 import { ImageConfig } from 'konva/lib/shapes/Image'
 import Konva from 'konva'
 import { useRecoilState } from 'recoil'
-import { spriteDatasWithId, spriteMetasWithId } from '../../state/SpritesState'
+import {
+  selectedSpriteIdsState,
+  spriteDatasWithId,
+  spriteMetasWithId,
+} from '../../state/SpritesState'
 
 interface Props extends KonvaNodeEvents, Partial<ImageConfig> {
   id: string
 }
 
 export const CanvasSprite = ({ id, ...props }: Props) => {
+  const [selectedIds, setSelectedIds] = useRecoilState(selectedSpriteIdsState)
   const [spriteData, setSpriteData] = useRecoilState(spriteDatasWithId(id))
   const [spriteMeta, setSpriteMeta] = useRecoilState(spriteMetasWithId(id))
 
@@ -25,15 +30,31 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
   const x = position.x - width / 2
   const y = position.y - height / 2
 
-  const scaleX = isDragging ? scale.x * CANVAS_LIFT_UP_SCALING_FACTOR : scale.x
-  const scaleY = isDragging ? scale.y * CANVAS_LIFT_UP_SCALING_FACTOR : scale.y
+  const scaleX = isDragging ? Number(scale.x) * CANVAS_LIFT_UP_SCALING_FACTOR : Number(scale.x)
+  const scaleY = isDragging ? Number(scale.y) * CANVAS_LIFT_UP_SCALING_FACTOR : Number(scale.y)
 
   const onDragStart = (e: Konva.KonvaEventObject<DragEvent>) => {
     setSpriteMeta((meta) => ({ ...meta, isDragging: true }))
   }
 
   const onDragEnd = (e: Konva.KonvaEventObject<DragEvent>) => {
+    setSpriteData((data) => ({
+      ...data,
+      position: {
+        x: e.target.x() + width / 2,
+        y: e.target.y() + height / 2,
+        z: data.position.z || 1,
+      },
+    }))
     setSpriteMeta((meta) => ({ ...meta, isDragging: false }))
+  }
+
+  const onClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    if (selectedIds.includes(id)) {
+      setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id))
+    } else {
+      setSelectedIds([...selectedIds, id])
+    }
   }
 
   return (
@@ -58,6 +79,7 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
       opacity={opacity}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
+      onClick={onClick}
     />
   )
 }

@@ -32,8 +32,8 @@ export const Canvas = () => {
 
   const onDrop: DragEventHandler = (e) => {
     e.preventDefault()
-    if (!stageRef.current) return console.warn('No stage ref')
-    if (!dragAndDropRef.current) return console.warn('No drag and drop ref')
+    if (!stageRef.current) return console.error('No stage ref')
+    if (!dragAndDropRef.current) return console.error('No drag and drop ref')
 
     // Register event position
     stageRef.current.setPointersPositions(e)

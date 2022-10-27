@@ -20,7 +20,7 @@ const SaveScene = ({}: Props): JSX.Element => {
     try {
       const fileContents = Scene.toFile(sceneFileData)
       await writeTextFile(sceneFilePath, fileContents)
-      console.log('saved')
+      console.log('Saved')
     } catch (e) {
       notify.error(`Failed to save scene ${e}`)
     }

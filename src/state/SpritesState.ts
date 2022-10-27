@@ -11,6 +11,11 @@ export const spriteIdsState = atom<string[]>({
   default: [],
 })
 
+export const selectedSpriteIdsState = atom<string[]>({
+  key: 'selectedSpriteIds',
+  default: [],
+})
+
 /**
  * Sprite data
  */
