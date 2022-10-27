@@ -86,8 +86,6 @@ const NewScene = ({}: Props): JSX.Element => {
             setAssets(assets)
             const spriteDatasAndMetas = await CanvasLoader.loadSprites(scene, assets)
             setAllSprites(spriteDatasAndMetas)
-          } else {
-            console.log('Scene has no assets path, skipping...')
           }
 
           // Mark scene as loaded

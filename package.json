@@ -14,6 +14,7 @@
     "buffer": "^6.0.3",
     "dracula-ui": "^1.0.3",
     "konva": "^8.3.13",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
@@ -26,6 +27,7 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.1.0",
+    "@types/lodash": "^4.14.186",
     "@types/node": "^18.7.10",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
