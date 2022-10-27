@@ -6,13 +6,14 @@ import LoadScene from './scene/LoadScene'
 import CloseScene from './scene/CloseScene'
 import { useRecoilValue } from 'recoil'
 import SelectAssetsPath from './assets/SelectAssetsPath'
-import { isSceneOpenState } from '../../state/SceneState'
+import { isSceneLoadedState, isSceneOpenState } from '../../state/SceneState'
 import SaveScene from './scene/SaveScene'
 
 interface Props {}
 
 const Menu = ({}: Props): JSX.Element => {
   const isSceneOpen = useRecoilValue(isSceneOpenState)
+  const isSceneLoaded = useRecoilValue(isSceneLoadedState)
 
   return (
     <>
@@ -23,14 +24,13 @@ const Menu = ({}: Props): JSX.Element => {
           <CloseScene />
         </Category>
 
-        {/* Todo - Only start saving once scene is initialised */}
-        {/*{isSceneOpen && (*/}
-        {/*  <Category title="">*/}
-        {/*    <SaveScene />*/}
-        {/*  </Category>*/}
-        {/*)}*/}
+        {isSceneOpen && isSceneLoaded && (
+          <Category title="">
+            <SaveScene />
+          </Category>
+        )}
 
-        {isSceneOpen && (
+        {isSceneOpen && isSceneLoaded && (
           <Category title="Assets">
             <SelectAssetsPath />
           </Category>

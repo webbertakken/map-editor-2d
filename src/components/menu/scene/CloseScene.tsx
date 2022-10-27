@@ -8,7 +8,7 @@ import { isSceneOpenState, sceneMetaState, sceneState } from '../../../state/Sce
 import { Assets } from '../../../model/Assets'
 import { assetsState } from '../../../state/AssetsState'
 import { allSpritesState } from '../../../state/SpritesState'
-import { Sprite } from '../../../model/Sprite'
+import { Sprites } from '../../../model/Sprites'
 
 interface Props {}
 
@@ -25,7 +25,7 @@ const CloseScene = ({}: Props): JSX.Element => {
     setScene(Scene.default())
     setSceneMeta(SceneMeta.default())
     setAssets(Assets.default())
-    setSprites(Sprite.default())
+    setSprites(Sprites.default())
     notify.success('Scene closed')
   }
 

@@ -14,6 +14,7 @@ import { Toaster } from 'react-hot-toast'
 import ReactModal from 'react-modal'
 import { RecoilRoot } from 'recoil'
 import { DragAndDropContext } from './context/DragAndDropContext'
+import { SpriteAsset } from './model/SpriteAsset'
 
 // Global stuff
 initialiseApplication().then(() => console.info('Application initialised'))
@@ -27,7 +28,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <RecoilRoot>
       <DragAndDropContext.Provider
         value={{
-          dragAndDropRef: createRef<string>(),
+          dragAndDropRef: createRef<SpriteAsset>(),
         }}
       >
         <Toaster />

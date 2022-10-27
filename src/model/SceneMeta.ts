@@ -1,11 +1,13 @@
 export class SceneMeta {
   public absolutePath: string = ''
   public sceneFileName: string = ''
+  public hasLoaded: boolean = false
 
   static default() {
     return {
       absolutePath: '',
       sceneFileName: '',
+      hasLoaded: false,
     }
   }
 

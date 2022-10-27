@@ -3,7 +3,7 @@ import { Assets } from '../model/Assets'
 import { SpriteMeta } from '../model/SpriteMeta'
 
 export class CanvasLoader {
-  static async loadSprites(scene: Scene, assets: Assets): Promise<Sprite> {
+  static async loadSprites(scene: Scene, assets: Assets): Promise<Sprites> {
     const metas: SpriteMeta[] = []
     const datas: SpriteData[] = []
 

@@ -1,7 +1,7 @@
-import { atom, selector } from 'recoil'
+import { atom, DefaultValue, selector } from 'recoil'
 import { Scene } from '../model/Scene'
-import { SceneMeta } from '../model/SceneMeta'
 import { allSpritesState } from './SpritesState'
+import { SceneMeta } from '../model/SceneMeta'
 
 /**
  * Meta information about the scene
@@ -11,6 +11,7 @@ export const sceneMetaState = atom<SceneMeta>({
   key: 'sceneMeta',
   default: SceneMeta.default(),
 })
+
 export const sceneAbsolutePathSelector = selector({
   key: 'sceneAbsolutePath',
   get: ({ get }) => get(sceneMetaState).absolutePath,
@@ -26,6 +27,20 @@ export const sceneAbsoluteFilePath = selector({
   },
 })
 
+export const isSceneLoadedState = selector<boolean>({
+  key: 'hasLoadedScene',
+  get: ({ get }) => get(sceneMetaState).hasLoaded,
+  set: ({ set, get }, hasLoaded) => {
+    set(sceneMetaState, (oldValue) => {
+      if (hasLoaded instanceof DefaultValue) {
+        return { ...oldValue, hasLoaded: false }
+      } else {
+        return { ...oldValue, hasLoaded }
+      }
+    })
+  },
+})
+
 /**
  * Scene itself
  */
@@ -35,12 +50,12 @@ export const sceneState = atom<Scene>({
   default: Scene.default(),
 })
 
-export const sceneNameSelector = selector({
+export const sceneNameSelector = selector<string>({
   key: 'sceneName',
   get: ({ get }) => get(sceneState).name,
 })
 
-export const isSceneOpenState = selector({
+export const isSceneOpenState = selector<boolean>({
   key: 'isSceneOpen',
   get: ({ get }) => get(sceneState).name !== Scene.default().name,
 })
