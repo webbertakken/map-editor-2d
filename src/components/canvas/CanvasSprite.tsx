@@ -55,11 +55,12 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
   }
 
   const onClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
-    const isShiftPressed = e.evt.shiftKey
+    // prevent deselection by clicking on the canvas
+    e.cancelBubble = true
 
     if (selectedIds.includes(id)) {
       setSelectedIds(selectedIds.filter((selectedId) => selectedId !== id))
-    } else if (isShiftPressed) {
+    } else if (e.evt.shiftKey) {
       setSelectedIds([...selectedIds, id])
     } else {
       setSelectedIds([id])
