@@ -30,6 +30,7 @@ jobs:
       - name: Cache
         uses: swatinem/rust-cache@v2
         with:
+          workspaces: "./src-tauri -> target"
           shared-key: ${{ runner.os }}-base
 
       - name: Cargo check
@@ -60,6 +61,7 @@ jobs:
       - name: Cache
         uses: swatinem/rust-cache@v2
         with:
+          workspaces: "./src-tauri -> target"
           shared-key: ${{ runner.os }}-test
 
       - name: Cargo test
@@ -148,6 +150,7 @@ jobs:
       - name: Cache
         uses: swatinem/rust-cache@v2
         with:
+          workspaces: "./src-tauri -> target"
           shared-key: ${{ runner.os }}-base
 
       - name: Cargo clippy
