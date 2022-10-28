@@ -1,5 +1,6 @@
 [hooks]
-pre-commit = "yarn test && cd src-tauri && cargo check && cargo fmt -- --check && cargo clippy -- -D warnings"
+pre-commit = "yarn test"
+pre-push = "yarn cargo-test && cd src-tauri && cargo check && cargo fmt -- --check && cargo clippy -- -D warnings"
 
 [logging]
 verbose = true
