@@ -19,8 +19,8 @@ export const InspectorSection = ({}: Props): JSX.Element => {
   }
 
   return (
-    <Section title="Sprite" color="pink" flexGrow={0}>
-      <Heading size="md" color="yellow" as="h3">
+    <Section title="Inspector" color="pink" flexGrow={1} style={{ maxHeight: 'inherit' }}>
+      <Heading size="xs" color="yellow" as="h3">
         Identifier
       </Heading>
 
@@ -44,7 +44,7 @@ export const InspectorSection = ({}: Props): JSX.Element => {
       </FormRow>
 
       <Box pt="sm">
-        <Heading size="md" color="yellow" as="h3">
+        <Heading size="xs" color="yellow" as="h3">
           Transform
         </Heading>
       </Box>
@@ -57,6 +57,9 @@ export const InspectorSection = ({}: Props): JSX.Element => {
           size="sm"
           color="green"
           type="number"
+          step="1"
+          min="-1"
+          max="1000"
           borderSize="sm"
           id="position.z"
           value={spriteData.position.z}
@@ -96,6 +99,8 @@ export const InspectorSection = ({}: Props): JSX.Element => {
           color="green"
           type="number"
           step="0.1"
+          min="0.01"
+          max="100"
           borderSize="sm"
           id="scale.x"
           value={spriteData.scale.x || 1}
@@ -107,6 +112,8 @@ export const InspectorSection = ({}: Props): JSX.Element => {
           color="green"
           type="number"
           step="0.1"
+          min="0.01"
+          max="100"
           borderSize="sm"
           id="scale.y"
           value={spriteData.scale.y}
@@ -115,7 +122,7 @@ export const InspectorSection = ({}: Props): JSX.Element => {
       </FormRow>
 
       <Box pt="sm">
-        <Heading size="md" color="yellow" as="h3">
+        <Heading size="xs" color="yellow" as="h3">
           Other settings
         </Heading>
       </Box>
@@ -127,6 +134,9 @@ export const InspectorSection = ({}: Props): JSX.Element => {
           size="sm"
           color="green"
           type="number"
+          step="1"
+          min="-179"
+          max="180"
           borderSize="sm"
           id="rotation"
           value={spriteData.rotation}
@@ -143,6 +153,8 @@ export const InspectorSection = ({}: Props): JSX.Element => {
           color="green"
           type="number"
           step="0.1"
+          max="1"
+          min="0"
           borderSize="sm"
           id="opacity"
           value={spriteData.opacity}

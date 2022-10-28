@@ -5,14 +5,15 @@ import { useWindowSize } from '../../hooks/useWindowSize'
 import { DragAndDropContext, DragAndDropContextProps } from '../../context/DragAndDropContext'
 import { SpriteMeta } from '../../model/SpriteMeta'
 import { CanvasSprite } from './CanvasSprite'
-import { useRecoilCallback, useRecoilValue } from 'recoil'
+import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil'
 import { SpriteData } from '../../model/SpriteData'
-import { addSpriteCallback, spriteIdsState } from '../../state/SpritesState'
+import { addSpriteCallback, selectedSpriteIdsState, spriteIdsState } from '../../state/SpritesState'
 
 export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
   const stageRef = React.useRef<Konva.Stage>(null)
   const windowSize = useWindowSize()
+  const [selectedSpriteIds, setSelectedSpriteIds] = useRecoilState(selectedSpriteIdsState)
   const [width, setWidth] = useState<number | undefined>(windowSize.width)
   const [height, setHeight] = useState<number | undefined>(windowSize.height)
   const addSprite = useRecoilCallback(addSpriteCallback, [])
@@ -48,9 +49,13 @@ export const Canvas = () => {
     dragAndDropRef.current = null
   }
 
+  const onClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    setSelectedSpriteIds([])
+  }
+
   return (
     <div ref={ref} style={{ flexGrow: 1 }} onDragOver={onDragOver} onDrop={onDrop}>
-      <Stage width={width} height={height} ref={stageRef}>
+      <Stage width={width} height={height} ref={stageRef} onClick={onClick}>
         <Layer>
           {spriteIds.map((id) => (
             <CanvasSprite key={id} id={id} />

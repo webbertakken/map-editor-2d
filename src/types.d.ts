@@ -20,6 +20,14 @@ interface Vector3 {
   z: number
 }
 
+// A point of 2D space, represented using strings to store more accuracy.
+// See: https://github.com/tc39/proposal-decimal for more details.
+interface PreciseVector3 {
+  x: string
+  y: string
+  z: string
+}
+
 // Position of the entity. In 2d, the last value of the Vec3 is used for z-ordering.
 interface Translation extends Vector3 {}
 
@@ -27,7 +35,7 @@ interface Translation extends Vector3 {}
 type Rotation = IntRange<0, 360>
 
 // Scale of the entity.
-interface Scale extends Vector3 {}
+interface Scale extends PreciseVector3 {}
 
 /**
  * Information about the canvas item.
