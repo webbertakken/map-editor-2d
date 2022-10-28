@@ -16,8 +16,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install rust deps
-        run: sudo apt-get install build-essential pkg-config
-#       run: sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev lld
+        run: sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
@@ -45,7 +44,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install rust deps
-        run: sudo apt-get install build-essential pkg-config
+        run: sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
@@ -73,7 +72,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install rust deps
-        run: sudo apt-get install build-essential pkg-config
+        run: sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
 
       - name: Rust Cache
         uses: swatinem/rust-cache@v2
@@ -115,7 +114,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install rust deps
-        run: sudo apt-get install build-essential pkg-config
+        run: sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
@@ -141,7 +140,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install rust deps
-        run: sudo apt-get install build-essential pkg-config
+        run: sudo apt-get install -y libgtk-3-dev webkit2gtk-4.0 libappindicator3-dev librsvg2-dev patchelf
 
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
