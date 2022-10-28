@@ -1,9 +1,5 @@
 # Webber's Map Editor 2D
 
-⚠️ Pre-alpha, works but doesn't do much yet. ⚠️
-
-## How it works
-
 - Load or create a new map
 - Select your sprites' folder (recursively). 
 - Drag your sprites to the canvas to create instances.
@@ -20,6 +16,10 @@
 [//]: # (    - Color)
 [//]: # (    - Opacity)
 [//]: # (    - Blend mode)
+
+## Demo
+
+https://user-images.githubusercontent.com/20756439/198751508-4094773d-8660-42f8-a48e-ab8489b30068.mp4
 
 ## Limitations
 
