@@ -22,7 +22,7 @@ const DeselectListener = ({}: Props): JSX.Element => {
     if (selectedSpriteIds.length <= 0) return
 
     setSelectedSpriteIds([])
-    notify.success('Deselected all sprites')
+    notify.success('Deselected')
   }
 
   return <></>
