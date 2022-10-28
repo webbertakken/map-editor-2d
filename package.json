@@ -7,6 +7,7 @@
     "dev": "tauri dev",
     "build": "tauri build --debug",
     "preview": "vite preview",
+    "clippy": "cargo clippy --manifest-path ./src-tauri/Cargo.toml -- -D warnings",
     "tauri": "tauri",
     "test": "cd src-tauri && cargo test && cd ..",
     "step-ci-test": "echo \"No tests specified\" && exit 0",
