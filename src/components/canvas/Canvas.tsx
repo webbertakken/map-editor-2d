@@ -2,23 +2,24 @@ import { Layer, Stage } from 'react-konva'
 import React, { createRef, DragEventHandler, useContext, useEffect, useState } from 'react'
 import Konva from 'konva'
 import { useWindowSize } from '../../hooks/useWindowSize'
-import { DragAndDropContext, DragAndDropContextProps } from '../../context/DragAndDropContext'
+import { AppContext, AppContextProps } from '../../context/AppContext'
 import { SpriteMeta } from '../../model/SpriteMeta'
 import { CanvasSprite } from './CanvasSprite'
 import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil'
 import { SpriteData } from '../../model/SpriteData'
 import { addSpriteCallback, selectedSpriteIdsState, spriteIdsState } from '../../state/SpritesState'
+import CopyAndPaste from './CopyAndPaste'
 
 export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
   const stageRef = React.useRef<Konva.Stage>(null)
   const windowSize = useWindowSize()
-  const [selectedSpriteIds, setSelectedSpriteIds] = useRecoilState(selectedSpriteIdsState)
+  const [_1, setSelectedSpriteIds] = useRecoilState(selectedSpriteIdsState)
   const [width, setWidth] = useState<number | undefined>(windowSize.width)
   const [height, setHeight] = useState<number | undefined>(windowSize.height)
   const addSprite = useRecoilCallback(addSpriteCallback, [])
   const spriteIds = useRecoilValue(spriteIdsState)
-  const { dragAndDropRef } = useContext<DragAndDropContextProps>(DragAndDropContext)
+  const { dragAndDropRef } = useContext<AppContextProps>(AppContext)
 
   useEffect(() => {
     if (ref.current) {
@@ -55,6 +56,7 @@ export const Canvas = () => {
 
   return (
     <div ref={ref} style={{ flexGrow: 1 }} onDragOver={onDragOver} onDrop={onDrop}>
+      <CopyAndPaste />
       <Stage width={width} height={height} ref={stageRef} onClick={onClick}>
         <Layer>
           {spriteIds.map((id) => (

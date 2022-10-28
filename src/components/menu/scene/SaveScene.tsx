@@ -1,5 +1,9 @@
 import React, { useEffect } from 'react'
-import { sceneAbsoluteFilePath, sceneFileDataSelector } from '../../../state/SceneState'
+import {
+  isSceneLoadedState,
+  sceneAbsoluteFilePath,
+  sceneFileDataSelector,
+} from '../../../state/SceneState'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Box, Button, Checkbox } from 'dracula-ui'
 import { appState, isAutoSaveEnabledSelector } from '../../../state/AppState'
@@ -14,6 +18,7 @@ const SaveScene = ({}: Props): JSX.Element => {
   const sceneFilePath = useRecoilValue(sceneAbsoluteFilePath)
   const sceneFileData = useRecoilValue(sceneFileDataSelector)
   const isAutoSaveEnabled = useRecoilValue(isAutoSaveEnabledSelector)
+  const isSceneLoaded = useRecoilValue(isSceneLoadedState)
   const notify = useNotification()
 
   const save = async () => {
@@ -27,13 +32,19 @@ const SaveScene = ({}: Props): JSX.Element => {
   }
 
   useEffect(() => {
-    if (isAutoSaveEnabled) {
-      save()
-    }
-  }, [sceneFileData, isAutoSaveEnabled])
+    if (isSceneLoaded && isAutoSaveEnabled) save()
+  }, [isSceneLoaded, sceneFileData, isAutoSaveEnabled])
 
   const onAutoSaveChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState((state) => ({ ...state, autoSave: e.target.checked }))
+  }
+
+  const onSaveButtonClick = async () => {
+    await notify.promise(save(), {
+      loading: 'Saving...',
+      success: 'Saved 💾',
+      error: (error) => `Failed to save. ${error}`,
+    })
   }
 
   const autoSaveCheckBox = (
@@ -55,7 +66,7 @@ const SaveScene = ({}: Props): JSX.Element => {
   return (
     <>
       {isAutoSaveEnabled || (
-        <Button size="xs" color={'green'} onClick={save}>
+        <Button size="xs" color={'green'} onClick={onSaveButtonClick}>
           Save
         </Button>
       )}

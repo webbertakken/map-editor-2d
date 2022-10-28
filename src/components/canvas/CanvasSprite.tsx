@@ -19,10 +19,10 @@ interface Props extends KonvaNodeEvents, Partial<ImageConfig> {
 
 export const CanvasSprite = ({ id, ...props }: Props) => {
   const ref = React.createRef<Konva.Node>()
+  const Transformer = useTransformer(ref)
   const [selectedIds, setSelectedIds] = useRecoilState(selectedSpriteIdsState)
   const [spriteData, setSpriteData] = useRecoilState(spriteDatasWithId(id))
   const [spriteMeta, setSpriteMeta] = useRecoilState(spriteMetasWithId(id))
-  const Transformer = useTransformer(ref)
 
   const isSelected = selectedIds.includes(id)
 

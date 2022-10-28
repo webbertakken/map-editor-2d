@@ -1,10 +1,10 @@
 import React, { DragEventHandler, useContext } from 'react'
 import styles from '../Sprite.module.css'
-import { DragAndDropContext } from '../../../context/DragAndDropContext'
+import { AppContext } from '../../../context/AppContext'
 import { SpriteAsset } from '../../../model/SpriteAsset'
 
 const SpriteAssetCard = (asset: SpriteAsset): JSX.Element => {
-  const { dragAndDropRef } = useContext(DragAndDropContext)
+  const { dragAndDropRef } = useContext(AppContext)
 
   const { name, src } = asset
 
