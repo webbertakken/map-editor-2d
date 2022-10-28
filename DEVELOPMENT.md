@@ -12,13 +12,13 @@ cargo install tauri-cli
 ## Run
 
 ```powershell
-yarn tauri dev
+yarn dev
 ```
 
 ## Build
 
 ```powershell
-yarn tauri build --debug
+yarn build
 ```
 
 _Note: `--debug` is currently just to allow the inspector to work._
