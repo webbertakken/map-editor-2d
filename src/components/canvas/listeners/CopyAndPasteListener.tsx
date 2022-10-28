@@ -1,22 +1,24 @@
 import React, { useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { AppContext } from '../../context/AppContext'
+import { AppContext } from '../../../context/AppContext'
 import {
   allSpritesState,
   copiedSpritesState,
   selectedSpriteIdsState,
   selectedSpritesState,
-} from '../../state/SpritesState'
+} from '../../../state/SpritesState'
 import { v4 as uuidv4 } from 'uuid'
+import { useNotification } from '../../../hooks/useNotification'
 
 interface Props {}
 
-const CopyAndPaste = ({}: Props): JSX.Element => {
+const CopyAndPasteListener = ({}: Props): JSX.Element => {
   const { hotkeys } = React.useContext(AppContext)
   const [_1, setAllSprites] = useRecoilState(allSpritesState)
   const [_2, setSelectedSpriteIds] = useRecoilState(selectedSpriteIdsState)
   const [copiedSprites, setCopiedSprites] = useRecoilState(copiedSpritesState)
   const selectedSprites = useRecoilValue(selectedSpritesState)
+  const notify = useNotification()
 
   useEffect(() => {
     hotkeys.copy?.subscribe(onCopy)
@@ -28,11 +30,16 @@ const CopyAndPaste = ({}: Props): JSX.Element => {
   })
 
   const onCopy = () => {
+    const numberOfSprites = selectedSprites.datas.length
+    if (numberOfSprites <= 0) return
+
     setCopiedSprites(selectedSprites)
+    notify.success(`Copied ${numberOfSprites} sprite${numberOfSprites > 1 ? 's' : ''}`)
   }
 
   const onPaste = () => {
-    if (copiedSprites.datas.length === 0) return
+    const numberOfSprites = copiedSprites.datas.length
+    if (numberOfSprites <= 0) return
 
     // Generate new IDs
     const newIds = new Map<string, string>()
@@ -52,9 +59,11 @@ const CopyAndPaste = ({}: Props): JSX.Element => {
 
     // Select the new copies
     setSelectedSpriteIds(uniquelyCopiedSprites.datas.map((d) => d.id))
+
+    notify.success(`Pasted ${numberOfSprites} sprite${numberOfSprites > 1 ? 's' : ''}`)
   }
 
   return <></>
 }
 
-export default CopyAndPaste
+export default CopyAndPasteListener

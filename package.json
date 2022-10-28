@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "clippy": "cargo clippy --manifest-path ./src-tauri/Cargo.toml -- -D warnings",
     "tauri": "tauri",
-    "test": "cd src-tauri && cargo test && cd ..",
+    "test": "echo \"No tests specified\" && exit 0",
+    "cargo-test": "cd src-tauri && cargo test && cd ..",
     "step-ci-test": "echo \"No tests specified\" && exit 0",
     "step-rust-dev": "vite",
     "step-rust-build": "tsc && vite build"
