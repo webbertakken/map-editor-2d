@@ -118,3 +118,12 @@ export const addSpriteCallback =
     set(spriteDatasWithId(id), spriteData)
     set(spriteMetasWithId(id), spriteMeta)
   }
+
+export const deleteSpritesCallback =
+  ({ set }: CallbackInterface) =>
+  (ids: string[]) => {
+    set(allSpritesState, (allSprites) => ({
+      datas: allSprites.datas.filter((data) => !ids.includes(data.id)),
+      metas: allSprites.metas.filter((meta) => !ids.includes(meta.id)),
+    }))
+  }

@@ -10,6 +10,7 @@ import { SpriteData } from '../../model/SpriteData'
 import { addSpriteCallback, selectedSpriteIdsState, spriteIdsState } from '../../state/SpritesState'
 import CopyAndPasteListener from './listeners/CopyAndPasteListener'
 import DeleteListener from './listeners/DeleteListener'
+import DeselectListener from './listeners/DeselectListener'
 
 export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
@@ -59,6 +60,7 @@ export const Canvas = () => {
     <div ref={ref} style={{ flexGrow: 1 }} onDragOver={onDragOver} onDrop={onDrop}>
       <CopyAndPasteListener />
       <DeleteListener />
+      <DeselectListener />
       <Stage width={width} height={height} ref={stageRef} onClick={onClick}>
         <Layer>
           {spriteIds.map((id) => (

@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useRef } from 'react'
+import React, { RefObject, useEffect, useRef } from 'react'
 import Konva from 'konva'
 import { Transformer } from 'react-konva'
 
@@ -14,16 +14,16 @@ export const useTransformer = (nodeRef: RefObject<Konva.Node>) => {
 
   const transformer: React.FC<Konva.TransformerConfig> = ({ children, ...rest }) => (
     <Transformer
+      ref={transformerRef}
       rotationSnaps={[0, 90, 180, -90]}
       rotationSnapTolerance={2}
       borderDash={[3, 3]}
       anchorSize={8}
       centeredScaling={true}
       shouldOverdrawWholeArea={true}
-      useSingleNodeRotation={false}
+      useSingleNodeRotation={true}
       anchorCornerRadius={1}
       {...rest}
-      ref={transformerRef}
     >
       {children}
     </Transformer>

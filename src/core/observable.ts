@@ -1,20 +1,20 @@
-export type Listener = (eventId: string) => void
+export type Listener<T> = (value: T, id: string) => void
 
-export interface Observable {
-  notify: (eventId: string) => void
-  subscribe: (func: Listener) => void
-  unsubscribe: (func: Listener) => void
+export interface Observable<T> {
+  notify: (value: T, id: string) => void
+  subscribe: (listener: Listener<T>) => void
+  unsubscribe: (listener: Listener<T>) => void
 }
 
-export const createObservable = (): Observable => {
-  const observers: Listener[] = []
+export const createObservable = <T>(): Observable<T> => {
+  const observers: Listener<T>[] = []
 
   return Object.freeze({
-    notify: (eventId: string) => observers.forEach((observer) => observer(eventId)),
-    subscribe: (func: Listener) => observers.push(func),
-    unsubscribe: (func: Listener) => {
+    notify: (value: T, id: string) => observers.forEach((observer) => observer(value, id)),
+    subscribe: (listener: Listener<T>) => observers.push(listener),
+    unsubscribe: (listener: Listener<T>) => {
       ;[...observers].forEach((observer, index) => {
-        if (observer === func) {
+        if (observer === listener) {
           observers.splice(index, 1)
         }
       })
