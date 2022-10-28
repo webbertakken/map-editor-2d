@@ -7,11 +7,11 @@ export class SpriteData {
   // Unique id
   public id: string = ''
   // Position in 2D space
-  public position: Translation = { x: 0, y: 0, z: 0 }
+  public position: Translation = { x: 0.0, y: 0.0, z: 0.0 }
   // Rotation in 2D space (Z-axis)
   public rotation: Rotation = 0
   // Scale in 2D space
-  public scale: Scale = { x: 1, y: 1, z: 1 }
+  public scale: Scale = { x: '1.0', y: '1.0', z: '1.0' }
   // Opacity
   public opacity: number = 1
   // Relative path to the asset
@@ -22,7 +22,7 @@ export class SpriteData {
       id: uuidv4(),
       position: { x, y, z: 1 },
       rotation: 0,
-      scale: { x: 1, y: 1, z: 1 },
+      scale: { x: '1.0', y: '1.0', z: '1.0' },
       opacity: 1,
       relativePath,
     }

@@ -11,13 +11,21 @@ interface Props {
   noPadding?: boolean
   color: keyof typeof dividerColors
   flexGrow?: number
+  style?: React.CSSProperties
 }
 
-const Section = ({ title, children, noPadding, color, flexGrow = 1 }: Props): JSX.Element => {
+const Section = ({
+  title,
+  children,
+  noPadding,
+  color,
+  flexGrow = 1,
+  style = {},
+}: Props): JSX.Element => {
   return (
-    <div className={styles.section} style={{ flexGrow }}>
+    <div className={styles.section} style={{ flexGrow, ...style }}>
       <Box className={styles.header} px="xs" pt="xxs">
-        <Heading size="xs" color={color}>
+        <Heading size="md" color={color}>
           {title}
         </Heading>
       </Box>
