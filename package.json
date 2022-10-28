@@ -9,8 +9,9 @@
     "preview": "vite preview",
     "tauri": "tauri",
     "test": "cd src-tauri && cargo test && cd ..",
-    "internal-step-dev": "vite",
-    "internal-step-build": "tsc && vite build"
+    "step-ci-test": "echo \"No tests specified\" && exit 0",
+    "step-rust-dev": "vite",
+    "step-rust-build": "tsc && vite build"
   },
   "dependencies": {
     "@tauri-apps/api": "^1.1.0",

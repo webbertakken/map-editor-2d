@@ -1,7 +1,7 @@
 {
   "build": {
-    "beforeDevCommand": "yarn internal-step-dev",
-    "beforeBuildCommand": "yarn internal-step-build",
+    "beforeDevCommand": "yarn step-rust-dev",
+    "beforeBuildCommand": "yarn step-rust-build",
     "devPath": "http://localhost:1420",
     "distDir": "../dist"
   },

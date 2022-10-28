@@ -15,8 +15,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-#      - name: Install Bevy deps + LLD linker
-#        run: sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev lld
+      - name: Install rust deps
+        run: sudo apt-get install pkg-config
+#       run: sudo apt-get install g++ pkg-config libx11-dev libasound2-dev libudev-dev lld
 
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
@@ -43,6 +44,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install rust deps
+        run: sudo apt-get install pkg-config
+
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
         with:
@@ -68,10 +72,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Cache
+      - name: Install rust deps
+        run: sudo apt-get install pkg-config
+
+      - name: Rust Cache
         uses: swatinem/rust-cache@v2
         with:
           shared-key: ${{ runner.os }}-test
+
       - name: Yarn cache
         uses: actions/cache@v2
         with:
@@ -88,13 +96,14 @@ jobs:
           profile: minimal
           toolchain: stable
           override: true
+
       - uses: borales/actions-yarn@v3.0.0
         with:
           cmd: install
 
       - uses: borales/actions-yarn@v3.0.0
         with:
-          cmd: test
+          cmd: step-ci-test
 
   fmt:
     name: Rustfmt
@@ -102,6 +111,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Install rust deps
+        run: sudo apt-get install pkg-config
 
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
@@ -125,6 +137,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Install rust deps
+        run: sudo apt-get install pkg-config
 
       - name: Install rust toolchain
         uses: actions-rs/toolchain@v1
