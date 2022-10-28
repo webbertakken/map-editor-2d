@@ -1,7 +1,7 @@
 import useImage from 'use-image'
 import { Image as KonvaImage, Transformer } from 'react-konva'
 import React from 'react'
-import { CANVAS_LIFT_UP_SCALING_FACTOR } from '../../constants'
+import { CANVAS_LIFT_UP_SCALING_FACTOR } from '../../../constants'
 import { KonvaNodeEvents } from 'react-konva/ReactKonvaCore'
 import { ImageConfig } from 'konva/lib/shapes/Image'
 import Konva from 'konva'
@@ -10,8 +10,8 @@ import {
   selectedSpriteIdsState,
   spriteDatasWithId,
   spriteMetasWithId,
-} from '../../state/SpritesState'
-import { useTransformer } from './useTransformer'
+} from '../../../state/SpritesState'
+import { useTransformer } from './hooks/useTransformer'
 
 interface Props extends KonvaNodeEvents, Partial<ImageConfig> {
   id: string

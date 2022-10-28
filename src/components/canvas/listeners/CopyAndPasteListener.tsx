@@ -1,18 +1,18 @@
 import React, { useEffect } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { AppContext } from '../../context/AppContext'
+import { AppContext } from '../../../context/AppContext'
 import {
   allSpritesState,
   copiedSpritesState,
   selectedSpriteIdsState,
   selectedSpritesState,
-} from '../../state/SpritesState'
+} from '../../../state/SpritesState'
 import { v4 as uuidv4 } from 'uuid'
-import { useNotification } from '../../hooks/useNotification'
+import { useNotification } from '../../../hooks/useNotification'
 
 interface Props {}
 
-const CopyAndPaste = ({}: Props): JSX.Element => {
+const CopyAndPasteListener = ({}: Props): JSX.Element => {
   const { hotkeys } = React.useContext(AppContext)
   const [_1, setAllSprites] = useRecoilState(allSpritesState)
   const [_2, setSelectedSpriteIds] = useRecoilState(selectedSpriteIdsState)
@@ -66,4 +66,4 @@ const CopyAndPaste = ({}: Props): JSX.Element => {
   return <></>
 }
 
-export default CopyAndPaste
+export default CopyAndPasteListener

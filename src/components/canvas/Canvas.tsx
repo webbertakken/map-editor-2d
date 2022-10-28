@@ -4,11 +4,12 @@ import Konva from 'konva'
 import { useWindowSize } from '../../hooks/useWindowSize'
 import { AppContext, AppContextProps } from '../../context/AppContext'
 import { SpriteMeta } from '../../model/SpriteMeta'
-import { CanvasSprite } from './CanvasSprite'
+import { CanvasSprite } from './objects/CanvasSprite'
 import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil'
 import { SpriteData } from '../../model/SpriteData'
 import { addSpriteCallback, selectedSpriteIdsState, spriteIdsState } from '../../state/SpritesState'
-import CopyAndPaste from './CopyAndPaste'
+import CopyAndPasteListener from './listeners/CopyAndPasteListener'
+import DeleteListener from './listeners/DeleteListener'
 
 export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
@@ -56,7 +57,8 @@ export const Canvas = () => {
 
   return (
     <div ref={ref} style={{ flexGrow: 1 }} onDragOver={onDragOver} onDrop={onDrop}>
-      <CopyAndPaste />
+      <CopyAndPasteListener />
+      <DeleteListener />
       <Stage width={width} height={height} ref={stageRef} onClick={onClick}>
         <Layer>
           {spriteIds.map((id) => (
