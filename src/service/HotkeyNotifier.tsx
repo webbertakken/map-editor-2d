@@ -16,6 +16,14 @@ export class HotkeyNotifier {
     this.events.set('delete', createObservable())
   }
 
+  public async activate() {
+    await this.register()
+  }
+
+  public async deactivate() {
+    await this.unregister()
+  }
+
   public async registerListeners() {
     // Register
     await listen(TauriEvent.WINDOW_FOCUS, this.register.bind(this))
@@ -26,7 +34,6 @@ export class HotkeyNotifier {
   }
 
   private async register() {
-    console.log('registering hotkeys')
     await unregisterAll()
     await register('CommandOrControl+C', (shortcut) => {
       this.copy?.notify(shortcut, uuidv4())
@@ -43,7 +50,6 @@ export class HotkeyNotifier {
   }
 
   private async unregister() {
-    console.log('unregistering hotkeys')
     await unregisterAll()
   }
 

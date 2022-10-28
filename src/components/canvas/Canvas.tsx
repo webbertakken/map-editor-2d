@@ -11,6 +11,7 @@ import { addSpriteCallback, selectedSpriteIdsState, spriteIdsState } from '../..
 import CopyAndPasteListener from './listeners/CopyAndPasteListener'
 import DeleteListener from './listeners/DeleteListener'
 import DeselectListener from './listeners/DeselectListener'
+import { useGlobalHotkeys } from '../../hooks/useGlobalHotkeys'
 
 export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
@@ -22,6 +23,7 @@ export const Canvas = () => {
   const addSprite = useRecoilCallback(addSpriteCallback, [])
   const spriteIds = useRecoilValue(spriteIdsState)
   const { dragAndDropRef } = useContext<AppContextProps>(AppContext)
+  const [enableHotkeys, disableHotkeys] = useGlobalHotkeys()
 
   useEffect(() => {
     if (ref.current) {
@@ -57,10 +59,18 @@ export const Canvas = () => {
   }
 
   return (
-    <div ref={ref} style={{ flexGrow: 1 }} onDragOver={onDragOver} onDrop={onDrop}>
+    <div
+      ref={ref}
+      style={{ flexGrow: 1 }}
+      onDragOver={onDragOver}
+      onDrop={onDrop}
+      onMouseEnter={enableHotkeys}
+      onMouseLeave={disableHotkeys}
+    >
       <CopyAndPasteListener />
       <DeleteListener />
       <DeselectListener />
+
       <Stage width={width} height={height} ref={stageRef} onClick={onClick}>
         <Layer>
           {spriteIds.map((id) => (
