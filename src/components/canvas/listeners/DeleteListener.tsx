@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { AppContext } from '../../../context/AppContext'
-import { useRecoilCallback, useRecoilValue } from 'recoil'
+import { useRecoilCallback, useRecoilState } from 'recoil'
 import { deleteSpritesCallback, selectedSpriteIdsState } from '../../../state/SpritesState'
 import { useNotification } from '../../../hooks/useNotification'
 
@@ -8,7 +8,7 @@ interface Props {}
 
 const DeleteListener = ({}: Props): JSX.Element => {
   const { hotkeys } = React.useContext(AppContext)
-  const selectedSpriteIds = useRecoilValue(selectedSpriteIdsState)
+  const [selectedSpriteIds, setSelectedSpriteIds] = useRecoilState(selectedSpriteIdsState)
   const notify = useNotification()
   const deleteSprites = useRecoilCallback(deleteSpritesCallback, [])
 
@@ -24,6 +24,7 @@ const DeleteListener = ({}: Props): JSX.Element => {
     if (numberOfSprites <= 0) return
 
     deleteSprites(selectedSpriteIds)
+    setSelectedSpriteIds([])
     notify.success(`Deleted ${numberOfSprites} sprite${numberOfSprites > 1 ? 's' : ''}`)
   }
 
