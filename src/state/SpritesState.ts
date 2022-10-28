@@ -63,7 +63,7 @@ export const spriteMetasWithId = selectorFamily<SpriteMeta, string>({
  */
 
 export const allSpritesState = selector<Sprites>({
-  key: 'spriteDatasCollection',
+  key: 'allSprites',
   get: ({ get }) => {
     const ids = get(spriteIdsState)
     const datas = ids.map((id) => get(spriteDatasWithId(id)))
@@ -86,6 +86,24 @@ export const allSpritesState = selector<Sprites>({
     for (const data of datas) set(spriteDatasWithId(data.id), data)
     for (const meta of metas) set(spriteMetasWithId(meta.id), meta)
     set(spriteIdsState, ids)
+  },
+})
+
+export const copiedSpritesState = atom<Sprites>({
+  key: 'copiedSpritesState',
+  default: {
+    metas: [],
+    datas: [],
+  },
+})
+
+export const selectedSpritesState = selector<Sprites>({
+  key: 'selectedSprites',
+  get: ({ get }) => {
+    const ids = get(selectedSpriteIdsState)
+    const datas = ids.map((id) => get(spriteDatasWithId(id)))
+    const metas = ids.map((id) => get(spriteMetasWithId(id)))
+    return { datas, metas }
   },
 })
 

@@ -13,11 +13,16 @@ import Main from './components/layout/Main'
 import { Toaster } from 'react-hot-toast'
 import ReactModal from 'react-modal'
 import { RecoilRoot } from 'recoil'
-import { DragAndDropContext } from './context/DragAndDropContext'
+import { AppContext } from './context/AppContext'
 import { SpriteAsset } from './model/SpriteAsset'
+import { HotkeyNotifier } from './service/HotkeyNotifier'
 
 // Global stuff
-initialiseApplication().then(() => console.info('Application initialised'))
+let hotkeys = new HotkeyNotifier()
+let dragAndDropRef = createRef<SpriteAsset>()
+
+initialiseApplication()
+hotkeys.registerListeners()
 
 // Needed for accessibility: https://reactcommunity.org/react-modal/accessibility/
 ReactModal.setAppElement('#root')
@@ -26,13 +31,8 @@ ReactModal.setAppElement('#root')
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <RecoilRoot>
-      <DragAndDropContext.Provider
-        value={{
-          dragAndDropRef: createRef<SpriteAsset>(),
-        }}
-      >
+      <AppContext.Provider value={{ dragAndDropRef, hotkeys }}>
         <Toaster />
-
         <Layout menu={<Menu />}>
           <Sidebar left>
             <ProjectPanel />
@@ -44,7 +44,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
             <DetailsPanel />
           </Sidebar>
         </Layout>
-      </DragAndDropContext.Provider>
+      </AppContext.Provider>
     </RecoilRoot>
   </React.StrictMode>,
 )
