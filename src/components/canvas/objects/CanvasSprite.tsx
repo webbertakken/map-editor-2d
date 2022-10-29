@@ -12,6 +12,7 @@ import {
   spriteMetasWithId,
 } from '../../../state/SpritesState'
 import { useTransformer } from './hooks/useTransformer'
+import { noop } from 'lodash'
 
 interface Props extends KonvaNodeEvents, Partial<ImageConfig> {
   id: string
@@ -26,7 +27,7 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
 
   const isSelected = selectedIds.includes(id)
 
-  const { scale, rotation, position, opacity } = spriteData
+  const { scale, rotation, position, opacity, locked } = spriteData
   const { src, isDragging } = spriteMeta
 
   const [htmlImageElement] = useImage(src)
@@ -54,6 +55,10 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
     setSpriteMeta((meta) => ({ ...meta, isDragging: false }))
   }
 
+  const onDoubleClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+    onClick(e)
+  }
+
   const onClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
     // prevent deselection by clicking on the canvas
     e.cancelBubble = true
@@ -77,13 +82,15 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
     setSpriteData((data) => ({ ...data, scale: { x: scaleX, y: scaleY, z: '1.0' }, rotation }))
   }
 
+  const draggable = !(locked && !isSelected)
+
   return (
     <>
       {isSelected && <Transformer />}
       <KonvaImage
         // @ts-ignore
         ref={ref}
-        draggable={true}
+        draggable={draggable}
         shadowOffsetX={isDragging ? 10 : 5}
         shadowOffsetY={isDragging ? 10 : 5}
         shadowColor="rgba(0, 0, 0, 0.5)"
@@ -103,8 +110,10 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
         opacity={opacity}
         onDragStart={onDragStart}
         onDragEnd={onDragEnd}
-        onClick={onClick}
-        onTap={onClick}
+        onClick={locked ? noop : onClick}
+        onDblClick={onDoubleClick}
+        onTap={locked ? noop : onClick}
+        onDblTap={onDoubleClick}
         onTransformEnd={onTransformEnd}
       />
     </>

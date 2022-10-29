@@ -69,6 +69,8 @@ interface SpriteData {
   opacity: number
   // Relative path to the asset
   relativePath: string
+  // Whether you can drag the sprite
+  locked: boolean
 }
 
 interface Sprites {

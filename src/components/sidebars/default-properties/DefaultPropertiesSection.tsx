@@ -1,6 +1,6 @@
 import React from 'react'
 import Section from '../../layout/Section'
-import { Box, Heading } from 'dracula-ui'
+import { Box, Checkbox, Heading } from 'dracula-ui'
 import FormRow from '../../atoms/FormRow'
 import { Field } from '../../atoms/Field'
 import { defaultPropertiesState } from '../../../state/AssetsState'
@@ -13,9 +13,12 @@ const DefaultPropertiesSection = ({}: Props): JSX.Element => {
   const [defaultProps, setDefaultProps] = useRecoilState(defaultPropertiesState)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target
-    console.log(id, value)
-    setDefaultProps((data) => set(cloneDeep(data), id, value))
+    const { id, value, checked } = e.target
+    if (e.target.type === 'checkbox') {
+      setDefaultProps((data) => set(cloneDeep(data), id, checked))
+    } else {
+      setDefaultProps((data) => set(cloneDeep(data), id, value))
+    }
   }
 
   return (
@@ -96,6 +99,13 @@ const DefaultPropertiesSection = ({}: Props): JSX.Element => {
           onChange={onChange}
         />
         <label htmlFor="opacity">Opacity</label>
+      </FormRow>
+
+      <FormRow>
+        <Box mt="xs">
+          <Checkbox color="green" id="locked" checked={defaultProps.locked} onChange={onChange} />
+          <label htmlFor="opacity">Locked</label>
+        </Box>
       </FormRow>
     </Section>
   )

@@ -1,7 +1,7 @@
 import React, { HTMLInputTypeAttribute } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { selectedSpriteIdsState, spriteDatasWithId } from '../../../state/SpritesState'
-import { Box, Heading } from 'dracula-ui'
+import { Box, Checkbox, Heading } from 'dracula-ui'
 import Section from '../../layout/Section'
 import FormRow from '../../atoms/FormRow'
 import CopyButton from '../../atoms/CopyButton'
@@ -13,8 +13,12 @@ export const InspectorSection = (): JSX.Element => {
   const [spriteData, setSpriteData] = useRecoilState(spriteDatasWithId(selectionId))
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target
-    setSpriteData((data) => set(cloneDeep(data), id, value))
+    const { id, value, checked } = e.target
+    if (e.target.type === 'checkbox') {
+      setSpriteData((data) => set(cloneDeep(data), id, checked))
+    } else {
+      setSpriteData((data) => set(cloneDeep(data), id, value))
+    }
   }
 
   return (
@@ -147,6 +151,13 @@ export const InspectorSection = (): JSX.Element => {
           onChange={onChange}
         />
         <label htmlFor="opacity">Opacity</label>
+      </FormRow>
+
+      <FormRow>
+        <Box mt="xs">
+          <Checkbox color="green" id="locked" checked={spriteData.locked} onChange={onChange} />
+          <label htmlFor="opacity">Locked</label>
+        </Box>
       </FormRow>
     </Section>
   )
