@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { selectedSpriteIdsState } from '../../state/SpritesState'
-import InspectorSection from './inspector-section/InspectorSection'
+import InspectorSection from './inspector/InspectorSection'
 
 interface Props {}
 

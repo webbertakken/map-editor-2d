@@ -1,59 +1,21 @@
 import React, { HTMLInputTypeAttribute } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { selectedSpriteIdsState, spriteDatasWithId } from '../../../state/SpritesState'
-import { Box, Heading, Input } from 'dracula-ui'
+import { Box, Heading } from 'dracula-ui'
 import Section from '../../layout/Section'
-import { cloneDeep, set } from 'lodash'
 import FormRow from '../../atoms/FormRow'
 import CopyButton from '../../atoms/CopyButton'
+import { cloneDeep, set } from 'lodash'
+import { Field } from '../../atoms/Field'
 
-interface Props {
-  value: string
-  type?: HTMLInputTypeAttribute | undefined
-  step?: number | string | undefined
-  enforceStep?: boolean | undefined
-  [key: string]: any
-}
-
-const Field = ({ id, value, type, step, enforceStep, ...props }: any) => {
+export const InspectorSection = (): JSX.Element => {
   const [selectionId] = useRecoilValue(selectedSpriteIdsState)
-  const [_1, setSpriteData] = useRecoilState(spriteDatasWithId(selectionId))
-
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') e.currentTarget.blur()
-  }
+  const [spriteData, setSpriteData] = useRecoilState(spriteDatasWithId(selectionId))
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target
     setSpriteData((data) => set(cloneDeep(data), id, value))
   }
-
-  if (type === 'number') {
-    // Rounding after a comma or dot is added.
-    if (enforceStep && step === '1' && value !== '') {
-      value = Math.round(value).toString()
-    }
-  }
-
-  return (
-    <Input
-      id={id}
-      type={type}
-      step={step}
-      lang="en-150"
-      size="sm"
-      borderSize="sm"
-      onKeyDown={onKeyDown}
-      onChange={onChange}
-      {...props}
-      value={value}
-    />
-  )
-}
-
-export const InspectorSection = (): JSX.Element => {
-  const [selectionId] = useRecoilValue(selectedSpriteIdsState)
-  const [spriteData, setSpriteData] = useRecoilState(spriteDatasWithId(selectionId))
 
   return (
     <Section title="Inspector" color="pink" flexGrow={1} style={{ maxHeight: 'inherit' }}>
@@ -63,13 +25,19 @@ export const InspectorSection = (): JSX.Element => {
 
       <label htmlFor="id">Unique ID</label>
       <FormRow>
-        <Field color="purple" disabled id="id" value={spriteData.id} />
+        <Field color="purple" disabled id="id" value={spriteData.id} onChange={onChange} />
         <CopyButton name="id" copyText={spriteData.id} />
       </FormRow>
 
       <label htmlFor="relativePath">Relative Path (from scene file)</label>
       <FormRow>
-        <Field color="purple" disabled id="relativePath" value={spriteData.relativePath} />
+        <Field
+          color="purple"
+          disabled
+          id="relativePath"
+          value={spriteData.relativePath}
+          onChange={onChange}
+        />
         <CopyButton name="relative path" copyText={spriteData.relativePath} />
       </FormRow>
 
@@ -91,6 +59,7 @@ export const InspectorSection = (): JSX.Element => {
           max="1000"
           id="position.z"
           value={spriteData.position.z}
+          onChange={onChange}
         />
       </FormRow>
 
@@ -104,6 +73,7 @@ export const InspectorSection = (): JSX.Element => {
           enforceStep
           id="position.x"
           value={spriteData.position.x}
+          onChange={onChange}
         />
         <label htmlFor="position.y">Y</label>
         <Field
@@ -113,6 +83,7 @@ export const InspectorSection = (): JSX.Element => {
           enforceStep
           id="position.y"
           value={spriteData.position.y}
+          onChange={onChange}
         />
       </FormRow>
 
@@ -126,6 +97,7 @@ export const InspectorSection = (): JSX.Element => {
           max="100"
           id="scale.x"
           value={spriteData.scale.x}
+          onChange={onChange}
         />
         <label htmlFor="scale.y">Y</label>
         <Field
@@ -135,6 +107,7 @@ export const InspectorSection = (): JSX.Element => {
           max="100"
           id="scale.y"
           value={spriteData.scale.y}
+          onChange={onChange}
         />
       </FormRow>
 
@@ -155,6 +128,7 @@ export const InspectorSection = (): JSX.Element => {
           max="180"
           id="rotation"
           value={spriteData.rotation}
+          onChange={onChange}
         />
         <label htmlFor="rotation">Angle</label>
       </FormRow>
@@ -170,6 +144,7 @@ export const InspectorSection = (): JSX.Element => {
           min="0"
           id="opacity"
           value={spriteData.opacity}
+          onChange={onChange}
         />
         <label htmlFor="opacity">Opacity</label>
       </FormRow>

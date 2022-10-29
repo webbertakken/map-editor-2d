@@ -11,13 +11,14 @@ import { useNotification } from '../../../hooks/useNotification'
 import { SceneMeta } from '../../../model/SceneMeta'
 import { isSceneLoadedState, sceneMetaState, sceneState } from '../../../state/SceneState'
 import { AssetsLoader } from '../../../service/AssetsLoader'
-import { assetsState } from '../../../state/AssetsState'
+import { assetsState, defaultPropertiesState } from '../../../state/AssetsState'
 import { AssetPath } from '../../../model/AssetPath'
 import { Path } from '../../../model/Path'
 import { Assets } from '../../../model/Assets'
 import { CanvasLoader } from '../../../service/CanvasLoader'
 import { allSpritesState } from '../../../state/SpritesState'
 import { Sprites } from '../../../model/Sprites'
+import { DefaultProperties } from '../../../model/DefaultProperties'
 
 class Props {}
 
@@ -27,6 +28,7 @@ const NewScene = ({}: Props): JSX.Element => {
   const [_3, setAssets] = useRecoilState(assetsState)
   const [_4, setAllSprites] = useRecoilState(allSpritesState)
   const [_5, setHasLoadedScene] = useRecoilState(isSceneLoadedState)
+  const [_6, setDefaultProperties] = useRecoilState(defaultPropertiesState)
   const notify = useNotification()
   const [isOpen, setIsOpen] = React.useState(false)
 
@@ -63,6 +65,7 @@ const NewScene = ({}: Props): JSX.Element => {
           setSceneMeta(SceneMeta.default())
           setAssets(Assets.default())
           setAllSprites(Sprites.default())
+          setDefaultProperties(DefaultProperties.default())
 
           // Load file
           const fileContents = await readTextFile(filePath)
@@ -77,6 +80,11 @@ const NewScene = ({}: Props): JSX.Element => {
 
           // Close modal
           setIsOpen(false)
+
+          // Load defaults
+          if (scene.defaultProperties) {
+            setDefaultProperties(scene.defaultProperties)
+          }
 
           // Load assets
           if (scene.assetsRelativePath !== null) {

@@ -17,13 +17,17 @@ export class SpriteData {
   // Relative path to the asset
   public relativePath: string = ''
 
-  static createFromDragAndDrop(x: number, y: number, relativePath: string): SpriteData {
+  static createFromDragAndDrop(
+    x: number,
+    y: number,
+    relativePath: string,
+    defaults: DefaultPropertiesProps,
+  ): SpriteData {
+    const { z } = defaults.position
     return {
       id: uuidv4(),
-      position: { x, y, z: 1 },
-      rotation: 0,
-      scale: { x: '1.0', y: '1.0', z: '1.0' },
-      opacity: 1,
+      ...defaults,
+      position: { x, y, z },
       relativePath,
     }
   }

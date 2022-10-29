@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import {
   isSceneLoadedState,
+  isSceneOpenState,
   sceneAbsoluteFilePath,
   sceneFileDataSelector,
 } from '../../../state/SceneState'
