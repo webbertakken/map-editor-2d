@@ -12,12 +12,14 @@ import CopyAndPasteListener from './listeners/CopyAndPasteListener'
 import DeleteListener from './listeners/DeleteListener'
 import DeselectListener from './listeners/DeselectListener'
 import { useGlobalHotkeys } from '../../hooks/useGlobalHotkeys'
+import { defaultPropertiesState } from '../../state/AssetsState'
 
 export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
   const stageRef = React.useRef<Konva.Stage>(null)
   const windowSize = useWindowSize()
   const [_1, setSelectedSpriteIds] = useRecoilState(selectedSpriteIdsState)
+  const [defaultProps] = useRecoilState(defaultPropertiesState)
   const [width, setWidth] = useState<number | undefined>(windowSize.width)
   const [height, setHeight] = useState<number | undefined>(windowSize.height)
   const addSprite = useRecoilCallback(addSpriteCallback, [])
@@ -46,7 +48,8 @@ export const Canvas = () => {
     const { x, y } = stageRef.current.getPointerPosition() || { x: 0, y: 0 }
 
     // Add sprite to canvas at that position
-    const spriteData = SpriteData.createFromDragAndDrop(x, y, dragAndDropRef.current.relativePath)
+    const { relativePath } = dragAndDropRef.current
+    const spriteData = SpriteData.createFromDragAndDrop(x, y, relativePath, defaultProps)
     const spriteMeta = SpriteMeta.createFromSpriteAsset(spriteData.id, dragAndDropRef.current)
     addSprite(spriteData.id, spriteData, spriteMeta)
 

@@ -2,6 +2,7 @@ import { atom, DefaultValue, selector } from 'recoil'
 import { Scene } from '../model/Scene'
 import { allSpritesState } from './SpritesState'
 import { SceneMeta } from '../model/SceneMeta'
+import { defaultPropertiesState } from './AssetsState'
 
 /**
  * Meta information about the scene
@@ -68,6 +69,7 @@ export const sceneFileDataSelector = selector<Scene>({
   key: 'sceneFileData',
   get: ({ get }) => ({
     ...get(sceneState),
+    defaultProperties: get(defaultPropertiesState),
     canvas: {
       sprites: get(allSpritesState).datas,
     },

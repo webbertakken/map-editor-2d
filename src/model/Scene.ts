@@ -1,6 +1,7 @@
 import { SCENE_FILE_CURRENT_VERSION } from '../constants'
 import { gt as semverGt, lt as semverLt, valid as semverValid } from 'semver'
 import { SpriteData } from './SpriteData'
+import { DefaultProperties } from './DefaultProperties'
 
 interface CanvasInstance {
   sprites: SpriteData[]
@@ -15,6 +16,7 @@ export class Scene {
   public description: string = ''
   public assetsRelativePath: string | null = null
   public canvas: CanvasInstance = {} as CanvasInstance
+  public defaultProperties: DefaultPropertiesProps = DefaultProperties.default()
 
   public static default() {
     return {
@@ -22,6 +24,7 @@ export class Scene {
       version: SCENE_FILE_CURRENT_VERSION,
       description: 'Please select a scene file to edit',
       assetsRelativePath: null,
+      defaultProperties: DefaultProperties.default(),
       canvas: {
         sprites: [],
       },
@@ -69,7 +72,7 @@ export class Scene {
     }
 
     // Parse file
-    const { name, description, assetsRelativePath, canvas, ...rest } = json
+    const { name, description, assetsRelativePath, canvas, defaultProperties, ...rest } = json
     if (rest.length > 0 && !allowUnknownFields) {
       throw new Error('Unknown fields in scene file.')
     }
@@ -87,6 +90,7 @@ export class Scene {
     const safeProps = {}
     if (typeof canvas !== 'undefined') Object.assign(safeProps, { canvas })
     if (typeof assetsRelativePath !== 'undefined') Object.assign(safeProps, { assetsRelativePath })
+    if (typeof defaultProperties !== 'undefined') Object.assign(safeProps, { defaultProperties })
 
     return {
       ...Scene.default(),

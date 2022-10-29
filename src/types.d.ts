@@ -75,3 +75,5 @@ interface Sprites {
   datas: SpriteData[]
   metas: SpriteMeta[]
 }
+
+type DefaultPropertiesProps = Omit<SpriteData, 'id' | 'relativePath'>
