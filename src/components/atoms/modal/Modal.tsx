@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactModal from 'react-modal'
-import { Heading, Button as DraculaButton, Box, Divider, DividerProps } from 'dracula-ui'
+import { Heading, Button as DraculaButton, Box, Divider } from 'dracula-ui'
 import styles from './Modale.module.css'
 import { dividerColors } from 'dracula-ui/components/Divider/Divider'
 

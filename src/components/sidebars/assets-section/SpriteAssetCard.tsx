@@ -1,5 +1,5 @@
 import React, { DragEventHandler, useContext } from 'react'
-import styles from '../Sprite.module.css'
+import styles from './Sprite.module.css'
 import { AppContext } from '../../../context/AppContext'
 import { SpriteAsset } from '../../../model/SpriteAsset'
 
