@@ -1,15 +1,15 @@
 import React from 'react'
 import { useRecoilValue } from 'recoil'
 import { selectedSpriteIdsState } from '../../state/SpritesState'
-import InspectorSection from './InspectorSection'
+import InspectorSection from './inspector-section/InspectorSection'
 
 interface Props {}
 
-const DetailsPanel = ({}: Props): JSX.Element => {
+const RightSidebar = ({}: Props): JSX.Element => {
   const selectedSprites = useRecoilValue(selectedSpriteIdsState)
   const hasSelection = selectedSprites.length > 0
 
   return <>{hasSelection && <InspectorSection />}</>
 }
 
-export default DetailsPanel
+export default RightSidebar

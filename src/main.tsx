@@ -5,9 +5,9 @@ import 'dracula-ui/styles/dracula-ui.css'
 import { initialiseApplication } from './init'
 import Layout from './components/layout/Layout'
 import Menu from './components/menu/Menu'
-import ProjectPanel from './components/project-panel/ProjectPanel'
+import LeftSidebar from './components/sidebars/LeftSidebar'
 import { Canvas } from './components/canvas/Canvas'
-import DetailsPanel from './components/details-panel/DetailsPanel'
+import RightSidebar from './components/sidebars/RightSidebar'
 import Sidebar from './components/layout/Sidebar'
 import Main from './components/layout/Main'
 import { Toaster } from 'react-hot-toast'
@@ -35,13 +35,13 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <Toaster />
         <Layout menu={<Menu />}>
           <Sidebar left>
-            <ProjectPanel />
+            <LeftSidebar />
           </Sidebar>
           <Main>
             <Canvas />
           </Main>
           <Sidebar right>
-            <DetailsPanel />
+            <RightSidebar />
           </Sidebar>
         </Layout>
       </AppContext.Provider>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Paragraph } from 'dracula-ui'
-import Modal from '../../modal/Modal'
+import Modal from '../../atoms/modal/Modal'
 import ExternalLink from '../../atoms/ExternalLink'
 import { open } from '@tauri-apps/api/dialog'
 import { SCENE_FILE_TYPE_EXTENSION, SCENE_FILE_TYPE_NAME } from '../../../constants'
