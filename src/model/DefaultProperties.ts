@@ -5,6 +5,7 @@ export class DefaultProperties implements Partial<SpriteData> {
       rotation: 0,
       scale: { x: '1.0', y: '1.0', z: '1.0' },
       opacity: 1,
+      locked: false,
     }
   }
 }

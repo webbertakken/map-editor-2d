@@ -16,6 +16,8 @@ export class SpriteData {
   public opacity: number = 1
   // Relative path to the asset
   public relativePath: string = ''
+  // Whether you can drag the sprite
+  public locked: boolean = false
 
   static createFromDragAndDrop(
     x: number,
