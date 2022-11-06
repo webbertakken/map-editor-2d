@@ -1,7 +1,6 @@
 import useImage from 'use-image'
 import { Image as KonvaImage, Transformer } from 'react-konva'
 import React from 'react'
-import { CANVAS_LIFT_UP_SCALING_FACTOR } from '../../../constants'
 import { KonvaNodeEvents } from 'react-konva/ReactKonvaCore'
 import { ImageConfig } from 'konva/lib/shapes/Image'
 import Konva from 'konva'
@@ -33,14 +32,8 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
   const [htmlImageElement] = useImage(src)
   const { width, height } = htmlImageElement || { width: 0, height: 0 }
 
-  const scaleX = isDragging ? Number(scale.x) * CANVAS_LIFT_UP_SCALING_FACTOR : Number(scale.x)
-  const scaleY = isDragging ? Number(scale.y) * CANVAS_LIFT_UP_SCALING_FACTOR : Number(scale.y)
-
-  const halfWidth = (width * scaleX) / 2
-  const halfHeight = (height * scaleY) / 2
-
-  const x = position.x - halfWidth
-  const y = position.y - halfHeight
+  const scaleX = Number(scale.x)
+  const scaleY = Number(scale.y)
 
   const onDragStart = (e: Konva.KonvaEventObject<DragEvent>) => {
     setSpriteMeta((meta) => ({ ...meta, isDragging: true }))
@@ -50,8 +43,8 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
     setSpriteData((data) => ({
       ...data,
       position: {
-        x: Number((e.target.x() + halfWidth).toFixed(0)),
-        y: Number((e.target.y() + halfHeight).toFixed(0)),
+        x: Number(e.target.x().toFixed(0)),
+        y: Number(e.target.y().toFixed(0)),
         z: Number(Number(data.position.z).toFixed(0)),
       },
     }))
@@ -103,10 +96,10 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
         {...spriteMeta}
         id={id}
         image={htmlImageElement}
-        x={x}
-        y={y}
-        offsetX={0}
-        offsetY={0}
+        x={position.x}
+        y={position.y}
+        offsetX={width / 2}
+        offsetY={height / 2}
         rotation={rotation}
         scaleX={scaleX}
         scaleY={scaleY}
