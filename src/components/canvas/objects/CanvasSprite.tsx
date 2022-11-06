@@ -33,11 +33,14 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
   const [htmlImageElement] = useImage(src)
   const { width, height } = htmlImageElement || { width: 0, height: 0 }
 
-  const x = position.x - width / 2
-  const y = position.y - height / 2
-
   const scaleX = isDragging ? Number(scale.x) * CANVAS_LIFT_UP_SCALING_FACTOR : Number(scale.x)
   const scaleY = isDragging ? Number(scale.y) * CANVAS_LIFT_UP_SCALING_FACTOR : Number(scale.y)
+
+  const halfWidth = (width * scaleX) / 2
+  const halfHeight = (height * scaleY) / 2
+
+  const x = position.x - halfWidth
+  const y = position.y - halfHeight
 
   const onDragStart = (e: Konva.KonvaEventObject<DragEvent>) => {
     setSpriteMeta((meta) => ({ ...meta, isDragging: true }))
@@ -47,8 +50,8 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
     setSpriteData((data) => ({
       ...data,
       position: {
-        x: Number((e.target.x() + width / 2).toFixed(0)),
-        y: Number((e.target.y() + height / 2).toFixed(0)),
+        x: Number((e.target.x() + halfWidth).toFixed(0)),
+        y: Number((e.target.y() + halfHeight).toFixed(0)),
         z: Number(Number(data.position.z).toFixed(0)),
       },
     }))
