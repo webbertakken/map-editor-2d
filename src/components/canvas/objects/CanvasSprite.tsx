@@ -1,6 +1,6 @@
 import useImage from 'use-image'
 import { Image as KonvaImage, Transformer } from 'react-konva'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { KonvaNodeEvents } from 'react-konva/ReactKonvaCore'
 import { ImageConfig } from 'konva/lib/shapes/Image'
 import Konva from 'konva'
@@ -34,6 +34,12 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
 
   const scaleX = Number(scale.x)
   const scaleY = Number(scale.y)
+
+  // When image loads, get the width and height, needed for weight calculations
+  useEffect(() => {
+    if (!width || !height) return
+    setSpriteMeta((meta) => ({ ...meta, spriteWidth: width, spriteHeight: height }))
+  }, [width, height])
 
   const onDragStart = (e: Konva.KonvaEventObject<DragEvent>) => {
     setSpriteMeta((meta) => ({ ...meta, isDragging: true }))

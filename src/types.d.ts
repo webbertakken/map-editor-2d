@@ -53,6 +53,9 @@ interface CanvasItemMeta {
   src: any
   // Needed to keep track of whether the item is being dragged
   isDragging: boolean
+  // Size
+  spriteWidth: number
+  spriteHeight: number
 }
 
 interface SpriteMeta extends CanvasItemMeta {}
@@ -71,6 +74,12 @@ interface SpriteData {
   relativePath: string
   // Whether you can drag the sprite
   locked: boolean
+  // Whether it can move as an object or not.
+  static: boolean
+  // Weight
+  useSizeForWeight: boolean
+  sizeToWeightMultiplier: number
+  weight: number
 }
 
 interface Sprites {

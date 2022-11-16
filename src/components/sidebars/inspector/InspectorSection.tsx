@@ -1,6 +1,10 @@
 import React, { HTMLInputTypeAttribute } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import { selectedSpriteIdsState, spriteDatasWithId } from '../../../state/SpritesState'
+import {
+  selectedSpriteIdsState,
+  spriteDatasWithId,
+  spriteMetasWithId,
+} from '../../../state/SpritesState'
 import { Box, Checkbox, Heading } from 'dracula-ui'
 import Section from '../../layout/Section'
 import FormRow from '../../atoms/FormRow'
@@ -8,17 +12,64 @@ import CopyButton from '../../atoms/CopyButton'
 import { cloneDeep, set } from 'lodash'
 import { Field } from '../../atoms/Field'
 
+const calculateWeight = (
+  width: number,
+  height: number,
+  scale: Scale,
+  sizeToWeightMultiplier: number | string,
+) => {
+  return (
+    ((width * Number(scale.x) * height * Number(scale.y)) / 200) * Number(sizeToWeightMultiplier)
+  )
+}
+
+const getDerivedValues = (
+  id: string,
+  value: any,
+  spriteData: SpriteData,
+  spriteMeta: SpriteMeta,
+) => {
+  console.log(id, value, spriteMeta.spriteWidth, spriteMeta.spriteHeight)
+  switch (id) {
+    case 'sizeToWeightMultiplier': {
+      const weight = calculateWeight(
+        spriteMeta.spriteWidth,
+        spriteMeta.spriteHeight,
+        spriteData.scale,
+        value,
+      )
+      return { weight }
+    }
+    case 'useSizeForWeight': {
+      if (value === false) return {}
+      const weight = calculateWeight(
+        spriteMeta.spriteWidth,
+        spriteMeta.spriteHeight,
+        spriteData.scale,
+        spriteData.sizeToWeightMultiplier,
+      )
+      return { weight }
+    }
+    default:
+      return {}
+  }
+}
+
 export const InspectorSection = (): JSX.Element => {
   const [selectionId] = useRecoilValue(selectedSpriteIdsState)
   const [spriteData, setSpriteData] = useRecoilState(spriteDatasWithId(selectionId))
+  const [spriteMeta, _] = useRecoilState(spriteMetasWithId(selectionId))
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value, checked } = e.target
-    if (e.target.type === 'checkbox') {
-      setSpriteData((data) => set(cloneDeep(data), id, checked))
-    } else {
-      setSpriteData((data) => set(cloneDeep(data), id, value))
-    }
+    const { id, value, checked, type } = e.target
+    let newValue = type === 'checkbox' ? checked : value
+
+    setSpriteData((data) => {
+      let newData = cloneDeep(data)
+      set(newData, id, newValue)
+      Object.assign(newData, getDerivedValues(id, newValue, spriteData, spriteMeta))
+      return newData
+    })
   }
 
   return (
@@ -156,7 +207,82 @@ export const InspectorSection = (): JSX.Element => {
       <FormRow>
         <Box mt="xs">
           <Checkbox color="green" id="locked" checked={spriteData.locked} onChange={onChange} />
-          <label htmlFor="opacity">Locked</label>
+          <label htmlFor="locked">Locked</label>
+        </Box>
+      </FormRow>
+
+      <Box pt="sm">
+        <Heading size="xs" color="yellow" as="h3">
+          Physics
+        </Heading>
+      </Box>
+
+      <Heading size="xs">Rigidbody</Heading>
+      <FormRow>
+        <Box my="xs">
+          <Checkbox color="green" id="static" checked={spriteData.static} onChange={onChange} />
+          <label htmlFor="static">Static</label>
+        </Box>
+      </FormRow>
+
+      <Heading size="xs">Weight</Heading>
+      <FormRow>
+        <Box my="xs">
+          <label htmlFor="useSizeForWeight">
+            <Checkbox
+              color="white"
+              id="useSizeForWeight"
+              checked={spriteData.useSizeForWeight}
+              onChange={onChange}
+            />{' '}
+            <Field
+              style={{ width: '6em' }}
+              disabled={!spriteData.useSizeForWeight}
+              color="green"
+              type="number"
+              max="10000"
+              min="0"
+              id="sizeToWeightMultiplier"
+              value={spriteData.sizeToWeightMultiplier}
+              onChange={onChange}
+            />{' '}
+            kg per sqm
+          </label>
+        </Box>
+      </FormRow>
+
+      <FormRow>
+        <Box my="xs">
+          <label htmlFor="notUseSizeForWeight">
+            <Checkbox
+              color="white"
+              id="notUseSizeForWeight"
+              checked={!spriteData.useSizeForWeight}
+              onChange={(e) =>
+                onChange({
+                  ...e,
+                  target: {
+                    ...e.target,
+                    id: 'useSizeForWeight',
+                    type: 'checkbox',
+                    checked: !e.target.checked,
+                  },
+                })
+              }
+            />{' '}
+            <Field
+              disabled={spriteData.useSizeForWeight}
+              style={{ width: '6em' }}
+              color="green"
+              type="number"
+              max="10000"
+              min="0"
+              id="weight"
+              value={spriteData.weight}
+              onChange={onChange}
+            />{' '}
+            kg
+          </label>
         </Box>
       </FormRow>
     </Section>

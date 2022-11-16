@@ -13,12 +13,9 @@ const DefaultPropertiesSection = ({}: Props): JSX.Element => {
   const [defaultProps, setDefaultProps] = useRecoilState(defaultPropertiesState)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value, checked } = e.target
-    if (e.target.type === 'checkbox') {
-      setDefaultProps((data) => set(cloneDeep(data), id, checked))
-    } else {
-      setDefaultProps((data) => set(cloneDeep(data), id, value))
-    }
+    const { id, type, value, checked } = e.target
+    const newValue = type === 'checkbox' ? checked : value
+    setDefaultProps((data) => set(cloneDeep(data), id, newValue))
   }
 
   return (
@@ -63,12 +60,6 @@ const DefaultPropertiesSection = ({}: Props): JSX.Element => {
         />
       </FormRow>
 
-      <Box pt="sm">
-        <Heading size="xs" color="yellow" as="h3">
-          Other settings
-        </Heading>
-      </Box>
-
       <Heading size="xs">Rotation</Heading>
       <FormRow>
         <Field
@@ -101,10 +92,91 @@ const DefaultPropertiesSection = ({}: Props): JSX.Element => {
         <label htmlFor="opacity">Opacity</label>
       </FormRow>
 
+      <Box pt="sm">
+        <Heading size="xs" color="yellow" as="h3">
+          Editor settings
+        </Heading>
+      </Box>
+
       <FormRow>
-        <Box mt="xs">
+        <Box my="xs">
           <Checkbox color="green" id="locked" checked={defaultProps.locked} onChange={onChange} />
-          <label htmlFor="opacity">Locked</label>
+          <label htmlFor="locked">Locked</label>
+        </Box>
+      </FormRow>
+
+      <Box pt="sm">
+        <Heading size="xs" color="yellow" as="h3">
+          Physics
+        </Heading>
+      </Box>
+
+      <Heading size="xs">Rigidbody</Heading>
+      <FormRow>
+        <Box my="xs">
+          <Checkbox color="green" id="static" checked={defaultProps.static} onChange={onChange} />
+          <label htmlFor="static">Static</label>
+        </Box>
+      </FormRow>
+
+      <Heading size="xs">Weight</Heading>
+      <FormRow>
+        <Box my="xs">
+          <label htmlFor="useSizeForWeight">
+            <Checkbox
+              color="white"
+              id="useSizeForWeight"
+              checked={defaultProps.useSizeForWeight}
+              onChange={onChange}
+            />{' '}
+            <Field
+              style={{ width: '6em' }}
+              disabled={!defaultProps.useSizeForWeight}
+              color="green"
+              type="number"
+              max="10000"
+              min="0"
+              id="sizeToWeightMultiplier"
+              value={defaultProps.sizeToWeightMultiplier}
+              onChange={onChange}
+            />{' '}
+            kg per sqm
+          </label>
+        </Box>
+      </FormRow>
+
+      <FormRow>
+        <Box my="xs">
+          <label htmlFor="notUseSizeForWeight">
+            <Checkbox
+              color="white"
+              id="notUseSizeForWeight"
+              checked={!defaultProps.useSizeForWeight}
+              onChange={(e) =>
+                onChange({
+                  ...e,
+                  target: {
+                    ...e.target,
+                    id: 'useSizeForWeight',
+                    type: 'checkbox',
+                    checked: !e.target.checked,
+                  },
+                })
+              }
+            />{' '}
+            <Field
+              disabled={defaultProps.useSizeForWeight}
+              style={{ width: '5em' }}
+              color="green"
+              type="number"
+              max="10000"
+              min="0"
+              id="weight"
+              value={defaultProps.weight}
+              onChange={onChange}
+            />{' '}
+            kg
+          </label>
         </Box>
       </FormRow>
     </Section>
