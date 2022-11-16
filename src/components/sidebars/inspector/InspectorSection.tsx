@@ -19,7 +19,7 @@ const calculateWeight = (
   sizeToWeightMultiplier: number | string,
 ) => {
   return (
-    ((width * Number(scale.x) * height * Number(scale.y)) / 200) * Number(sizeToWeightMultiplier)
+    ((width * Number(scale.x) * height * Number(scale.y)) / 10_000) * Number(sizeToWeightMultiplier)
   )
 }
 
