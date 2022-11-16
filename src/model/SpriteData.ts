@@ -21,7 +21,7 @@ export class SpriteData {
 
   // Physics properties
   // Whether it can move as an object or not.
-  public static: boolean = false
+  public isStatic: boolean = false
   // Weight
   public useSizeForWeight: boolean = true
   public sizeToWeightMultiplier: number = 100

@@ -220,8 +220,8 @@ export const InspectorSection = (): JSX.Element => {
       <Heading size="xs">Rigidbody</Heading>
       <FormRow>
         <Box my="xs">
-          <Checkbox color="green" id="static" checked={spriteData.static} onChange={onChange} />
-          <label htmlFor="static">Static</label>
+          <Checkbox color="green" id="isStatic" checked={spriteData.isStatic} onChange={onChange} />
+          <label htmlFor="isStatic">Static</label>
         </Box>
       </FormRow>
 

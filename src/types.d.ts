@@ -75,7 +75,7 @@ interface SpriteData {
   // Whether you can drag the sprite
   locked: boolean
   // Whether it can move as an object or not.
-  static: boolean
+  isStatic: boolean
   // Weight
   useSizeForWeight: boolean
   sizeToWeightMultiplier: number

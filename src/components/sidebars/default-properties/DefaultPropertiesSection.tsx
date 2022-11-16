@@ -114,8 +114,13 @@ const DefaultPropertiesSection = ({}: Props): JSX.Element => {
       <Heading size="xs">Rigidbody</Heading>
       <FormRow>
         <Box my="xs">
-          <Checkbox color="green" id="static" checked={defaultProps.static} onChange={onChange} />
-          <label htmlFor="static">Static</label>
+          <Checkbox
+            color="green"
+            id="isStatic"
+            checked={defaultProps.isStatic}
+            onChange={onChange}
+          />
+          <label htmlFor="isStatic">Static</label>
         </Box>
       </FormRow>
 
