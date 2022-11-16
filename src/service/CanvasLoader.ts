@@ -1,6 +1,7 @@
 import { Scene } from '../model/Scene'
 import { Assets } from '../model/Assets'
 import { SpriteMeta } from '../model/SpriteMeta'
+import { SpriteData } from '../model/SpriteData'
 
 export class CanvasLoader {
   static async loadSprites(scene: Scene, assets: Assets): Promise<Sprites> {
@@ -14,8 +15,10 @@ export class CanvasLoader {
         throw new Error(`Could not find asset for sprite ${sprite.relativePath}`)
       }
 
-      metas.push(SpriteMeta.fromSpriteAndAsset(sprite, asset))
-      datas.push(sprite)
+      let spriteData = SpriteData.fromSceneFile(sprite)
+
+      datas.push(spriteData)
+      metas.push(SpriteMeta.fromSpriteAndAsset(spriteData, asset))
     })
 
     return { datas, metas }

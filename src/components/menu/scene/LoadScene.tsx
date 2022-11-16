@@ -83,7 +83,7 @@ const NewScene = ({}: Props): JSX.Element => {
 
           // Load defaults
           if (scene.defaultProperties) {
-            setDefaultProperties(scene.defaultProperties)
+            setDefaultProperties(DefaultProperties.fromSceneFile(scene.defaultProperties))
           }
 
           // Load assets

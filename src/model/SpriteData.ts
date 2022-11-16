@@ -19,6 +19,20 @@ export class SpriteData {
   // Whether you can drag the sprite
   public locked: boolean = false
 
+  // Physics properties
+  // Whether it can move as an object or not.
+  public isStatic: boolean = false
+  // Weight
+  public useSizeForWeight: boolean = true
+  public sizeToWeightMultiplier: number = 100
+  public weight: number = 100
+
+  static default() {
+    const { ...defaults } = new SpriteData()
+
+    return defaults
+  }
+
   static createFromDragAndDrop(
     x: number,
     y: number,
@@ -27,14 +41,18 @@ export class SpriteData {
   ): SpriteData {
     const { z } = defaults.position
     return {
-      id: uuidv4(),
+      ...SpriteData.default(),
       ...defaults,
+      id: uuidv4(),
       position: { x, y, z },
       relativePath,
     }
   }
 
-  static default() {
-    return {} as SpriteData
+  static fromSceneFile(sprite: SpriteData) {
+    return {
+      ...SpriteData.default(),
+      ...sprite,
+    }
   }
 }
