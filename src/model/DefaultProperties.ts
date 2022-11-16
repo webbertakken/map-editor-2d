@@ -12,4 +12,13 @@ export class DefaultProperties implements Partial<SpriteData> {
       weight: 100,
     }
   }
+
+  public static fromSceneFile(
+    defaultProperties: Partial<DefaultPropertiesProps>,
+  ): DefaultPropertiesProps {
+    return {
+      ...DefaultProperties.default(),
+      ...defaultProperties,
+    }
+  }
 }
