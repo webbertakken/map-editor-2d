@@ -31,7 +31,7 @@ export const sceneAbsoluteFilePath = selector({
 export const isSceneLoadedState = selector<boolean>({
   key: 'hasLoadedScene',
   get: ({ get }) => get(sceneMetaState).hasLoaded,
-  set: ({ set, get }, hasLoaded) => {
+  set: ({ set }, hasLoaded) => {
     set(sceneMetaState, (oldValue) => {
       if (hasLoaded instanceof DefaultValue) {
         return { ...oldValue, hasLoaded: false }
