@@ -5,7 +5,7 @@ interface Props {
   href: string
 }
 
-const ExternalLink = ({ title, href }: Props): JSX.Element => {
+const ExternalLink = ({ title, href: _href }: Props): JSX.Element => {
   return (
     <a
       target="_blank"

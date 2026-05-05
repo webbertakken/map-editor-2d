@@ -1,0 +1,58 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "react", "vitest", "jsx-a11y", "unicorn", "oxc"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "error",
+    "perf": "error"
+  },
+  "rules": {
+    "vitest/require-mock-type-parameters": "off",
+    "vitest/valid-title": "off",
+    "typescript/no-explicit-any": "warn",
+    "typescript/ban-ts-comment": "off",
+    "typescript/no-extraneous-class": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-bitwise": "off",
+    "no-shadow": "off",
+    "no-empty-pattern": "off",
+    "no-await-in-loop": "off",
+    "unicorn/consistent-function-scoping": "off",
+    "unicorn/no-array-sort": "off",
+    "unicorn/prefer-set-has": "off",
+    "oxc/no-map-spread": "warn",
+    "react-hooks/exhaustive-deps": "warn",
+    "jsx-a11y/no-static-element-interactions": "warn",
+    "jsx-a11y/click-events-have-key-events": "warn",
+    "jsx-a11y/anchor-is-valid": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+      "rules": {
+        "typescript/no-explicit-any": "off",
+        "no-unused-vars": "off"
+      }
+    },
+    {
+      "files": ["src/init.ts"],
+      "rules": {
+        "no-extend-native": "off"
+      }
+    }
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es2024": true,
+    "vitest/globals": true
+  },
+  "ignorePatterns": [
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/.yarn/**",
+    "src-tauri/**"
+  ]
+}

@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+yarn lint-staged
+yarn typecheck
+
+# Tauri/Rust check only when src-tauri files are staged.
+if git diff --cached --name-only --diff-filter=ACM | grep -qE '^src-tauri/.+\.(rs|toml)$|^src-tauri/Cargo\.lock$'; then
+  if command -v cargo >/dev/null 2>&1; then
+    (cd src-tauri && cargo check)
+  fi
+fi
+
+if command -v gitleaks >/dev/null 2>&1; then
+  gitleaks protect --staged --no-banner --redact
+fi

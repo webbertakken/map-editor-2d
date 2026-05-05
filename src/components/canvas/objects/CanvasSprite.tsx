@@ -1,5 +1,5 @@
 import useImage from 'use-image'
-import { Image as KonvaImage, Transformer } from 'react-konva'
+import { Image as KonvaImage } from 'react-konva'
 import React, { useEffect } from 'react'
 import { KonvaNodeEvents } from 'react-konva/ReactKonvaCore'
 import { ImageConfig } from 'konva/lib/shapes/Image'
@@ -41,7 +41,7 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
     setSpriteMeta((meta) => ({ ...meta, spriteWidth: width, spriteHeight: height }))
   }, [width, height])
 
-  const onDragStart = (e: Konva.KonvaEventObject<DragEvent>) => {
+  const onDragStart = (_e: Konva.KonvaEventObject<DragEvent>) => {
     setSpriteMeta((meta) => ({ ...meta, isDragging: true }))
   }
 
@@ -74,7 +74,7 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
     }
   }
 
-  const onTransformEnd = (e: Konva.KonvaEventObject<Event>) => {
+  const onTransformEnd = (_e: Konva.KonvaEventObject<Event>) => {
     const node = ref.current
     if (!node) return
 

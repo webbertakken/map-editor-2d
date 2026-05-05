@@ -34,6 +34,7 @@ const Modal = ({
   children,
   color = 'purple',
 }: Props): JSX.Element => {
+  // eslint-disable-next-line no-unused-vars -- ref-style binding written by react-modal
   let subtitle: HTMLHeadingElement | null
 
   function openModal() {

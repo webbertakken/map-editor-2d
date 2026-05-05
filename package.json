@@ -4,16 +4,33 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tauri dev",
+    "dev": "node scripts/ensure-husky.mjs && tauri dev",
     "build": "tauri build --debug",
     "preview": "vite preview",
     "clippy": "cargo clippy --manifest-path ./src-tauri/Cargo.toml -- -D warnings",
     "tauri": "tauri",
-    "test": "echo \"No tests specified\" && exit 0",
-    "cargo-test": "cd src-tauri && cargo test && cd ..",
-    "step-ci-test": "echo \"No tests specified\" && exit 0",
+    "test": "node scripts/ensure-husky.mjs && vitest run",
+    "test:watch": "vitest",
+    "coverage": "vitest run --coverage",
+    "cargo-test": "cd src-tauri && cargo test",
+    "step-ci-test": "yarn coverage",
     "step-rust-dev": "vite",
-    "step-rust-build": "tsc && vite build"
+    "step-rust-build": "tsgo --noEmit && vite build",
+    "lint": "yarn oxlint --report-unused-disable-directives",
+    "format": "oxfmt --write",
+    "format:check": "oxfmt --check",
+    "typecheck": "tsgo --noEmit",
+    "typecheck:tsc": "tsc --noEmit",
+    "setup:hooks": "node scripts/ensure-husky.mjs",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.@(ts|tsx|mts|js|jsx|mjs|cjs)": [
+      "oxlint --fix --quiet",
+      "oxfmt --write"
+    ],
+    "*.@(json|jsonc|json5|md|mdx|yaml|yml|css|scss|sass|html|toml)": "oxfmt --write",
+    ".github/workflows/*.@(yml|yaml)": "actionlint"
   },
   "dependencies": {
     "@tauri-apps/api": "^1.1.0",
@@ -33,21 +50,37 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.1.0",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/lodash": "^4.14.186",
     "@types/node": "^18.7.10",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
-    "@types/react-modal": "^3.13.1",
+    "@types/react-modal": "^3.16.3",
     "@types/semver": "^7.3.12",
     "@types/uuid": "^8.3.4",
-    "@vitejs/plugin-react": "^2.0.0",
-    "typescript": "^4.6.4",
-    "vite": "^3.0.2"
+    "@typescript/native-preview": "^7.0.0-dev.20260505.1",
+    "@vitejs/plugin-react-swc": "^4.3.0",
+    "@vitest/coverage-istanbul": "^3",
+    "eslint": "^10.3.0",
+    "eslint-plugin-unicorn": "^64.0.0",
+    "happy-dom": "^20.9.0",
+    "husky": "9",
+    "lint-staged": "^16.4.0",
+    "oxfmt": "^0.48.0",
+    "oxlint": "^1.63.0",
+    "typescript": "^5",
+    "vite": "^6",
+    "vitest": "^3"
   },
   "packageManager": "yarn@4.14.1",
   "dependenciesMeta": {
     "esbuild": {
       "built": true
     }
+  },
+  "resolutions": {
+    "@types/react": "^18",
+    "@types/react-dom": "^18"
   }
 }

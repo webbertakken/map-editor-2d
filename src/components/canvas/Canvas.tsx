@@ -57,7 +57,7 @@ export const Canvas = () => {
     dragAndDropRef.current = null
   }
 
-  const onClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+  const onClick = (_e: Konva.KonvaEventObject<MouseEvent>) => {
     setSelectedSpriteIds([])
   }
 

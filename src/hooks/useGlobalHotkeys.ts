@@ -12,7 +12,8 @@ export function useGlobalHotkeys() {
   const deactivate = () => setActive(false)
 
   useEffect(() => {
-    active ? hotkeys.activate() : hotkeys.deactivate()
+    if (active) hotkeys.activate()
+    else hotkeys.deactivate()
   }, [active])
 
   return [activate, deactivate, active] as const
