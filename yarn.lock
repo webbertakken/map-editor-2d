@@ -2,7 +2,7 @@
 # Manual changes might be lost - proceed with caution!
 
 __metadata:
-  version: 9
+  version: 10
   cacheKey: 10
 
 "@adobe/css-tools@npm:^4.4.0":
@@ -1541,10 +1541,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/uuid@npm:^8.3.4":
-  version: 8.3.4
-  resolution: "@types/uuid@npm:8.3.4"
-  checksum: 10/6f11f3ff70f30210edaa8071422d405e9c1d4e53abbe50fdce365150d3c698fe7bbff65c1e71ae080cbfb8fded860dbb5e174da96fdbbdfcaa3fb3daa474d20f
+"@types/uuid@npm:^11.0.0":
+  version: 11.0.0
+  resolution: "@types/uuid@npm:11.0.0"
+  dependencies:
+    uuid: "npm:*"
+  checksum: 10/9f94bd34e5d220c53cc58ea9f48a0061d3bc343e29bc33a17edc705f5e21fedda21553318151f2bc227c2b2b03727bbb536da2b82a61f84d2e1ca38abc5e5c3f
   languageName: node
   linkType: hard
 
@@ -3025,7 +3027,7 @@ __metadata:
     "@types/react-dom": "npm:^18.0.6"
     "@types/react-modal": "npm:^3.16.3"
     "@types/semver": "npm:^7.3.12"
-    "@types/uuid": "npm:^8.3.4"
+    "@types/uuid": "npm:^11.0.0"
     "@typescript/native-preview": "npm:^7.0.0-dev.20260505.1"
     "@vitejs/plugin-react-swc": "npm:^4.3.0"
     "@vitest/coverage-istanbul": "npm:^4.1.12"
@@ -4084,6 +4086,15 @@ __metadata:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
   checksum: 10/efe14bc6a75e9e35eb0213201829435736872e38e9ee75b38c052baa207238ddd89fadea31357d5676197bc47f065a40eab4da3954b5e9f371a04409b95535d3
+  languageName: node
+  linkType: hard
+
+"uuid@npm:*":
+  version: 14.0.3
+  resolution: "uuid@npm:14.0.3"
+  bin:
+    uuid: dist-node/bin/uuid
+  checksum: 10/a6ab4e6ef84ff77b574846215c425c915de035395710e09f083f3bc1d4744df63db78598da0d04619a0a60a15a9cce2bc7c1ef10bf302349e761838816d798a7
   languageName: node
   linkType: hard
 
