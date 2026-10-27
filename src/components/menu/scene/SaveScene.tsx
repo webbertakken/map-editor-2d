@@ -4,7 +4,7 @@ import {
   sceneAbsoluteFilePath,
   sceneFileDataSelector,
 } from '../../../state/SceneState'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { Box, Button, Checkbox } from 'dracula-ui'
 import { appState, isAutoSaveEnabledSelector } from '../../../state/AppState'
 import { Scene } from '../../../model/Scene'
@@ -13,12 +13,12 @@ import { useNotification } from '../../../hooks/useNotification'
 
 interface Props {}
 
-const SaveScene = ({}: Props): JSX.Element => {
-  const [_1, setState] = useRecoilState(appState)
-  const sceneFilePath = useRecoilValue(sceneAbsoluteFilePath)
-  const sceneFileData = useRecoilValue(sceneFileDataSelector)
-  const isAutoSaveEnabled = useRecoilValue(isAutoSaveEnabledSelector)
-  const isSceneLoaded = useRecoilValue(isSceneLoadedState)
+const SaveScene = ({}: Props): React.JSX.Element => {
+  const setState = useSetAtom(appState)
+  const sceneFilePath = useAtomValue(sceneAbsoluteFilePath)
+  const sceneFileData = useAtomValue(sceneFileDataSelector)
+  const isAutoSaveEnabled = useAtomValue(isAutoSaveEnabledSelector)
+  const isSceneLoaded = useAtomValue(isSceneLoadedState)
   const notify = useNotification()
 
   const save = async () => {

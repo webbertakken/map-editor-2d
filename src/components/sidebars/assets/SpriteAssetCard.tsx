@@ -3,7 +3,7 @@ import styles from './Sprite.module.css'
 import { AppContext } from '../../../context/AppContext'
 import { SpriteAsset } from '../../../model/SpriteAsset'
 
-const SpriteAssetCard = (asset: SpriteAsset): JSX.Element => {
+const SpriteAssetCard = (asset: SpriteAsset): React.JSX.Element => {
   const { dragAndDropRef } = useContext(AppContext)
 
   const { name, src } = asset

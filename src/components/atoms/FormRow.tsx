@@ -5,7 +5,7 @@ interface Props {
   children: React.ReactNode | React.ReactNode[]
 }
 
-const FormRow = ({ children }: Props): JSX.Element => {
+const FormRow = ({ children }: Props): React.JSX.Element => {
   return <Box style={{ display: 'flex', alignItems: 'baseline', gap: '.5em' }}>{children}</Box>
 }
 

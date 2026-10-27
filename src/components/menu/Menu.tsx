@@ -4,16 +4,16 @@ import Category from './Category'
 import MenuBar from './MenuBar'
 import LoadScene from './scene/LoadScene'
 import CloseScene from './scene/CloseScene'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import SelectAssetsPath from './assets/SelectAssetsPath'
 import { isSceneLoadedState, isSceneOpenState } from '../../state/SceneState'
 import SaveScene from './scene/SaveScene'
 
 interface Props {}
 
-const Menu = ({}: Props): JSX.Element => {
-  const isSceneOpen = useRecoilValue(isSceneOpenState)
-  const isSceneLoaded = useRecoilValue(isSceneLoadedState)
+const Menu = ({}: Props): React.JSX.Element => {
+  const isSceneOpen = useAtomValue(isSceneOpenState)
+  const isSceneLoaded = useAtomValue(isSceneLoadedState)
 
   return (
     <>

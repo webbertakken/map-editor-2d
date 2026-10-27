@@ -32,3 +32,6 @@ dist-ssr
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Test coverage
+coverage

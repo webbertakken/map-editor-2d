@@ -7,7 +7,7 @@ interface Props {
   children: React.ReactNode
 }
 
-const Category = ({ title, children }: Props): JSX.Element => {
+const Category = ({ title, children }: Props): React.JSX.Element => {
   return (
     <div className={styles.category}>
       {title && <Paragraph size="xs">{title}:</Paragraph>}

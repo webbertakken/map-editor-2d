@@ -5,7 +5,7 @@ interface Props {
   children: React.ReactNode | React.ReactNode[]
 }
 
-const MenuBar = ({ children }: Props): JSX.Element => {
+const MenuBar = ({ children }: Props): React.JSX.Element => {
   return <div className={styles.menuBar}>{children}</div>
 }
 

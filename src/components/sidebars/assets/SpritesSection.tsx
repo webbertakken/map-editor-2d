@@ -1,4 +1,4 @@
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import Section from '../../layout/Section'
 import styles from './Sprite.module.css'
 import React from 'react'
@@ -7,9 +7,9 @@ import { areSpritesAssetsLoadedSelector, spriteAssetsSelector } from '../../../s
 
 interface Props {}
 
-export const SpritesSection = ({}: Props): JSX.Element | null => {
-  const areSpritesLoaded = useRecoilValue(areSpritesAssetsLoadedSelector)
-  const spriteAssets = useRecoilValue(spriteAssetsSelector)
+export const SpritesSection = ({}: Props): React.JSX.Element | null => {
+  const areSpritesLoaded = useAtomValue(areSpritesAssetsLoadedSelector)
+  const spriteAssets = useAtomValue(spriteAssetsSelector)
 
   if (!areSpritesLoaded) return null
 

@@ -4,13 +4,13 @@ import { Box, Checkbox, Heading } from 'dracula-ui'
 import FormRow from '../../atoms/FormRow'
 import { Field } from '../../atoms/Field'
 import { defaultPropertiesState } from '../../../state/AssetsState'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { cloneDeep, set } from 'lodash'
 
 interface Props {}
 
-const DefaultPropertiesSection = ({}: Props): JSX.Element => {
-  const [defaultProps, setDefaultProps] = useRecoilState(defaultPropertiesState)
+const DefaultPropertiesSection = ({}: Props): React.JSX.Element => {
+  const [defaultProps, setDefaultProps] = useAtom(defaultPropertiesState)
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, type, value, checked } = e.target
