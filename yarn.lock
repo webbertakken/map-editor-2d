@@ -2769,10 +2769,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"konva@npm:^8.3.13":
-  version: 8.4.3
-  resolution: "konva@npm:8.4.3"
-  checksum: 10/e1e1487f603c3c09972e7be4d1dce701dba67453dc810caf34cc98cc3e46bef917d07a881a96a89cbe61e6e26d6b307ea48efd9e6289e7b6a3a70886c086ddd5
+"konva@npm:^10.0.0":
+  version: 10.9.0
+  resolution: "konva@npm:10.9.0"
+  peerDependencies:
+    canvas: ^3.0.0
+    skia-canvas: ^3.0.0
+  peerDependenciesMeta:
+    canvas:
+      optional: true
+    skia-canvas:
+      optional: true
+  checksum: 10/5b37b13cbf55e5ba723dbe1259ff09ea0f30c54b8024e6f6d57960a5c3431fe7ae2b611c5d2c246d54bd90a3e60b5c1df3223e70d98d2e9156a3df92e6e09c14
   languageName: node
   linkType: hard
 
@@ -3045,7 +3053,7 @@ __metadata:
     eslint-plugin-unicorn: "npm:^64.0.0"
     happy-dom: "npm:^21.0.0"
     husky: "npm:9"
-    konva: "npm:^8.3.13"
+    konva: "npm:^10.0.0"
     lint-staged: "npm:^16.4.0"
     lodash: "npm:^4.17.21"
     oxfmt: "npm:^0.48.0"
