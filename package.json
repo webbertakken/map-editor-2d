@@ -61,7 +61,7 @@
     "@types/uuid": "^8.3.4",
     "@typescript/native-preview": "^7.0.0-dev.20260505.1",
     "@vitejs/plugin-react-swc": "^4.3.0",
-    "@vitest/coverage-istanbul": "^3",
+    "@vitest/coverage-istanbul": "^4.1.12",
     "eslint": "^10.3.0",
     "eslint-plugin-unicorn": "^64.0.0",
     "happy-dom": "^20.9.0",
@@ -71,7 +71,7 @@
     "oxlint": "^1.63.0",
     "typescript": "^5",
     "vite": "^6",
-    "vitest": "^3"
+    "vitest": "^4.1.12"
   },
   "packageManager": "yarn@4.14.1",
   "dependenciesMeta": {
