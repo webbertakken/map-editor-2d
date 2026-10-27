@@ -1,12 +1,12 @@
 import React from 'react'
 import Section from '../../layout/Section'
-import { useRecoilValue } from 'recoil'
+import { useAtomValue } from 'jotai'
 import { sceneNameSelector } from '../../../state/SceneState'
 
 interface Props {}
 
-export const SceneSection = ({}: Props): JSX.Element => {
-  const sceneName = useRecoilValue(sceneNameSelector)
+export const SceneSection = ({}: Props): React.JSX.Element => {
+  const sceneName = useAtomValue(sceneNameSelector)
 
   return (
     <Section title="Scene" color="pink" flexGrow={0}>

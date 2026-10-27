@@ -8,7 +8,7 @@ interface Props {
   children: React.ReactNode
 }
 
-const Sidebar = ({ left, right, children }: Props): JSX.Element => {
+const Sidebar = ({ left, right, children }: Props): React.JSX.Element => {
   return (
     <div className={cx(styles.sidebar, { [styles.right]: right, [styles.left]: left })}>
       {children}

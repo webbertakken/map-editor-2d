@@ -5,7 +5,7 @@ interface Props {
   children: React.ReactNode
 }
 
-const Main = ({ children }: Props): JSX.Element => {
+const Main = ({ children }: Props): React.JSX.Element => {
   return <div className={styles.main}>{children}</div>
 }
 

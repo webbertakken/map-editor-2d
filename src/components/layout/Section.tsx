@@ -21,7 +21,7 @@ const Section = ({
   color,
   flexGrow = 1,
   style = {},
-}: Props): JSX.Element => {
+}: Props): React.JSX.Element => {
   return (
     <div className={styles.section} style={{ flexGrow, ...style }}>
       <Box className={styles.header} px="xs" pt="xxs">

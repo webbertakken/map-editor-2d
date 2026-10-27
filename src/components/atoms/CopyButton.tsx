@@ -7,7 +7,7 @@ interface Props {
   copyText: string
 }
 
-const CopyButton = ({ name, copyText }: Props): JSX.Element => {
+const CopyButton = ({ name, copyText }: Props): React.JSX.Element => {
   const notify = useNotification()
 
   return (

@@ -18,7 +18,7 @@ const customStyles = {
 }
 
 interface Props {
-  button: (props: any) => JSX.Element
+  button: (props: any) => React.JSX.Element
   title: string
   children: React.ReactNode
   color?: keyof typeof dividerColors
@@ -33,7 +33,7 @@ const Modal = ({
   setIsOpen,
   children,
   color = 'purple',
-}: Props): JSX.Element => {
+}: Props): React.JSX.Element => {
   // eslint-disable-next-line no-unused-vars -- ref-style binding written by react-modal
   let subtitle: HTMLHeadingElement | null
 

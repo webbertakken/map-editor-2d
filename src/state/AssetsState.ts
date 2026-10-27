@@ -1,23 +1,11 @@
-import { atom, selector } from 'recoil'
+import { atom } from 'jotai'
 import { Assets } from '../model/Assets'
 import { DefaultProperties } from '../model/DefaultProperties'
 
-export const assetsState = atom<Assets>({
-  key: 'assets',
-  default: Assets.default(),
-})
+export const assetsState = atom<Assets>(Assets.default())
 
-export const spriteAssetsSelector = selector({
-  key: 'spritesAssets',
-  get: ({ get }) => get(assetsState).sprites,
-})
+export const spriteAssetsSelector = atom((get) => get(assetsState).sprites)
 
-export const areSpritesAssetsLoadedSelector = selector({
-  key: 'areSpriteAssetsLoaded',
-  get: ({ get }) => get(assetsState).areSpritesLoaded,
-})
+export const areSpritesAssetsLoadedSelector = atom((get) => get(assetsState).areSpritesLoaded)
 
-export const defaultPropertiesState = atom<DefaultPropertiesProps>({
-  key: 'defaultProperties',
-  default: DefaultProperties.default(),
-})
+export const defaultPropertiesState = atom<DefaultPropertiesProps>(DefaultProperties.default())

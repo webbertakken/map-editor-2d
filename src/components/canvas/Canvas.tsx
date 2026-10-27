@@ -5,9 +5,9 @@ import { useWindowSize } from '../../hooks/useWindowSize'
 import { AppContext, AppContextProps } from '../../context/AppContext'
 import { SpriteMeta } from '../../model/SpriteMeta'
 import { CanvasSprite } from './objects/CanvasSprite'
-import { useRecoilCallback, useRecoilState, useRecoilValue } from 'recoil'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { SpriteData } from '../../model/SpriteData'
-import { addSpriteCallback, selectedSpriteIdsState, spriteIdsState } from '../../state/SpritesState'
+import { addSpriteAction, selectedSpriteIdsState, spriteIdsState } from '../../state/SpritesState'
 import CopyAndPasteListener from './listeners/CopyAndPasteListener'
 import DeleteListener from './listeners/DeleteListener'
 import DeselectListener from './listeners/DeselectListener'
@@ -18,12 +18,12 @@ export const Canvas = () => {
   const ref = createRef<HTMLDivElement>()
   const stageRef = React.useRef<Konva.Stage>(null)
   const windowSize = useWindowSize()
-  const [_1, setSelectedSpriteIds] = useRecoilState(selectedSpriteIdsState)
-  const [defaultProps] = useRecoilState(defaultPropertiesState)
+  const setSelectedSpriteIds = useSetAtom(selectedSpriteIdsState)
+  const defaultProps = useAtomValue(defaultPropertiesState)
   const [width, setWidth] = useState<number | undefined>(windowSize.width)
   const [height, setHeight] = useState<number | undefined>(windowSize.height)
-  const addSprite = useRecoilCallback(addSpriteCallback, [])
-  const spriteIds = useRecoilValue(spriteIdsState)
+  const addSprite = useSetAtom(addSpriteAction)
+  const spriteIds = useAtomValue(spriteIdsState)
   const { dragAndDropRef } = useContext<AppContextProps>(AppContext)
   const [enableHotkeys, disableHotkeys] = useGlobalHotkeys()
 

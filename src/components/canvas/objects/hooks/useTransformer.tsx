@@ -2,7 +2,7 @@ import React, { RefObject, useEffect, useRef } from 'react'
 import Konva from 'konva'
 import { Transformer } from 'react-konva'
 
-export const useTransformer = (nodeRef: RefObject<Konva.Node>) => {
+export const useTransformer = (nodeRef: RefObject<Konva.Node | null>) => {
   const transformerRef = useRef<Konva.Transformer>(null)
 
   useEffect(() => {

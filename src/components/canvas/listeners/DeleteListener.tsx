@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import { AppContext } from '../../../context/AppContext'
-import { useRecoilCallback, useRecoilState } from 'recoil'
-import { deleteSpritesCallback, selectedSpriteIdsState } from '../../../state/SpritesState'
+import { useAtom, useSetAtom } from 'jotai'
+import { deleteSpritesAction, selectedSpriteIdsState } from '../../../state/SpritesState'
 import { useNotification } from '../../../hooks/useNotification'
 
 interface Props {}
 
-const DeleteListener = ({}: Props): JSX.Element => {
+const DeleteListener = ({}: Props): React.JSX.Element => {
   const { hotkeys } = React.useContext(AppContext)
-  const [selectedSpriteIds, setSelectedSpriteIds] = useRecoilState(selectedSpriteIdsState)
+  const [selectedSpriteIds, setSelectedSpriteIds] = useAtom(selectedSpriteIdsState)
   const notify = useNotification()
-  const deleteSprites = useRecoilCallback(deleteSpritesCallback, [])
+  const deleteSprites = useSetAtom(deleteSpritesAction)
 
   useEffect(() => {
     hotkeys.delete?.subscribe(onDelete)

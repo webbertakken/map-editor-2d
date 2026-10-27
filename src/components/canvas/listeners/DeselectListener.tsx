@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 import { AppContext } from '../../../context/AppContext'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import { selectedSpriteIdsState } from '../../../state/SpritesState'
 import { useNotification } from '../../../hooks/useNotification'
 
 interface Props {}
 
-const DeselectListener = ({}: Props): JSX.Element => {
+const DeselectListener = ({}: Props): React.JSX.Element => {
   const { hotkeys } = React.useContext(AppContext)
-  const [selectedSpriteIds, setSelectedSpriteIds] = useRecoilState(selectedSpriteIdsState)
+  const [selectedSpriteIds, setSelectedSpriteIds] = useAtom(selectedSpriteIdsState)
   const notify = useNotification()
 
   useEffect(() => {

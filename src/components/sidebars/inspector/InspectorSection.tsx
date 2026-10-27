@@ -1,5 +1,5 @@
 import React from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue } from 'jotai'
 import {
   selectedSpriteIdsState,
   spriteDatasWithId,
@@ -55,10 +55,10 @@ const getDerivedValues = (
   }
 }
 
-export const InspectorSection = (): JSX.Element => {
-  const [selectionId] = useRecoilValue(selectedSpriteIdsState)
-  const [spriteData, setSpriteData] = useRecoilState(spriteDatasWithId(selectionId))
-  const [spriteMeta, _] = useRecoilState(spriteMetasWithId(selectionId))
+export const InspectorSection = (): React.JSX.Element => {
+  const [selectionId] = useAtomValue(selectedSpriteIdsState)
+  const [spriteData, setSpriteData] = useAtom(spriteDatasWithId(selectionId))
+  const spriteMeta = useAtomValue(spriteMetasWithId(selectionId))
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value, checked, type } = e.target

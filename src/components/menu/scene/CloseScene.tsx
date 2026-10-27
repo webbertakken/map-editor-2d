@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from 'dracula-ui'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtomValue, useSetAtom } from 'jotai'
 import { Scene } from '../../../model/Scene'
 import { useNotification } from '../../../hooks/useNotification'
 import { SceneMeta } from '../../../model/SceneMeta'
@@ -12,13 +12,13 @@ import { Sprites } from '../../../model/Sprites'
 
 interface Props {}
 
-const CloseScene = ({}: Props): JSX.Element => {
-  const [_1, setScene] = useRecoilState(sceneState)
-  const [_2, setSceneMeta] = useRecoilState(sceneMetaState)
-  const [_3, setAssets] = useRecoilState(assetsState)
-  const [_4, setSprites] = useRecoilState(allSpritesState)
+const CloseScene = ({}: Props): React.JSX.Element => {
+  const setScene = useSetAtom(sceneState)
+  const setSceneMeta = useSetAtom(sceneMetaState)
+  const setAssets = useSetAtom(assetsState)
+  const setSprites = useSetAtom(allSpritesState)
   const notify = useNotification()
-  const isSceneOpen = useRecoilValue(isSceneOpenState)
+  const isSceneOpen = useAtomValue(isSceneOpenState)
 
   const closeScene = () => {
     // Reset previous scene

@@ -5,7 +5,7 @@ import { save } from '@tauri-apps/api/dialog'
 import { writeTextFile } from '@tauri-apps/api/fs'
 import { SCENE_FILE_TYPE_EXTENSION, SCENE_FILE_TYPE_NAME } from '../../../constants'
 import { Scene } from '../../../model/Scene'
-import { useRecoilState } from 'recoil'
+import { useSetAtom } from 'jotai'
 import { useNotification } from '../../../hooks/useNotification'
 import { SceneMeta } from '../../../model/SceneMeta'
 import { isSceneLoadedState, sceneMetaState, sceneState } from '../../../state/SceneState'
@@ -17,12 +17,12 @@ import { Sprites } from '../../../model/Sprites'
 
 class Props {}
 
-const NewScene = ({}: Props): JSX.Element => {
-  const [_1, setScene] = useRecoilState(sceneState)
-  const [_2, setSceneMeta] = useRecoilState(sceneMetaState)
-  const [_3, setAssets] = useRecoilState(assetsState)
-  const [_4, setSprites] = useRecoilState(allSpritesState)
-  const [_5, setHasLoadedScene] = useRecoilState(isSceneLoadedState)
+const NewScene = ({}: Props): React.JSX.Element => {
+  const setScene = useSetAtom(sceneState)
+  const setSceneMeta = useSetAtom(sceneMetaState)
+  const setAssets = useSetAtom(assetsState)
+  const setSprites = useSetAtom(allSpritesState)
+  const setHasLoadedScene = useSetAtom(isSceneLoadedState)
   const [isOpen, setIsOpen] = React.useState(false)
   const notify = useNotification()
 

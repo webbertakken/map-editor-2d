@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useAtom, useAtomValue, useSetAtom } from 'jotai'
 import { AppContext } from '../../../context/AppContext'
 import {
   allSpritesState,
@@ -12,12 +12,12 @@ import { useNotification } from '../../../hooks/useNotification'
 
 interface Props {}
 
-const CopyAndPasteListener = ({}: Props): JSX.Element => {
+const CopyAndPasteListener = ({}: Props): React.JSX.Element => {
   const { hotkeys } = React.useContext(AppContext)
-  const [_1, setAllSprites] = useRecoilState(allSpritesState)
-  const [_2, setSelectedSpriteIds] = useRecoilState(selectedSpriteIdsState)
-  const [copiedSprites, setCopiedSprites] = useRecoilState(copiedSpritesState)
-  const selectedSprites = useRecoilValue(selectedSpritesState)
+  const setAllSprites = useSetAtom(allSpritesState)
+  const setSelectedSpriteIds = useSetAtom(selectedSpriteIdsState)
+  const [copiedSprites, setCopiedSprites] = useAtom(copiedSpritesState)
+  const selectedSprites = useAtomValue(selectedSpritesState)
   const notify = useNotification()
 
   useEffect(() => {

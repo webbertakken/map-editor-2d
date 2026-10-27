@@ -7,7 +7,7 @@ interface Props {
 /**
  * Used to fill up the rest of the space in a flexbox.
  */
-const FlexFiller = ({ flexGrow = 1 }: Props): JSX.Element => {
+const FlexFiller = ({ flexGrow = 1 }: Props): React.JSX.Element => {
   return <div style={{ flexGrow }} />
 }
 

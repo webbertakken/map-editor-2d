@@ -1,10 +1,10 @@
 import useImage from 'use-image'
 import { Image as KonvaImage } from 'react-konva'
 import React, { useEffect } from 'react'
-import { KonvaNodeEvents } from 'react-konva/ReactKonvaCore'
+import { KonvaNodeEvents } from 'react-konva'
 import { ImageConfig } from 'konva/lib/shapes/Image'
 import Konva from 'konva'
-import { useRecoilState } from 'recoil'
+import { useAtom } from 'jotai'
 import {
   selectedSpriteIdsState,
   spriteDatasWithId,
@@ -20,9 +20,9 @@ interface Props extends KonvaNodeEvents, Partial<ImageConfig> {
 export const CanvasSprite = ({ id, ...props }: Props) => {
   const ref = React.createRef<Konva.Node>()
   const Transformer = useTransformer(ref)
-  const [selectedIds, setSelectedIds] = useRecoilState(selectedSpriteIdsState)
-  const [spriteData, setSpriteData] = useRecoilState(spriteDatasWithId(id))
-  const [spriteMeta, setSpriteMeta] = useRecoilState(spriteMetasWithId(id))
+  const [selectedIds, setSelectedIds] = useAtom(selectedSpriteIdsState)
+  const [spriteData, setSpriteData] = useAtom(spriteDatasWithId(id))
+  const [spriteMeta, setSpriteMeta] = useAtom(spriteMetasWithId(id))
 
   const isSelected = selectedIds.includes(id)
 
@@ -57,11 +57,11 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
     setSpriteMeta((meta) => ({ ...meta, isDragging: false }))
   }
 
-  const onDoubleClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+  const onDoubleClick = (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
     onClick(e)
   }
 
-  const onClick = (e: Konva.KonvaEventObject<MouseEvent>) => {
+  const onClick = (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
     // prevent deselection by clicking on the canvas
     e.cancelBubble = true
 

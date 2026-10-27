@@ -12,7 +12,7 @@ import Sidebar from './components/layout/Sidebar'
 import Main from './components/layout/Main'
 import { Toaster } from 'react-hot-toast'
 import ReactModal from 'react-modal'
-import { RecoilRoot } from 'recoil'
+import { Provider } from 'jotai'
 import { AppContext } from './context/AppContext'
 import { SpriteAsset } from './model/SpriteAsset'
 import { HotkeyNotifier } from './service/HotkeyNotifier'
@@ -30,7 +30,7 @@ ReactModal.setAppElement('#root')
 // Mount application
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RecoilRoot>
+    <Provider>
       <AppContext.Provider value={{ dragAndDropRef, hotkeys }}>
         <Toaster />
         <Layout menu={<Menu />}>
@@ -45,6 +45,6 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           </Sidebar>
         </Layout>
       </AppContext.Provider>
-    </RecoilRoot>
+    </Provider>
   </React.StrictMode>,
 )
