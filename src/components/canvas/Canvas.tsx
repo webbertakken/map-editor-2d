@@ -1,5 +1,5 @@
 import { Layer, Stage } from 'react-konva'
-import React, { createRef, DragEventHandler, useContext, useEffect, useState } from 'react'
+import React, { DragEventHandler, useContext } from 'react'
 import Konva from 'konva'
 import { useWindowSize } from '../../hooks/useWindowSize'
 import { AppContext, AppContextProps } from '../../context/AppContext'
@@ -15,24 +15,17 @@ import { useGlobalHotkeys } from '../../hooks/useGlobalHotkeys'
 import { defaultPropertiesState } from '../../state/AssetsState'
 
 export const Canvas = () => {
-  const ref = createRef<HTMLDivElement>()
   const stageRef = React.useRef<Konva.Stage>(null)
   const windowSize = useWindowSize()
   const setSelectedSpriteIds = useSetAtom(selectedSpriteIdsState)
   const defaultProps = useAtomValue(defaultPropertiesState)
-  const [width, setWidth] = useState<number | undefined>(windowSize.width)
-  const [height, setHeight] = useState<number | undefined>(windowSize.height)
+  const width =
+    windowSize.width && windowSize.width - 500 /* both sidebars */ - 12 /* both scrollbars */
+  const height = windowSize.height && windowSize.height - 42 /* menu */
   const addSprite = useSetAtom(addSpriteAction)
   const spriteIds = useAtomValue(spriteIdsState)
   const { dragAndDropRef } = useContext<AppContextProps>(AppContext)
   const [enableHotkeys, disableHotkeys] = useGlobalHotkeys()
-
-  useEffect(() => {
-    if (ref.current) {
-      setWidth(window.innerWidth - 500 /* both sidebars */ - 12 /* both scrollbars */)
-      setHeight(window.innerHeight - 42 /* menu */)
-    }
-  }, [ref, windowSize])
 
   const onDragOver: DragEventHandler = (e) => {
     e.preventDefault()
@@ -63,7 +56,6 @@ export const Canvas = () => {
 
   return (
     <div
-      ref={ref}
       style={{ flexGrow: 1 }}
       onDragOver={onDragOver}
       onDrop={onDrop}

@@ -12,13 +12,6 @@ const DeleteListener = ({}: Props): React.JSX.Element => {
   const notify = useNotification()
   const deleteSprites = useSetAtom(deleteSpritesAction)
 
-  useEffect(() => {
-    hotkeys.delete?.subscribe(onDelete)
-    return () => {
-      hotkeys.delete?.unsubscribe(onDelete)
-    }
-  })
-
   const onDelete = () => {
     const numberOfSprites = selectedSpriteIds.length
     if (numberOfSprites <= 0) return
@@ -27,6 +20,13 @@ const DeleteListener = ({}: Props): React.JSX.Element => {
     setSelectedSpriteIds([])
     notify.success(`Deleted ${numberOfSprites} sprite${numberOfSprites > 1 ? 's' : ''}`)
   }
+
+  useEffect(() => {
+    hotkeys.delete?.subscribe(onDelete)
+    return () => {
+      hotkeys.delete?.unsubscribe(onDelete)
+    }
+  })
 
   return <></>
 }

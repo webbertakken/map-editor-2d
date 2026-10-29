@@ -2,7 +2,11 @@ import React, { RefObject, useEffect, useRef } from 'react'
 import Konva from 'konva'
 import { Transformer } from 'react-konva'
 
-export const useTransformer = (nodeRef: RefObject<Konva.Node | null>) => {
+interface Props extends Konva.TransformerConfig {
+  nodeRef: RefObject<Konva.Node | null>
+}
+
+export const SpriteTransformer = ({ nodeRef, children, ...rest }: Props) => {
   const transformerRef = useRef<Konva.Transformer>(null)
 
   useEffect(() => {
@@ -10,9 +14,9 @@ export const useTransformer = (nodeRef: RefObject<Konva.Node | null>) => {
 
     transformerRef.current.setNode(nodeRef.current)
     transformerRef.current.getLayer()!.batchDraw()
-  }, [nodeRef, transformerRef])
+  }, [nodeRef])
 
-  const transformer: React.FC<Konva.TransformerConfig> = ({ children, ...rest }) => (
+  return (
     <Transformer
       ref={transformerRef}
       rotationSnaps={[0, 90, 180, -90]}
@@ -28,6 +32,4 @@ export const useTransformer = (nodeRef: RefObject<Konva.Node | null>) => {
       {children}
     </Transformer>
   )
-
-  return transformer
 }

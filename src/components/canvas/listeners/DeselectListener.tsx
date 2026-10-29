@@ -11,19 +11,19 @@ const DeselectListener = ({}: Props): React.JSX.Element => {
   const [selectedSpriteIds, setSelectedSpriteIds] = useAtom(selectedSpriteIdsState)
   const notify = useNotification()
 
-  useEffect(() => {
-    hotkeys.escape?.subscribe(onDeselect)
-    return () => {
-      hotkeys.escape?.unsubscribe(onDeselect)
-    }
-  })
-
   const onDeselect = () => {
     if (selectedSpriteIds.length <= 0) return
 
     setSelectedSpriteIds([])
     notify.success('Deselected')
   }
+
+  useEffect(() => {
+    hotkeys.escape?.subscribe(onDeselect)
+    return () => {
+      hotkeys.escape?.unsubscribe(onDeselect)
+    }
+  })
 
   return <></>
 }

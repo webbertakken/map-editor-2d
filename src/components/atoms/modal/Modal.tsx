@@ -17,8 +17,12 @@ const customStyles = {
   },
 }
 
+export interface OpenModalButtonProps {
+  onClick: () => void
+}
+
 interface Props {
-  button: (props: any) => React.JSX.Element
+  button: React.ComponentType<OpenModalButtonProps>
   title: string
   children: React.ReactNode
   color?: keyof typeof dividerColors

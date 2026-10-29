@@ -20,15 +20,6 @@ const CopyAndPasteListener = ({}: Props): React.JSX.Element => {
   const selectedSprites = useAtomValue(selectedSpritesState)
   const notify = useNotification()
 
-  useEffect(() => {
-    hotkeys.copy?.subscribe(onCopy)
-    hotkeys.paste?.subscribe(onPaste)
-    return () => {
-      hotkeys.copy?.unsubscribe(onCopy)
-      hotkeys.paste?.unsubscribe(onPaste)
-    }
-  })
-
   const onCopy = () => {
     const numberOfSprites = selectedSprites.datas.length
     if (numberOfSprites <= 0) return
@@ -62,6 +53,15 @@ const CopyAndPasteListener = ({}: Props): React.JSX.Element => {
 
     notify.success(`Pasted ${numberOfSprites} sprite${numberOfSprites > 1 ? 's' : ''}`)
   }
+
+  useEffect(() => {
+    hotkeys.copy?.subscribe(onCopy)
+    hotkeys.paste?.subscribe(onPaste)
+    return () => {
+      hotkeys.copy?.unsubscribe(onCopy)
+      hotkeys.paste?.unsubscribe(onPaste)
+    }
+  })
 
   return <></>
 }

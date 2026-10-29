@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import {
   isSceneLoadedState,
   sceneAbsoluteFilePath,
@@ -21,7 +21,7 @@ const SaveScene = ({}: Props): React.JSX.Element => {
   const isSceneLoaded = useAtomValue(isSceneLoadedState)
   const notify = useNotification()
 
-  const save = async () => {
+  const save = useCallback(async () => {
     try {
       const fileContents = Scene.toFile(sceneFileData)
       await writeTextFile(sceneFilePath, fileContents)
@@ -29,11 +29,11 @@ const SaveScene = ({}: Props): React.JSX.Element => {
     } catch (e) {
       notify.error(`Failed to save scene ${e}`)
     }
-  }
+  }, [sceneFileData, sceneFilePath, notify])
 
   useEffect(() => {
     if (isSceneLoaded && isAutoSaveEnabled) save()
-  }, [isSceneLoaded, sceneFileData, isAutoSaveEnabled])
+  }, [isSceneLoaded, isAutoSaveEnabled, save])
 
   const onAutoSaveChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setState((state) => ({ ...state, autoSave: e.target.checked }))
