@@ -82,6 +82,7 @@
   },
   "resolutions": {
     "@types/react": "^19",
-    "@types/react-dom": "^19"
+    "@types/react-dom": "^19",
+    "tinypool": "^2.1.2"
   }
 }
