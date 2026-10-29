@@ -10,7 +10,7 @@ import {
   spriteDatasWithId,
   spriteMetasWithId,
 } from '../../../state/SpritesState'
-import { useTransformer } from './hooks/useTransformer'
+import { SpriteTransformer } from './SpriteTransformer'
 import { noop } from 'lodash'
 
 interface Props extends KonvaNodeEvents, Partial<ImageConfig> {
@@ -18,8 +18,7 @@ interface Props extends KonvaNodeEvents, Partial<ImageConfig> {
 }
 
 export const CanvasSprite = ({ id, ...props }: Props) => {
-  const ref = React.createRef<Konva.Node>()
-  const Transformer = useTransformer(ref)
+  const ref = React.useRef<Konva.Node>(null)
   const [selectedIds, setSelectedIds] = useAtom(selectedSpriteIdsState)
   const [spriteData, setSpriteData] = useAtom(spriteDatasWithId(id))
   const [spriteMeta, setSpriteMeta] = useAtom(spriteMetasWithId(id))
@@ -39,7 +38,7 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
   useEffect(() => {
     if (!width || !height) return
     setSpriteMeta((meta) => ({ ...meta, spriteWidth: width, spriteHeight: height }))
-  }, [width, height])
+  }, [width, height, setSpriteMeta])
 
   const onDragStart = (_e: Konva.KonvaEventObject<DragEvent>) => {
     setSpriteMeta((meta) => ({ ...meta, isDragging: true }))
@@ -88,7 +87,7 @@ export const CanvasSprite = ({ id, ...props }: Props) => {
 
   return (
     <>
-      {isSelected && <Transformer />}
+      {isSelected && <SpriteTransformer nodeRef={ref} />}
       <KonvaImage
         // @ts-ignore
         ref={ref}

@@ -20,7 +20,7 @@ const Section = ({
   noPadding,
   color,
   flexGrow = 1,
-  style = {},
+  style,
 }: Props): React.JSX.Element => {
   return (
     <div className={styles.section} style={{ flexGrow, ...style }}>

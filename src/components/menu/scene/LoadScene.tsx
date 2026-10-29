@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Paragraph } from 'dracula-ui'
-import Modal from '../../atoms/modal/Modal'
+import Modal, { OpenModalButtonProps } from '../../atoms/modal/Modal'
 import ExternalLink from '../../atoms/ExternalLink'
 import { open } from '@tauri-apps/api/dialog'
 import { SCENE_FILE_TYPE_EXTENSION, SCENE_FILE_TYPE_NAME } from '../../../constants'
@@ -21,6 +21,12 @@ import { Sprites } from '../../../model/Sprites'
 import { DefaultProperties } from '../../../model/DefaultProperties'
 
 class Props {}
+
+const LoadSceneButton = (props: OpenModalButtonProps) => (
+  <Button color="orange" size="xs" {...props}>
+    Load
+  </Button>
+)
 
 const NewScene = ({}: Props): React.JSX.Element => {
   const setScene = useSetAtom(sceneState)
@@ -113,11 +119,7 @@ const NewScene = ({}: Props): React.JSX.Element => {
   return (
     <Modal
       title={title}
-      button={(props) => (
-        <Button color={color} size="xs" {...props}>
-          {title}
-        </Button>
-      )}
+      button={LoadSceneButton}
       color={color}
       isOpen={isOpen}
       setIsOpen={setIsOpen}
