@@ -68,13 +68,13 @@
     "happy-dom": "^21.0.0",
     "husky": "9",
     "lint-staged": "^17.0.0",
-    "oxfmt": "^0.48.0",
+    "oxfmt": "^0.75.0",
     "oxlint": "^1.63.0",
     "typescript": "^5",
     "vite": "^6",
     "vitest": "^4.1.12"
   },
-  "packageManager": "yarn@4.14.1",
+  "packageManager": "yarn@4.18.1",
   "dependenciesMeta": {
     "esbuild": {
       "built": true
