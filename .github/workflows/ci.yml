@@ -10,7 +10,7 @@ on:
 jobs:
   check:
     name: Check
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-22.04
     # Skip on PRs: tauri 1.x wry/webkit2gtk system-lib rot.
     if: github.event_name == 'push'
     steps:
@@ -36,7 +36,7 @@ jobs:
 
   testRust:
     name: Test Rust
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-22.04
     # Skip on PRs: tauri 1.x wry/webkit2gtk system-lib rot.
     if: github.event_name == 'push'
     steps:
@@ -62,7 +62,7 @@ jobs:
 
   testTypescript:
     name: Test Typescript
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -110,7 +110,7 @@ jobs:
 
   fmt:
     name: Rustfmt
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-22.04
     # Skip on PRs: tauri 1.x wry/webkit2gtk system-lib rot.
     if: github.event_name == 'push'
     steps:
@@ -133,7 +133,7 @@ jobs:
 
   clippy:
     name: Clippy
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-22.04
     # Skip on PRs: tauri 1.x wry/webkit2gtk system-lib rot.
     if: github.event_name == 'push'
     steps:
