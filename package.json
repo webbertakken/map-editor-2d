@@ -74,15 +74,10 @@
     "oxfmt": "^0.75.0",
     "oxlint": "^1.63.0",
     "typescript": "^7.0.0",
-    "vite": "^6",
+    "vite": "^8.0.0",
     "vitest": "^5.0.0"
   },
   "packageManager": "yarn@4.18.1",
-  "dependenciesMeta": {
-    "esbuild": {
-      "built": true
-    }
-  },
   "resolutions": {
     "@types/react": "^19",
     "@types/react-dom": "^19",
