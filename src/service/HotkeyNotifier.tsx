@@ -1,4 +1,4 @@
-import { register, unregisterAll } from '@tauri-apps/api/globalShortcut'
+import { register, ShortcutEvent, unregisterAll } from '@tauri-apps/plugin-global-shortcut'
 import { v4 as uuidv4 } from 'uuid'
 import { createObservable, Observable } from '../core/observable'
 import { listen, TauriEvent } from '@tauri-apps/api/event'
@@ -30,23 +30,20 @@ export class HotkeyNotifier {
 
     // Unregister
     await listen(TauriEvent.WINDOW_BLUR, this.unregister.bind(this))
-    await listen(TauriEvent.MENU, this.unregister.bind(this))
   }
 
   private async register() {
     await unregisterAll()
-    await register('CommandOrControl+C', (shortcut) => {
-      this.copy?.notify(shortcut, uuidv4())
-    })
-    await register('CommandOrControl+V', (shortcut) => {
-      this.paste?.notify(shortcut, uuidv4())
-    })
-    await register('Escape', (shortcut) => {
-      this.escape?.notify(shortcut, uuidv4())
-    })
-    await register('Delete', (shortcut) => {
-      this.delete?.notify(shortcut, uuidv4())
-    })
+    await register('CommandOrControl+C', this.onPress(this.copy))
+    await register('CommandOrControl+V', this.onPress(this.paste))
+    await register('Escape', this.onPress(this.escape))
+    await register('Delete', this.onPress(this.delete))
+  }
+
+  private onPress(observable: Observable<Hotkey> | undefined) {
+    return ({ shortcut, state }: ShortcutEvent) => {
+      if (state === 'Pressed') observable?.notify(shortcut, uuidv4())
+    }
   }
 
   private async unregister() {

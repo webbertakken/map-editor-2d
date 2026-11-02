@@ -2,7 +2,7 @@
 
 ## Setup
 
-- Install [prerequisites](https://tauri.app/v1/guides/getting-started/prerequisites)
+- Install [prerequisites](https://v2.tauri.app/start/prerequisites/)
 - Install `tauri-cli`
 
 ```powershell
