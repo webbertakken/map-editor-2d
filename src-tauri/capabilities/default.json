@@ -1,0 +1,22 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "What the editor window may do: size itself, pick and read/write files under home, and own its hotkeys",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "core:window:allow-set-min-size",
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "fs:allow-read-dir",
+    "fs:allow-read-file",
+    "fs:allow-read-text-file",
+    "fs:allow-write-text-file",
+    {
+      "identifier": "fs:scope",
+      "allow": [{ "path": "$HOME/**" }]
+    },
+    "global-shortcut:allow-register",
+    "global-shortcut:allow-unregister-all"
+  ]
+}

@@ -1,73 +1,50 @@
 {
+  "$schema": "https://schema.tauri.app/config/2",
   "build": {
     "beforeDevCommand": "yarn step-rust-dev",
     "beforeBuildCommand": "yarn step-rust-build",
-    "devPath": "http://localhost:1420",
-    "distDir": "../dist"
+    "frontendDist": "../dist",
+    "devUrl": "http://localhost:1420"
   },
-  "package": {
-    "productName": "map-editor-2d",
-    "version": "1.3.1"
-  },
-  "tauri": {
-    "allowlist": {
-      "all": true,
-      "fs": {
-        "all": true,
-        "scope": ["$HOME/*"]
-      },
-      "dialog": {
-        "all": true
-      },
-      "shell": {
-        "open": true
-      },
-      "window": {
-        "all": true
-      },
-      "globalShortcut": {
-        "all": true
-      }
+  "bundle": {
+    "active": true,
+    "category": "DeveloperTool",
+    "copyright": "",
+    "targets": "all",
+    "externalBin": [],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "certificateThumbprint": null,
+      "digestAlgorithm": "sha256",
+      "timestampUrl": ""
     },
-    "bundle": {
-      "active": true,
-      "category": "DeveloperTool",
-      "copyright": "",
+    "longDescription": "",
+    "macOS": {
+      "entitlements": null,
+      "exceptionDomain": "",
+      "frameworks": [],
+      "providerShortName": null,
+      "signingIdentity": null
+    },
+    "resources": [],
+    "shortDescription": "",
+    "linux": {
       "deb": {
         "depends": []
-      },
-      "externalBin": [],
-      "icon": [
-        "icons/32x32.png",
-        "icons/128x128.png",
-        "icons/128x128@2x.png",
-        "icons/icon.icns",
-        "icons/icon.ico"
-      ],
-      "identifier": "map-editor-2d.takken.io",
-      "longDescription": "",
-      "macOS": {
-        "entitlements": null,
-        "exceptionDomain": "",
-        "frameworks": [],
-        "providerShortName": null,
-        "signingIdentity": null
-      },
-      "resources": [],
-      "shortDescription": "",
-      "targets": "all",
-      "windows": {
-        "certificateThumbprint": null,
-        "digestAlgorithm": "sha256",
-        "timestampUrl": ""
       }
-    },
-    "security": {
-      "csp": null
-    },
-    "updater": {
-      "active": false
-    },
+    }
+  },
+  "productName": "map-editor-2d",
+  "mainBinaryName": "map-editor-2d",
+  "version": "1.3.1",
+  "identifier": "map-editor-2d.takken.io",
+  "app": {
     "windows": [
       {
         "fullscreen": false,
@@ -75,8 +52,12 @@
         "height": 600,
         "resizable": true,
         "title": "Webber's Map Editor 2D",
-        "fileDropEnabled": false
+        "useHttpsScheme": true,
+        "dragDropEnabled": false
       }
-    ]
+    ],
+    "security": {
+      "csp": null
+    }
   }
 }

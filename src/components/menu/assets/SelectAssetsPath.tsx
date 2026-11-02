@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button } from 'dracula-ui'
 import { useAtomValue, useSetAtom } from 'jotai'
-import { open } from '@tauri-apps/api/dialog'
+import { open } from '@tauri-apps/plugin-dialog'
 import { useNotification } from '../../../hooks/useNotification'
 import { areSpritesAssetsLoadedSelector, assetsState } from '../../../state/AssetsState'
 import { AssetsLoader } from '../../../service/AssetsLoader'

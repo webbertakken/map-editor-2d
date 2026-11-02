@@ -1,5 +1,5 @@
 import { SpriteAsset } from './SpriteAsset'
-import { FileEntry, readBinaryFile, readDir } from '@tauri-apps/api/fs'
+import { readDir, readFile } from '@tauri-apps/plugin-fs'
 import { Buffer } from 'buffer'
 import { AssetPath } from './AssetPath'
 import { Path } from './Path'
@@ -32,12 +32,11 @@ export class Assets {
   ): Promise<SpriteAsset[]> {
     const sprites: SpriteAsset[] = []
 
-    const readFilesRecursively = async (entries: FileEntry[]) => {
-      for (const entry of entries) {
-        const { children, path: rawPath } = entry
-        const path = Path.normalise(rawPath)
-        if (children !== undefined) {
-          await readFilesRecursively(children)
+    const readFilesRecursively = async (directory: string) => {
+      for (const entry of await readDir(directory)) {
+        const path = `${directory}/${entry.name}`
+        if (entry.isDirectory) {
+          await readFilesRecursively(path)
           continue
         }
 
@@ -45,7 +44,7 @@ export class Assets {
         switch (extension) {
           case '.png':
           case '.jpg':
-            const data = await readBinaryFile(path)
+            const data = await readFile(path)
             const buffer = Buffer.from(data)
 
             // noinspection TypeScriptValidateJSTypes (incorrect assertion, base64 is indeed required)
@@ -65,8 +64,7 @@ export class Assets {
       }
     }
 
-    const entries = await readDir(spritesAbsolutePath, { recursive: true })
-    await readFilesRecursively(entries)
+    await readFilesRecursively(Path.normalise(spritesAbsolutePath))
 
     return sprites
   }

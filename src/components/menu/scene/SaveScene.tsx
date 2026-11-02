@@ -8,7 +8,7 @@ import { useAtomValue, useSetAtom } from 'jotai'
 import { Box, Button, Checkbox } from 'dracula-ui'
 import { appState, isAutoSaveEnabledSelector } from '../../../state/AppState'
 import { Scene } from '../../../model/Scene'
-import { writeTextFile } from '@tauri-apps/api/fs'
+import { writeTextFile } from '@tauri-apps/plugin-fs'
 import { useNotification } from '../../../hooks/useNotification'
 
 interface Props {}
