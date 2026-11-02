@@ -2756,9 +2756,6 @@ __metadata:
     uuid: "npm:^14.0.3"
     vite: "npm:^8.0.0"
     vitest: "npm:^4.1.12"
-  dependenciesMeta:
-    esbuild:
-      built: true
   languageName: unknown
   linkType: soft
 

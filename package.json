@@ -78,11 +78,6 @@
     "vitest": "^4.1.12"
   },
   "packageManager": "yarn@4.18.1",
-  "dependenciesMeta": {
-    "esbuild": {
-      "built": true
-    }
-  },
   "resolutions": {
     "@types/react": "^19",
     "@types/react-dom": "^19",
