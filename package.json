@@ -81,6 +81,7 @@
   "resolutions": {
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "minimatch": "^11.0.1",
     "tinypool": "^2.1.2"
   }
 }
